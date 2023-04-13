@@ -1,7 +1,51 @@
-import React from 'react';
+import React, {useState} from 'react';
 import image from "../assets/img/logo_w.png";
 import { Link } from "react-router-dom";
 const Login = () => {
+    const [formData, setFormData] = useState({
+        username: '',
+        password: ''
+    });
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const [errorText, setErrorText] = useState('');
+
+  // function to update the error text
+  function updateErrorText() {
+    setErrorText('Incorrect username or password');
+  }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await fetch('http://localhost:8000/api/token/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const data = await response.json();
+            console.log(data);
+
+
+            if (response.ok) {
+                // navigate("/login")
+                console.log('you\'re in')
+                const token = data.access;
+                console.log(token)
+            } else {
+                console.log('you fucked up submitting the form')
+                setErrorText('Incorrect username or password');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <form className="h-screen bg-BACKGROUND_COLOR_1 flex items-center justify-center">
             <div className="BACKGROUND_COLOR_1 w-full rounded flex flex-col justify-center items-center">
@@ -13,21 +57,29 @@ const Login = () => {
                         <div className="relative mb-4">
                             <input type="text" id="default_filled"
                                    className="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
-                                   placeholder=" "/>
+                                   placeholder=" "
+                                   name="username"
+                                   value={formData.username}
+                                   onChange={handleChange}/>
                             <label htmlFor="default_filled"
                                    className="absolute text-sm text-FONT_COLOR_1 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Username</label>
                         </div>
                         <div className="relative mb-6">
                             <input type="password" id="default_filled"
                                    className="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
-                                   placeholder=" "/>
+                                   placeholder=" "
+                                   name="password"
+                                   value={formData.password}
+                                   onChange={handleChange}/>
                             <label htmlFor="default_filled"
                                    className="absolute text-sm text-FONT_COLOR_1 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Password</label>
                         </div>
+                         <p className="text-red-500 text-center mb-4" id="error_text">{errorText}</p>
                         <div className="flex flex-col items-center justify-center">
                             <Link to="/">
                                 <button
                                     className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-4 rounded-full"
+                                    onClick={handleSubmit}
                                 >
                                     Sign In
                                 </button>
