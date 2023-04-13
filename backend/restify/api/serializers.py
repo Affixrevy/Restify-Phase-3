@@ -7,10 +7,12 @@ from django.contrib.auth import get_user_model
 
 class UserSerializer(ModelSerializer):
     password2 = CharField(write_only=True, required=True)
+
     class Meta:
         User = get_user_model()
         model = User
-        fields = ['first_name', 'last_name', 'username', 'avatar', 'password', 'password2', 'phone_num', 'email', 'birth_date',]
+        fields = ['first_name', 'last_name', 'username', 'avatar', 'password', 'password2', 'phone_num', 'email',
+                  'birth_date', ]
 
     def validate(self, attrs):
         if attrs['password'] != attrs['password2']:
@@ -23,7 +25,8 @@ class UserSerializer(ModelSerializer):
         User = get_user_model()
         user = User.objects.create_user(**validated_data)
         return user
-    
+
+
 class PasswordSerializer(ModelSerializer):
     password2 = CharField(write_only=True, required=True)
     old_password = CharField(write_only=True, required=True)
@@ -38,7 +41,7 @@ class PasswordSerializer(ModelSerializer):
             raise ValidationError({"password": "Password fields didn't match."})
 
         return attrs
-    
+
     def validate_old_password(self, value):
         user = self.context['request'].user
         if not user.check_password(value):
@@ -59,7 +62,7 @@ class ProfileSerializer(ModelSerializer):
     class Meta:
         User = get_user_model()
         model = User
-        fields = ['first_name', 'last_name', 'username', 'avatar', 'phone_num', 'email', 'birth_date',]
+        fields = ['first_name', 'last_name', 'username', 'avatar', 'phone_num', 'email', 'birth_date', ]
 
     def update(self, instance, validated_data):
         if 'first_name' in validated_data:

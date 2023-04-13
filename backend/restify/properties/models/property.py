@@ -6,6 +6,7 @@ from django.contrib.auth import get_user_model
 
 class PropertyModel(Model):
     pics = ImageField(upload_to='images/', blank=True, null=True)
+    name = CharField(max_length=200, default="No Name")
     address = CharField(max_length=200)
     country = CharField(max_length=50)
     price = IntegerField()
@@ -15,5 +16,5 @@ class PropertyModel(Model):
     num_beds = IntegerField()
     num_baths = IntegerField()
     amenities = CharField(max_length=500, blank=True, null=True)
-    description = CharField(max_length=200, blank=True, null=True)
+    description = CharField(max_length=5000, blank=True, null=True)
     owner = ForeignKey(get_user_model(), on_delete=CASCADE, null=True)
