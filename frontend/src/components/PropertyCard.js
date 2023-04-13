@@ -1,9 +1,10 @@
 import React from 'react';
 import mansion from "../assets/img/mansion/mansion.webp";
+import { Link } from "react-router-dom";
 
 const PropertyCard = () => {
     return (
-        <a href="../property_page/property_user.html"
+        <Link to={"/property"}
            className="flex flex-col items-start rounded-2xl shadow lg:flex-row lg:max-w-xl text-FONT_COLOR_2 hover:text-gray-700 hover:bg-gray-100 dark:bg-BACKGROUND_COLOR_2 dark:hover:bg-STROKE_COLOR">
             <img className="object-cover w-full rounded-t-2xl h-96 lg:h-auto lg:w-48 lg:rounded-none lg:rounded-l-2xl"
                  src={mansion} alt=""/>
@@ -30,7 +31,7 @@ const PropertyCard = () => {
                         <b>$110 CAD</b> night
                     </h1>
                 </div>
-        </a>
+        </Link>
     );
 };
 
