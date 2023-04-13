@@ -6,7 +6,7 @@ const Login = () => {
         <form className="h-screen bg-BACKGROUND_COLOR_1 flex items-center justify-center">
             <div className="BACKGROUND_COLOR_1 w-full rounded flex flex-col justify-center items-center">
                 <div className="flex flex-col items-center justify-center mb-4">
-                    <img className="max-h-60 flex flex-col justify-center items-center" src={image}/>
+                    <img className="max-h-60 flex flex-col justify-center items-center" src={image} alt={"Whatever"}/>
                 </div>
                 <div className="flex flex-col w-full max-w-xs">
                     <form className="BACKGROUND_COLOR_2 shadow-md rounded px-8 pt-6 pb-8 mb-4">
@@ -36,10 +36,10 @@ const Login = () => {
                                to="/signup">
                                 Don't have an account yet? Sign Up
                             </Link>
-                            <a className="inline-block align-baseline font-bold text-xs text-FONT_COLOR_1 hover:text-FONT_COLOR_2"
-                               href="#">
+                            <Link className="inline-block align-baseline font-bold text-xs text-FONT_COLOR_1 hover:text-FONT_COLOR_2"
+                               to={"#"}>
                                 Forgot password?
-                            </a>
+                            </Link>
                         </div>
                     </form>
                 </div>

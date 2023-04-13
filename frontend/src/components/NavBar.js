@@ -9,7 +9,7 @@ const NavBar = () => {
                 <div className="flex item-center justify-between h-16">
                     <Link to="/" class="md:p-3 px-6 pt-2 Restify_logo">Restify</Link>
                     <Link to="/profile" class="bg-BACKGROUND_COLOR_2 rounded-full w-10 h-10 pt-3 z-50">
-                        <img src={account} alt={"Whatever"}/>
+                        <img src={account} alt={""}/>
                     </Link>
                 </div>
             </nav>
