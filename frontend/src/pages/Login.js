@@ -3,7 +3,7 @@ import image from "../assets/img/logo_w.png";
 import { Link } from "react-router-dom";
 const Login = () => {
     return (
-        <form className="h-screen bg-BACKGROUND_COLOR_1 flex items-center justify-center">
+        <main className="h-screen bg-BACKGROUND_COLOR_1 flex items-center justify-center">
             <div className="BACKGROUND_COLOR_1 w-full rounded flex flex-col justify-center items-center">
                 <div className="flex flex-col items-center justify-center mb-4">
                     <img className="max-h-60 flex flex-col justify-center items-center" src={image} alt={"Whatever"}/>
@@ -44,7 +44,7 @@ const Login = () => {
                     </form>
                 </div>
             </div>
-        </form>
+        </main>
     );
 };
 
