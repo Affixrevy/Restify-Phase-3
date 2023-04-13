@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import image from "../assets/img/logo_w.png";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 const Login = () => {
     const [formData, setFormData] = useState({
         username: '',
         password: ''
     });
+
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,6 +39,9 @@ const Login = () => {
                 console.log('you\'re in')
                 const token = data.access;
                 console.log(token)
+
+                localStorage.setItem('token', token)
+                navigate("/")
             } else {
                 console.log('you fucked up submitting the form')
                 setErrorText('Incorrect username or password');
