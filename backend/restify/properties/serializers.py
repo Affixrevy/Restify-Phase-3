@@ -7,7 +7,7 @@ class PropertySerializer(serializers.ModelSerializer):
         model = PropertyModel
         fields = ['name', 'main_pic', 'address', 'country', 'start_date',
                   'end_date', 'num_guests', 'num_beds', 'num_baths',
-                  'amenities', 'description', 'price']
+                  'amenities', 'description', 'price', 'city', 'province']
 
     def create(self, validated_data):
         validated_data['owner'] = self.context.get('request').user

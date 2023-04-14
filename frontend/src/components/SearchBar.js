@@ -2,7 +2,7 @@ import React from 'react';
 
 const SearchBar = () => {
     return (
-        <div className="lg:absolute lg:top-10 w-full">
+        <div className="lg:absolute z-40 lg:top-10 w-full">
             <div className="relative container mx-auto py-3 md:px-10 lg:py-10 flex items-center justify-center">
                 <div
                     className="w-full md:w-3/4 max-w-7xl drop-shadow-lg p-6 rounded-2xl shadow dark:bg-POPUP_BACKGROUND_COLOR dark:border-gray-700">

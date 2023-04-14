@@ -2,14 +2,15 @@ import React from 'react';
 import mansion from "../assets/img/mansion/mansion.webp";
 import { Link } from "react-router-dom";
 
-const PropertyCard = () => {
+const PropertyCard = (props) => {
+    const property = props.property
     return (
         <Link to={"/property"}
-           className="flex flex-col items-start rounded-2xl shadow lg:flex-row lg:max-w-xl text-FONT_COLOR_2 hover:text-gray-700 hover:bg-gray-100 dark:bg-BACKGROUND_COLOR_2 dark:hover:bg-STROKE_COLOR">
-            <img className="object-cover w-full rounded-t-2xl h-96 lg:h-auto lg:w-48 lg:rounded-none lg:rounded-l-2xl"
-                 src={mansion} alt=""/>
+           className="flex flex-col items-start rounded-2xl shadow lg:flex-row lg:max-w-xl lg:h-max-1 text-FONT_COLOR_2 hover:text-gray-700 hover:bg-gray-100 dark:bg-BACKGROUND_COLOR_2 dark:hover:bg-STROKE_COLOR">
+            <img className="object-cover w-full rounded-t-2xl h-96 lg:h-36 lg:w-48 lg:rounded-none lg:rounded-l-2xl"
+                 src={property.main_pic} alt=""/>
                 <div className="m-3 ml-4">
-                    <h1 className="text-2xl font-bold tracking-tight dark:text-FONT_COLOR_1">Harry's Mansion</h1>
+                    <h1 className="text-2xl font-bold tracking-tight dark:text-FONT_COLOR_1">{property.name}</h1>
                     <div className="flex py-2 mb-1">
                         <svg
                             aria-hidden="true"
@@ -28,8 +29,28 @@ const PropertyCard = () => {
                     <h1
                         className="pt-2 text-current dark:text-FONT_COLOR_1"
                     >
-                        <b>$110 CAD</b> night
+                        <b>${property.price} CAD</b> night
                     </h1>
+                    <div className="flex items-center">
+                          <svg
+                                width="24"
+                                height="24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="mr-1 ml-0 pl-0 text-slate-400 dark:text-slate-500"
+                                aria-hidden="true"
+                          >
+                            <path d="M18 11.034C18 14.897 12 19 12 19s-6-4.103-6-7.966C6 7.655 8.819 5 12 5s6 2.655 6 6.034Z" />
+                            <path d="M14 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z" />
+                          </svg>
+                          <h4 className="text-xs pt-1">
+                            {property.city}, {property.province}
+                          </h4>
+                    </div>
+
                 </div>
         </Link>
     );

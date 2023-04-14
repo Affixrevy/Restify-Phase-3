@@ -8,6 +8,8 @@ class PropertyModel(Model):
     main_pic = ImageField(upload_to='images/', blank=True, null=True)
     name = CharField(max_length=200, default="No Name")
     address = CharField(max_length=200)
+    city = CharField(max_length=200, default="Toronto")
+    province = CharField(max_length=200, default="Ontario")
     country = CharField(max_length=50)
     price = IntegerField()
     start_date = DateField()
