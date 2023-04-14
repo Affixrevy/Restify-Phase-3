@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'comments',
     'properties',
     'notifications',
+    'reservations',
     'corsheaders',
 ]
 
