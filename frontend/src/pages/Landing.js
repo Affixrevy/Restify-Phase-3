@@ -1,9 +1,8 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import {default as NavBar} from "../components/NavBar.js";
 import SearchBar from "../components/SearchBar";
 import FilterBar from "../components/FilterBar";
 import PropertyCard from "../components/PropertyCard";
-import propertyCard from "../components/PropertyCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 class Landing extends React.Component {
@@ -38,25 +37,24 @@ class Landing extends React.Component {
             <NavBar></NavBar>
             <SearchBar></SearchBar>
             <main className="flex justify-center lg:mt-16 py-5 mx-auto w-full">
-                <div className="w-11/12 md:w-2/3">
+                <div className="w-11/12 md:w-2/3 justify-center">
                     <div className="py-4">
                         <FilterBar></FilterBar>
                     </div>
                     <InfiniteScroll
                         next={() => this.fetchData(this.state.items.length / 8 + 1)}
                         hasMore={this.state.hasMore}
-                        loader={<h4>Loading...</h4>}
+                        loader={<h4 className="text-FONT_COLOR_2">Loading...</h4>}
                         dataLength={this.state.items.length}
                         scrollThreshold={0.8}
                         scrollableTarget="window"
-                        // children={}
-                        endMessage={<p className="mt-2 p-2 text-FONT_COLOR_2 text-sm text-center justify-center">No more
-                            properties
-                            to
-                            load</p>}>
+                        endMessage={<p className="mt-2 p-2 text-FONT_COLOR_2 text-sm text-center justify-center">
+                                        No more properties to load
+                                    </p>}
+                    >
                         <div className="grid lg:grid-cols-2 gap-4 w-full">
                             {this.state.items.map((item, index) => {
-                                return <PropertyCard property={item}></PropertyCard>
+                                return <PropertyCard key={index} property={item}></PropertyCard>
                             })}
                         </div>
                     </InfiniteScroll>
