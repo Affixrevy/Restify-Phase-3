@@ -22,7 +22,6 @@ const Landing = () => {
                         <PropertyCard></PropertyCard>
                         <PropertyCard></PropertyCard>
                         <PropertyCard></PropertyCard>
-
                     </div>
                 </div>
             </main>

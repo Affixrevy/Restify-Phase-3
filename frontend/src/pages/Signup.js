@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import account from "../assets/img/account.png"
-import '../font.css';
 
 const Signup = () => {
     return (
