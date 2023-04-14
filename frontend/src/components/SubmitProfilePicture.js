@@ -38,7 +38,7 @@ const SubmitProfilePicture = () => {
             {showPopUp && (
                 <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-100 flex items-center justify-center modal">
                     <div className="bg-white p-8 rounded-md">
-                        <h2 className="text-lg font-bold mb-4 text-black">Add profile picture</h2>
+                        <h2 className="text-lg font-bold mb-4 text-black">Upload a profile picture</h2>
                         <form onSubmit={handleFormSubmit}>
                             <div className="mb-4 text-black">
                                 <input type="file" onChange={handleFileChange} />

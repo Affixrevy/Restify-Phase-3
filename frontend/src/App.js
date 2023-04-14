@@ -7,6 +7,7 @@ import { default as Profile } from "./pages/Profile.js"
 import { default as Property } from "./pages/Property.js"
 import { default as Reservation } from "./pages/Reservation.js"
 import { default as Listing } from "./pages/Listing.js"
+import { default as EditProfile } from "./pages/EditProfile.js"
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/property" element={<Property />}/>
           <Route path="/reservation" element={<Reservation />}/>
           <Route path="/listing" element={<Listing />}/>
+          <Route path="/edit-profile" element={<EditProfile />}/>
       </Routes>
     );
 }

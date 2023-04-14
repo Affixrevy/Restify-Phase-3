@@ -58,11 +58,13 @@ const Profile = () => {
                             </div>
                         </div>
                         <div className="flex mt-6 pt-6 items-center justify-center space-x-10">
-                            <button
-                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-40 font-medium rounded-full text-xl"
-                            >
-                                <p className="block overflow-auto">Edit Information</p>
-                            </button>
+                            <Link to="/edit-profile">
+                                <button
+                                    className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-40 font-medium rounded-full text-xl"
+                                >
+                                    <p className="block overflow-auto">Edit Information</p>
+                                </button>
+                            </Link>
                             <button
                                 className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-40 font-medium rounded-full text-xl"
                             >
@@ -159,7 +161,7 @@ const Profile = () => {
     ];
 
     return (
-        <body className="h-screen bg-BACKGROUND_COLOR_1">
+        <div className="h-screen bg-BACKGROUND_COLOR_1">
         <NavBar></NavBar>
         <div className="mx-auto mt-10 w-full sm:px-0">
             <div className="md:w-4/6 sm:mx-auto">
@@ -197,7 +199,7 @@ const Profile = () => {
                 </div>
             ))}
         </div>
-        </body>
+        </div>
     );
 };
 
