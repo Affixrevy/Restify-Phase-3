@@ -48,32 +48,32 @@ const Landing = () => {
 
 
     return (
-        <body className="h-screen bg-BACKGROUND_COLOR_1">
-        <NavBar></NavBar>
-        <SearchBar></SearchBar>
-        <main className="flex justify-center lg:mt-16 py-5 mx-auto w-full">
-            <div className="w-11/12 md:w-2/3">
-                <div className="py-4">
-                    <FilterBar></FilterBar>
-                </div>
-                <div className="grid lg:grid-cols-2 gap-4 w-full">
+        <div className="h-screen bg-BACKGROUND_COLOR_1">
+            <NavBar></NavBar>
+            <SearchBar></SearchBar>
+            <main className="flex justify-center lg:mt-16 py-5 mx-auto w-full">
+                <div className="w-11/12 md:w-2/3">
+                    <div className="py-4">
+                        <FilterBar></FilterBar>
+                    </div>
+                    <div className="grid lg:grid-cols-2 gap-4 w-full">
 
-                    {properties.length > 0 ? (
-                        properties.map((item, index) => {
-                            return <PropertyCard property={item}></PropertyCard>
-                        })
-                    ) : (
-                        <p>Loading...</p>
-                    )}
+                        {properties.length > 0 ? (
+                            properties.map((item, index) => {
+                                return <PropertyCard property={item}></PropertyCard>
+                            })
+                        ) : (
+                            <p>Loading...</p>
+                        )}
 
+                    </div>
+                    {loading && <p className="text-center justify-center ">Loading more properties...</p>}
+                    {!loading && !hasMore &&
+                        <p className="mt-2 p-2 text-FONT_COLOR_2 text-sm text-center justify-center">No more properties to
+                            load</p>}
                 </div>
-                {loading && <p className="text-center justify-center ">Loading more properties...</p>}
-                {!loading && !hasMore &&
-                    <p className="mt-2 p-2 text-FONT_COLOR_2 text-sm text-center justify-center">No more properties to
-                        load</p>}
-            </div>
-        </main>
-        </body>
+            </main>
+        </div>
     );
 };
 

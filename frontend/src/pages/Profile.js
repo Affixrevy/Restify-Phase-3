@@ -134,10 +134,10 @@ const Profile = () => {
                         </button>
                         <main className="flex lg:mt-4 py-5 mx-auto w-full">
                             <div className="grid lg:grid-cols-2 gap-4 w-full">
-                                <PropertyCard></PropertyCard>
-                                <PropertyCard></PropertyCard>
-                                <PropertyCard></PropertyCard>
-                                <PropertyCard></PropertyCard>
+                                {/*<PropertyCard></PropertyCard>*/}
+                                {/*<PropertyCard></PropertyCard>*/}
+                                {/*<PropertyCard></PropertyCard>*/}
+                                {/*<PropertyCard></PropertyCard>*/}
                             </div>
                         </main>
                     </div>
@@ -167,10 +167,10 @@ const Profile = () => {
                     </button>
                     <main className="flex lg:mt-4 py-5 mx-auto w-full">
                         <div className="grid lg:grid-cols-2 gap-4 w-full">
-                            <PropertyCard></PropertyCard>
-                            <PropertyCard></PropertyCard>
-                            <PropertyCard></PropertyCard>
-                            <PropertyCard></PropertyCard>
+                            {/*<PropertyCard></PropertyCard>*/}
+                            {/*<PropertyCard></PropertyCard>*/}
+                            {/*<PropertyCard></PropertyCard>*/}
+                            {/*<PropertyCard></PropertyCard>*/}
                         </div>
                     </main>
                 </div>
