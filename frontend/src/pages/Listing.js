@@ -79,7 +79,7 @@ const Listing = () => {
                                            className="absolute text-sm text-gray-300 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Amenities</label>
                                 </div>
                                 <div className="relative mb-6">
-                                    <textarea type="text" id="description"
+                                    <textarea id="description"
                                            className="block rounded-lg px-2.5 pb-32 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
                                            placeholder=" "/>
                                     <label htmlFor="description"
@@ -89,15 +89,13 @@ const Listing = () => {
                                     <div className="flex flex-col items-start">
                                         <button
                                             className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full">
-                                            <a href="../profile_page/profile.html"
-                                               className="block overflow-auto py-2 px-4">Cancel</a>
+                                            <p className="block overflow-auto py-2 px-4">Cancel</p>
                                         </button>
                                     </div>
                                     <div className="flex flex-col items-center justify-center">
                                         <button
                                             className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold rounded-full">
-                                            <a href="../profile_page/profile.html"
-                                               className="block overflow-auto py-2 px-4">Confirm</a>
+                                            <p className="block overflow-auto py-2 px-4">Confirm</p>
                                         </button>
                                     </div>
                                 </div>
