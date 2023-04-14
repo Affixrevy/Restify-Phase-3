@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import account from "../assets/img/account.png"
-import '../font.css';
 
 const Signup = () => {
 
