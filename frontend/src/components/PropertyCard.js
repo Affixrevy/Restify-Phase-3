@@ -7,7 +7,7 @@ const PropertyCard = (props) => {
     return (
         <Link to={"/property"}
            className="flex flex-col items-start rounded-2xl shadow lg:flex-row lg:max-w-xl lg:h-max-1 text-FONT_COLOR_2 hover:text-gray-700 hover:bg-gray-100 dark:bg-BACKGROUND_COLOR_2 dark:hover:bg-STROKE_COLOR">
-            <img className="object-cover w-full rounded-t-2xl h-96 lg:h-36 lg:w-48 lg:rounded-none lg:rounded-l-2xl"
+            <img className="object-cover w-full rounded-t-2xl h-96 lg:h-40 lg:w-48 lg:rounded-none lg:rounded-l-2xl"
                  src={property.main_pic} alt=""/>
                 <div className="m-3 ml-4">
                     <h1 className="text-2xl font-bold tracking-tight dark:text-FONT_COLOR_1">{property.name}</h1>

@@ -130,7 +130,7 @@ const Landing = () => {
 
                     </div>
                     {loading && <p className="text-center justify-center ">Loading more properties...</p>}
-                    {!loading && !hasMore && <p className="mt-1 p-2 text-FONT_COLOR_2 text-sm text-center justify-center">No more properties to load</p>}
+                    {!loading && !hasMore && <p className="mt-2 p-2 text-FONT_COLOR_2 text-sm text-center justify-center">No more properties to load</p>}
                 </div>
             </main>
         </body>
