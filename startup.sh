@@ -7,3 +7,5 @@ python3 -m pip install django
 python3 -m pip install djangorestframework
 python3 -m pip install --upgrade Pillow
 python3 -m pip install djangorestframework-simplejwt
+python3 -m pip install django-filter
+python3 -m pip install django-cors-headers

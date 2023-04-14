@@ -34,7 +34,7 @@ class Landing extends React.Component {
 
     render() {
         return (
-            <body className="h-screen bg-BACKGROUND_COLOR_1">
+        <div className="bg-BACKGROUND_COLOR_1">
             <NavBar></NavBar>
             <SearchBar></SearchBar>
             <main className="flex justify-center lg:mt-16 py-5 mx-auto w-full">
@@ -47,7 +47,7 @@ class Landing extends React.Component {
                         hasMore={this.state.hasMore}
                         loader={<h4>Loading...</h4>}
                         dataLength={this.state.items.length}
-                        scrollThreshold={1}
+                        scrollThreshold={0.8}
                         scrollableTarget="window"
                         // children={}
                         endMessage={<p className="mt-2 p-2 text-FONT_COLOR_2 text-sm text-center justify-center">No more
@@ -62,7 +62,7 @@ class Landing extends React.Component {
                     </InfiniteScroll>
                 </div>
             </main>
-            </body>
+            </div>
         );
     }
 }
