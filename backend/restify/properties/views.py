@@ -1,7 +1,11 @@
 from django.shortcuts import render, get_object_or_404
 from rest_framework import generics
-from .serializers import PropertySerializer
-from .models.property import PropertyModel
+from rest_framework.parsers import FileUploadParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .serializers import PropertySerializer, PropertyImageSerializer
+from .models.property import PropertyModel, PropertyImage
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, DateFilter, NumberFilter
@@ -59,3 +63,26 @@ class PropertyListView(generics.ListAPIView):
     filterset_class = PropertyFilterSet
     ordering_fields = ['price', 'start_date']
     pagination_class = PropertyPagination
+
+
+class PropertyImageView(APIView):
+    parser_class = (FileUploadParser,)
+
+    def put(self, request, property_id):
+        property_obj = get_object_or_404(PropertyModel, pk=property_id)
+        print(property_obj.name)
+        request.data['property'] = property_obj.pk
+        serializer = PropertyImageSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        else:
+            return Response(serializer.errors, status=400)
+
+
+class PropertyImageListView(APIView):
+    def get(self, request, property_id):
+        property_obj = get_object_or_404(PropertyModel, pk=property_id)
+        property_images = PropertyImage.objects.filter(property=property_obj)
+        serializer = PropertyImageSerializer(property_images, many=True)
+        return Response(serializer.data)

@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 # Create your models here.
 
 class PropertyModel(Model):
-    pics = ImageField(upload_to='images/', blank=True, null=True)
+    main_pic = ImageField(upload_to='images/', blank=True, null=True)
     name = CharField(max_length=200, default="No Name")
     address = CharField(max_length=200)
     country = CharField(max_length=50)
@@ -18,3 +18,8 @@ class PropertyModel(Model):
     amenities = CharField(max_length=500, blank=True, null=True)
     description = CharField(max_length=5000, blank=True, null=True)
     owner = ForeignKey(get_user_model(), on_delete=CASCADE, null=True)
+
+
+class PropertyImage(Model):
+    property = ForeignKey(PropertyModel, on_delete=CASCADE)
+    image = ImageField(upload_to='images/')
