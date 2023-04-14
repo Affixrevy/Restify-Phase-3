@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import NavBar from "../components/NavBar";
 import image from "../assets/img/account.png";
-import PropertyCard from "../components/PropertyCard";
 import {Link} from "react-router-dom";
+import SubmitFile from "../components/SubmitFile";
+import SubmitProfilePicture from "../components/SubmitProfilePicture";
 
 const Profile = () => {
     const [activeTab, setActiveTab] = useState(1);
@@ -22,12 +23,12 @@ const Profile = () => {
                         className="tab-panel p-6 transition duration-300 flex flex-col space-y-4 divide-y-2"
                     >
                         <div className="flex flex-col space-y-4">
-                            <h2 className="text-xl font-semibold text-FONT_COLOR_1 mb-2">
+                            <h2 className="text-xl font-semibold text-FONT_COLOR_1 mb-1">
                                 Profile
                             </h2>
                             <div className="w-20 h-20 bg-BACKGROUND_COLOR_2 relative">
                                 <div
-                                    className="rounded-full w-20 h-20 pt-3 z-40"
+                                    className="rounded-full w-20 h-20 z-40"
                                 >
                                     <img
                                         src={image}
@@ -35,61 +36,40 @@ const Profile = () => {
                                         alt="Account Icon"
                                     />
                                     <div
-                                        className="flex absolute top-0 left-0 w-20 h-20 z-50 justify-center items-center text-FONT_COLOR_1 bg-BACKGROUND_COLOR_2 opacity-0 hover:transition-opacity hover:opacity-50"
+                                        className="flex absolute top-0 left-0 w-20 h-20 z-50 justify-center items-center text-FONT_COLOR_1 bg-BACKGROUND_COLOR_2 opacity-0 hover:opacity-100"
                                     >
-                                        <div>Edit</div>
+                                        <SubmitProfilePicture></SubmitProfilePicture>
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex flex-row mt-4 text-FONT_COLOR_2 h-fit">
-                                <div className="flex flex-col space-y-2 w-1/2">
-                                    <p>First Name:</p>
-                                    <p>Last Name:</p>
-                                    <p>Date of Birth:</p>
-                                </div>
-                                <div className="flex flex-col space-y-2 relative">
-                                    <p>Potato</p>
-                                    <p>Tomato</p>
-                                    <p>2002-04-13</p>
-                                </div>
-                            </div>
-                            <button
-                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 font-bold rounded-full">
-                                <p className="block overflow-auto">Edit</p>
-                            </button>
                         </div>
                         <div className="text-FONT_COLOR_2 flex flex-col space-y-4">
                             <div className="flex flex-row mt-4 text-FONT_COLOR_2 h-fit">
                                 <div className="flex flex-col space-y-2 w-1/2">
+                                    <p>First Name:</p>
+                                    <p>Last Name:</p>
                                     <p>Email:</p>
-                                    <button
-                                        className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 font-bold rounded-full">
-                                        <p className="block overflow-auto">Edit</p>
-                                    </button>
-                                    <p>Password:</p>
-                                    <button
-                                        className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 font-bold rounded-full">
-                                        <p className="block overflow-auto">Edit</p>
-                                    </button>
                                 </div>
                                 <div className="flex flex-col space-y-2 relative">
+                                    <p>Potato</p>
+                                    <p>Tomato</p>
                                     <p>t***o@mayo.com</p>
-                                    <button
-                                        className="opacity-0 bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 font-bold rounded-full cursor-default"
-                                    >
-                                        Edit
-                                    </button>
-                                    <p>*****</p>
-                                    <button
-                                        className="opacity-0 bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 font-bold rounded-full cursor-default">
-                                        Edit
-                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <div className="flex mt-6 pt-6 items-center justify-center">
+                        <div className="flex mt-6 pt-6 items-center justify-center space-x-10">
                             <button
-                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full text-2xl"
+                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-40 font-medium rounded-full text-xl"
+                            >
+                                <p className="block overflow-auto">Edit Information</p>
+                            </button>
+                            <button
+                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-40 font-medium rounded-full text-xl"
+                            >
+                                <p className="block overflow-auto">Edit Password</p>
+                            </button>
+                            <button
+                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-40 font-medium rounded-full text-xl"
                             >
                                 <p className="block overflow-auto">Logout</p>
                             </button>

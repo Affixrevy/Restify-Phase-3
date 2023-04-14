@@ -1,17 +1,18 @@
 import React from 'react';
 import { useState } from 'react';
+import SubmitFile from "./SubmitFile";
 
-const SubmitFile = () => {
-    const [showModal, setShowModal] = useState(false);
+const SubmitProfilePicture = () => {
+    const [showPopUp, setShowPopUp] = useState(false);
     const [file, setFile] = useState(null);
 
     const handleButtonClick = (event) => {
         event.preventDefault();
-        setShowModal(true);
+        setShowPopUp(true);
     };
 
     const handleCloseModal = () => {
-        setShowModal(false);
+        setShowPopUp(false);
     };
 
     const handleFileChange = (event) => {
@@ -29,14 +30,15 @@ const SubmitFile = () => {
     return (
         <div>
             <button
-                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold rounded-full block overflow-auto py-2 px-4"
-                onClick={handleButtonClick}>
-                Add Thumbnail
+                className="flex absolute top-0 left-0 w-20 h-20 z-50 justify-center items-center text-FONT_COLOR_1 hover:opacity-100"
+                onClick={handleButtonClick}
+            >
+                <p>Edit</p>
             </button>
-            {showModal && (
+            {showPopUp && (
                 <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-100 flex items-center justify-center modal">
                     <div className="bg-white p-8 rounded-md">
-                        <h2 className="text-lg font-bold mb-4 text-black">Submit a Thumbnail</h2>
+                        <h2 className="text-lg font-bold mb-4 text-black">Add profile picture</h2>
                         <form onSubmit={handleFormSubmit}>
                             <div className="mb-4 text-black">
                                 <input type="file" onChange={handleFileChange} />
@@ -61,4 +63,4 @@ const SubmitFile = () => {
     );
 };
 
-export default SubmitFile;
+export default SubmitProfilePicture;
