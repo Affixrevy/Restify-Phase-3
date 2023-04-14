@@ -1,10 +1,21 @@
 import React from 'react';
 import ImageGallery from "../components/ImageGallery";
 import NavBar from "../components/NavBar";
-import {Link} from "react-router-dom";
 import CommentBox from "../components/CommentBox";
+import AddComment from "../components/AddComment";
 
 const Property = () => {
+    const username1 = 'Joe Mama';
+    const username2 = 'Harry Potter';
+    const username3 = 'Peter Parker';
+    const content = "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam ad nobis\n" +
+        "                cupiditate veniam inventore commodi eligendi illo, perspiciatis\n" +
+        "                accusantium consectetur distinctio id culpa minima, in officia dolorum\n" +
+        "                itaque repellendus? Rerum.";
+    const content_special = "Avada kedavra. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam ad nobis\n" +
+        "                cupiditate veniam inventore commodi eligendi illo, perspiciatis\n" +
+        "                accusantium consectetur distinctio id culpa minima, in officia dolorum\n" +
+        "                itaque repellendus? Rerum."
     return (
         <body className="h-screen bg-BACKGROUND_COLOR_1">
             <NavBar></NavBar>
@@ -24,18 +35,12 @@ const Property = () => {
                                 </h5>
                             </div>
                             <div className="xl:col-span-1 col-span-5">
-                                <Link to={"/"}>
-                                    <button
-                                        className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-4 my-5 rounded-full col-span-1"
-                                    >
-                                        Add comments
-                                    </button>
-                                </Link>
+                                    <AddComment></AddComment>
                             </div>
                         </div>
-                        <CommentBox></CommentBox>
-                        <CommentBox></CommentBox>
-                        <CommentBox></CommentBox>
+                        <CommentBox username={username1} content={content}></CommentBox>
+                        <CommentBox username={username2} content={content_special}></CommentBox>
+                        <CommentBox username={username3} content={content}></CommentBox>
                     </div>
                 </div>
             </div>
