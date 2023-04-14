@@ -1,0 +1,14 @@
+
+{
+    "pics": null,
+    "address": "123 Main St",
+    "country": "United States",
+    "start_date": "2023-06-01",
+    "end_date": "2023-12-31",
+    "num_guests": 4,
+    "num_beds": 2,
+    "num_baths": 1,
+    "amenities": "something",
+    "description": "This cozy two-bedroom apartment is located in the heart of downtown. Perfect for a family or group of friends visiting the city.",
+    "price": 150.00
+  }

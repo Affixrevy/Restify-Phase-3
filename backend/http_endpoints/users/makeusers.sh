@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+cat makeuser.json | http POST 10.0.1.7:8000/api/register/ Content-Type:application/json
+cat makeuser2.json | http POST 10.0.1.7:8000/api/register/ Content-Type:application/json
+
+cat property.json | http POST 10.0.1.7:8000/properties/create/ Content-Type:application/json Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc4OTg1NjY5LCJpYXQiOjE2Nzg4OTkyNjksImp0aSI6ImJjNjVmMTA2YzQyNzRhNmY5NGJlOGFkNzQzODY3MDM4IiwidXNlcl9pZCI6Mn0.N7fmWPY0C3F3ymyTAOxnVRafUSMpiU9NQmOFhQO8xBA"
+cat property2.json | http POST 10.0.1.7:8000/properties/create/ Content-Type:application/json Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc4OTg2NjAzLCJpYXQiOjE2Nzg5MDAyMDMsImp0aSI6IjEyYzQ3NzdiN2ZlODQ3MDhhMWIzMTVhZmUyN2MxYTU3IiwidXNlcl9pZCI6M30.-g3-ccPXPjHCekcPr3Hq8ldDjmAE8jy8Ee-oHXn8WzU"
+
+cat makereservation.json | http POST 10.0.1.7:8000/reservations/create/ Content-Type:application/json Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc4OTg1NjY5LCJpYXQiOjE2Nzg4OTkyNjksImp0aSI6ImJjNjVmMTA2YzQyNzRhNmY5NGJlOGFkNzQzODY3MDM4IiwidXNlcl9pZCI6Mn0.N7fmWPY0C3F3ymyTAOxnVRafUSMpiU9NQmOFhQO8xBA"
+
+http PATCH 10.0.1.7:8000/reservations/cancel/123/ "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc4OTg1NjY5LCJpYXQiOjE2Nzg4OTkyNjksImp0aSI6ImJjNjVmMTA2YzQyNzRhNmY5NGJlOGFkNzQzODY3MDM4IiwidXNlcl9pZCI6Mn0.N7fmWPY0C3F3ymyTAOxnVRafUSMpiU9NQmOFhQO8xBA"
+
+http PATCH 10.0.1.7:8000/reservations/2/hostconfirm/ \
+    Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc4OTg2NjAzLCJpYXQiOjE2Nzg5MDAyMDMsImp0aSI6IjEyYzQ3NzdiN2ZlODQ3MDhhMWIzMTVhZmUyN2MxYTU3IiwidXNlcl9pZCI6M30.-g3-ccPXPjHCekcPr3Hq8ldDjmAE8jy8Ee-oHXn8WzU" \
+    status=confirmed
+
+http PATCH 10.0.1.7:8000/reservations/1/confirmcancel/ \
+    Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc4OTg2NjAzLCJpYXQiOjE2Nzg5MDAyMDMsImp0aSI6IjEyYzQ3NzdiN2ZlODQ3MDhhMWIzMTVhZmUyN2MxYTU3IiwidXNlcl9pZCI6M30.-g3-ccPXPjHCekcPr3Hq8ldDjmAE8jy8Ee-oHXn8WzU"

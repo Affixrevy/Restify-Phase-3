@@ -43,10 +43,11 @@ class PropertyFilterSet(FilterSet):
     end_date = DateFilter(field_name='end_date', lookup_expr='lte')
     min_price = NumberFilter(field_name='price', lookup_expr='gte')
     max_price = NumberFilter(field_name='price', lookup_expr='lte')
+    owner_pk = NumberFilter(field_name='owner__pk')
 
     class Meta:
         models = PropertyModel
-        fields = ['country', 'start_date', 'end_date', 'min_price', 'max_price', 'num_guests']
+        fields = ['country', 'start_date', 'end_date', 'min_price', 'max_price', 'num_guests', 'owner_pk']
 
 
 class PropertyPagination(PageNumberPagination):

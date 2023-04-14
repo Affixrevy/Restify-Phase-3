@@ -10,6 +10,7 @@ class Reservation(models.Model):
         ('cancelled_awaiting_confirmation', 'Cancelled - Awaiting Confirmation'),
         ('cancelled', 'Cancelled'),
         ('terminated', 'Terminated'),
+        ('completed', 'Completed')
     )
 
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)

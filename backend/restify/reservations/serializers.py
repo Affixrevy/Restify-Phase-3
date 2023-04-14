@@ -31,4 +31,4 @@ class ReservationSerializerCreate(ModelSerializer):
         ]
 
     def create(self, validated_data):
-        Reservation.objects.create( )
+        Reservation.objects.create()
