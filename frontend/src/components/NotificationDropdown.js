@@ -43,13 +43,15 @@ function NotificationDropdown({ notifications }) {
                                 </li>
                             ))}
                         </ul>
-                        <div className="px-4 py-2 bg-BACKGROUND_COLOR_1">
-                            <button
-                                onClick={clearAllNotifications}
-                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-4 rounded-full"
-                            >
-                                Clear notifications
-                            </button>
+                        <div className="flex justify-center bg-BACKGROUND_COLOR_1">
+                            <div className="px-4 py-2 bg-BACKGROUND_COLOR_1">
+                                <button
+                                    onClick={clearAllNotifications}
+                                    className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-4 rounded-full"
+                                >
+                                    Clear notifications
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </Link>

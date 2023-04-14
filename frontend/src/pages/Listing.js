@@ -4,7 +4,7 @@ import SetHoliday from "../components/SetHoliday";
 
 const Listing = () => {
     return (
-        <body className="h-screen bg-BACKGROUND_COLOR_1">
+        <div className="h-screen bg-BACKGROUND_COLOR_1">
             <NavBar></NavBar>
             <main className="flex bg-BACKGROUND_COLOR_1 flex-col items-center">
                 <div className="p-6 text-FONT_COLOR_1 w-screen md:w-5/6">
@@ -104,7 +104,7 @@ const Listing = () => {
                     </div>
                 </div>
             </main>
-        </body>
+        </div>
     );
 };
 

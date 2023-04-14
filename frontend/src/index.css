@@ -5,6 +5,7 @@
 
 body {
     overflow-y: auto;
+    background-color: rgb(48, 45, 49);
 }
 
 * {
@@ -128,4 +129,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.canvas {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
