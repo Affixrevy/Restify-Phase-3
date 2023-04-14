@@ -6,7 +6,7 @@ import { default as Signup } from "./pages/Signup.js"
 import { default as Profile } from "./pages/Profile.js"
 import { default as Property } from "./pages/Property.js"
 import { default as Reservation } from "./pages/Reservation.js"
-import {default as Listing } from "./pages/Listing.js"
+import { default as Listing } from "./pages/Listing.js"
 
 function App() {
     return (
