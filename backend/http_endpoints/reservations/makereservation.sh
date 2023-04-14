@@ -19,6 +19,6 @@ http --form POST http://localhost:8000/reservations/create/ \
     "Authorization: Bearer $TOKEN_JOE" \
     "user=$CURRENT_UID" \
     status="pending_awaiting_confirmation" \
-    property=4 \
+    to_book_property=4 \
     start_date="2023-07-01" \
     end_date="2023-07-05"

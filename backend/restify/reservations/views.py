@@ -7,37 +7,73 @@ from rest_framework.response import Response
 from django.contrib.auth import get_user_model
 from .models import Reservation
 from properties.models.property import PropertyModel
-from .serializers import ReservationSerializer
+from .serializers import ReservationSerializer, ReservationSerializerCreate
 from django.db.models import Q
 
 
 # Create your views here.
 
 
+# class ReservationCreateView(generics.CreateAPIView):
+#     serializer_class = ReservationSerializer
+#
+#     def perform_create(self, serializer):
+#         # Set status to 'pending' before saving
+#         serializer.save(status='pending_awaiting_confirmation')
+#
+#         # Check if there are any existing reservations for the property
+#         # in the same time frame
+#         property_id = serializer.validated_data['property'].id
+#         start_date = serializer.validated_data['start_date']
+#         end_date = serializer.validated_data['end_date']
+#         existing_reservations = Reservation.objects.filter(
+#             Q(property_id=property_id),
+#             Q(start_date__lte=start_date, end_date__gte=start_date) |
+#             Q(start_date__lte=end_date, end_date__gte=end_date) |
+#             Q(start_date__gte=start_date, end_date__lte=end_date),
+#             ~Q(status='cancelled')
+#         )
+#
+#         print(existing_reservations)
+#
+#         if existing_reservations:
+#             raise serializers.ValidationError(
+#                 'A reservation for this property already exists in the selected time frame.'
+#             )
+
 class ReservationCreateView(generics.CreateAPIView):
-    serializer_class = ReservationSerializer
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializerCreate
 
-    def perform_create(self, serializer):
-        # Set status to 'pending' before saving
-        serializer.save(status='pending_awaiting_confirmation')
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        # Check if there are any existing reservations for the property
-        # in the same time frame
-        property_id = serializer.validated_data['property'].id
+        # Extract the property, start_date, and end_date fields from the validated data
+        to_book_property = serializer.validated_data['to_book_property']
         start_date = serializer.validated_data['start_date']
         end_date = serializer.validated_data['end_date']
+
+        # Check if there are any existing reservations for the given date range
         existing_reservations = Reservation.objects.filter(
-            Q(property_id=property_id),
-            Q(start_date__lte=start_date, end_date__gte=start_date) |
-            Q(start_date__lte=end_date, end_date__gte=end_date) |
-            Q(start_date__gte=start_date, end_date__lte=end_date),
-            ~Q(status='cancelled')
+            to_book_property=to_book_property,
+            start_date__lte=end_date,
+            end_date__gte=start_date
         )
 
-        if existing_reservations:
-            raise serializers.ValidationError(
-                'A reservation for this property already exists in the selected time frame.'
+        if existing_reservations.exists():
+            # If there are existing reservations for the given date range, return an error response
+            return Response(
+                {"detail": f"A reservation for {to_book_property.name} already exists for the selected date range."},
+                status=status.HTTP_400_BAD_REQUEST
             )
+        else:
+            # If there are no existing reservations for the given date range, create a new reservation
+            self.perform_create(serializer)
+
+            # Serialize and return the new reservation with a success response
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class ReservationPagination(PageNumberPagination):
