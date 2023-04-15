@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function SetHoliday() {
+function SetHoliday(props) {
     const [isOpen, setIsOpen] = useState(false);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
@@ -38,9 +38,9 @@ function SetHoliday() {
     return (
         <>
             <button
-                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold rounded-full block overflow-auto py-2 px-4"
+                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-44 font-bold rounded-full block overflow-auto py-2 px-4"
                 onClick={toggleModal}>
-                Add Holiday Price
+                {props.text}
             </button>
             {isOpen && (
                 <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-10 modal">

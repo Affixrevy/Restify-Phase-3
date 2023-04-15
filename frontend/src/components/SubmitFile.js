@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 
-const SubmitFile = () => {
+const SubmitFile = (props) => {
+    const multiple = props.multiple;
     const [showModal, setShowModal] = useState(false);
     const [file, setFile] = useState(null);
 
@@ -29,17 +30,21 @@ const SubmitFile = () => {
     return (
         <div>
             <button
-                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold rounded-full block overflow-auto py-2 px-4"
+                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-44 font-bold rounded-full block overflow-auto py-2 px-4"
                 onClick={handleButtonClick}>
-                Add Thumbnail
+                {props.text}
             </button>
             {showModal && (
                 <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-100 flex items-center justify-center modal">
                     <div className="bg-white p-8 rounded-md">
-                        <h2 className="text-lg font-bold mb-4 text-black">Submit a Thumbnail</h2>
+                        <h2 className="text-lg font-bold mb-4 text-black">{props.title}</h2>
                         <form onSubmit={handleFormSubmit}>
                             <div className="mb-4 text-black">
-                                <input type="file" onChange={handleFileChange} />
+                                {multiple > 0 ? (
+                                    <input type="file" multiple onChange={handleFileChange} />
+                                ) : (
+                                    <input type="file" onChange={handleFileChange} />
+                                )}
                             </div>
                             <div className="grid grid-cols-2 gap-4 items-center">
                                 <button

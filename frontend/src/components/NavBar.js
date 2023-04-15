@@ -8,7 +8,7 @@ const NavBar = () => {
         { sender: "Harry" },
         { sender: "Arthur" },
         { sender: "Thomas" },
-        { sender: "Vanhid" }
+        { sender: "Vahid" }
     ];
 
     return (

@@ -13,7 +13,6 @@ const Listing = () => {
                             Create Listing
                         </div>
                         <div className="flex flex-col space-y-4 divide-y-2">
-
                             <div className="pt-4">
                                 <div className="relative mb-4">
                                     <input type="email" id="address"
@@ -40,9 +39,10 @@ const Listing = () => {
                                     </div>
                                 </div>
                                 <div className="flex justify-center items-center h-20">
-                                    <div className="grid grid-cols-2 gap-4 items-center">
-                                        <SetHoliday></SetHoliday>
-                                        <SubmitFile></SubmitFile>
+                                    <div className="grid grid-cols-3 gap-4 items-center">
+                                        <SetHoliday text="Add Holiday Price"></SetHoliday>
+                                        <SubmitFile multiple={0} text="Add Thumbnail" title="Submit a thumbnail"/>
+                                        <SubmitFile multiple={1} text="Add More Pictures" title="Submit multiple images for the listing"/>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@ const Listing = () => {
                                     </div>
                                     <div className="flex flex-col items-center justify-center">
                                         <button
-                                            className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold rounded-full">
+                                            className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full">
                                             <p className="block overflow-auto py-2 px-4">Confirm</p>
                                         </button>
                                     </div>

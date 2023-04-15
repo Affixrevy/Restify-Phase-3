@@ -1,5 +1,4 @@
 import React from 'react';
-import mansion from "../assets/img/mansion/mansion.webp";
 import { Link } from "react-router-dom";
 
 const PropertyCard = (props) => {
