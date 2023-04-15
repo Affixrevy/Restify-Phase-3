@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 import SubmitFile from "../components/SubmitFile";
 import SetHoliday from "../components/SetHoliday";
 
-const ModifyListing = (props) => {
+const ModifyProperty = (props) => {
     const navigate = useNavigate();
     const data = {
         address: "420 Awesome Avenue",
@@ -132,4 +132,4 @@ const ModifyListing = (props) => {
     );
 };
 
-export default ModifyListing;
+export default ModifyProperty;
