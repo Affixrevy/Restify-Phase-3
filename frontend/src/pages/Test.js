@@ -1,9 +1,9 @@
 import React from 'react';
-import ReservationCardOwner from "../components/ReservationCardOwner";
+import ReservationCardUser from "../components/ReservationCardUser.js";
 
 const Test = () => {
     return (
-        <ReservationCardOwner></ReservationCardOwner>
+        <ReservationCardUser></ReservationCardUser>
     );
 }
 

@@ -5,6 +5,7 @@ import image from "../assets/img/account.png";
 import { Link } from "react-router-dom";
 import img from "../assets/img/mansion/mansion.webp";
 import PropertyCard from "../components/PropertyCard";
+import ReservationCardUser from "../components/ReservationCardUser";
 
 const Profile = () => {
     const [activeTab, setActiveTab] = useState(1);
@@ -150,14 +151,13 @@ const Profile = () => {
                                 </button>
                             </Link>
                         </div>
-                        <main className="flex lg:mt-4 py-5 mx-auto w-full">
-                            <div className="grid lg:grid-cols-2 gap-4 w-full">
-                                {/*<PropertyCard></PropertyCard>*/}
-                                {/*<PropertyCard></PropertyCard>*/}
-                                {/*<PropertyCard></PropertyCard>*/}
-                                {/*<PropertyCard></PropertyCard>*/}
-                            </div>
-                        </main>
+                        <div className="flex flex-col items-center">
+                            <ReservationCardUser></ReservationCardUser>
+                            <ReservationCardUser></ReservationCardUser>
+                            <ReservationCardUser></ReservationCardUser>
+                            <ReservationCardUser></ReservationCardUser>
+                            <ReservationCardUser></ReservationCardUser>
+                        </div>
                     </div>
                 </div>
             )
