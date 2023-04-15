@@ -15,7 +15,7 @@ class ReservationSerializer(ModelSerializer):
         fields = [
             'user',
             'status',
-            'tp_book_property',
+            'to_book_property',
             'start_date',
             'end_date'
         ]

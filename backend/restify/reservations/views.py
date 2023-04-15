@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import get_user_model
 from .models import Reservation
 from properties.models.property import PropertyModel
@@ -83,15 +84,17 @@ class ReservationPagination(PageNumberPagination):
 class ReservationListView(generics.ListAPIView):
     serializer_class = ReservationSerializer
     pagination_class = ReservationPagination
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        user = self.request.user
         queryset = Reservation.objects.all()
 
         # Filter by user type - host or guest
-        user_type = self.request.query_params.get('user_type', None)
-        if user_type == 'host':
-            queryset = queryset.filter(property__owner=self.request.user)
-        elif user_type == 'guest':
+        request_type = self.kwargs.get('request_type', None)
+        if request_type == 'host':
+            queryset = queryset.filter(to_book_property__owner=self.request.user)
+        elif request_type == 'guest':
             queryset = queryset.filter(user=self.request.user)
 
         # Filter by reservation status
@@ -105,6 +108,7 @@ class ReservationListView(generics.ListAPIView):
 class ReservationUpdateView(generics.UpdateAPIView):
     queryset = Reservation.objects.filter(status='pending_awaiting_confirmation')
     serializer_class = ReservationSerializer
+    permission_classes = [IsAuthenticated]
 
     def patch(self, request, *args, **kwargs):
         reservation_id = kwargs.get('pk')
@@ -112,20 +116,49 @@ class ReservationUpdateView(generics.UpdateAPIView):
         owner = request.user
 
         if owner != reservation.property.owner:
-            return Response({'error': 'You are not authorized to perform this action.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': 'You are not authorized to perform this action.'},
+                            status=status.HTTP_403_FORBIDDEN)
 
-        status = request.data.get('status')
-        if status not in ('confirmed', 'denied'):
+        requested_status = request.data.get('status')
+        if requested_status not in ('confirmed', 'denied'):
             return Response({'error': 'Invalid status.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        reservation.status = status if status == 'confirmed' else 'terminated'
+        reservation.status = requested_status if requested_status == 'confirmed' else 'terminated'
         reservation.save()
         serializer = self.serializer_class(reservation)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data, status=requested_status.HTTP_200_OK)
+
+
+class ReservationTerminateView(generics.UpdateAPIView):
+    serializer_class = ReservationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        reservation = get_object_or_404(Reservation, id=self.kwargs.get('pk'))
+
+        # Check if the user making the request is the owner of the property
+        property_owner = reservation.property.owner
+        if request.user != property_owner:
+            return Response(
+                {'error': 'Only the owner of the property can terminate a reservation.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # Check if the reservation has already been cancelled or terminated
+        if reservation.status in ['cancelled', 'terminated']:
+            return Response(
+                {'error': 'This reservation has already been cancelled or terminated.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Update the status of the reservation to 'cancelled'
+        reservation.status = 'terminated'
+        reservation.save()
 
 
 class ReservationCancelView(generics.UpdateAPIView):
     serializer_class = ReservationSerializer
+    permission_classes = [IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         reservation = get_object_or_404(Reservation, id=self.kwargs.get('pk'))
@@ -154,6 +187,7 @@ class ReservationCancelView(generics.UpdateAPIView):
 
 class ReservationConfirmCancelView(generics.UpdateAPIView):
     serializer_class = ReservationSerializer
+    permission_classes = [IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         reservation = get_object_or_404(Reservation, id=self.kwargs.get('pk'))
@@ -194,6 +228,7 @@ class ReservationConfirmCancelView(generics.UpdateAPIView):
 
 class ReservationDenyCancelView(generics.UpdateAPIView):
     serializer_class = ReservationSerializer
+    permission_classes = [IsAuthenticated]
 
     def update(self, request, *args, **kwargs):
         reservation = get_object_or_404(Reservation, id=self.kwargs.get('pk'))

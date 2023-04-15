@@ -7,6 +7,7 @@ class Reservation(models.Model):
     STATUS_CHOICES = (
         ('pending_awaiting_confirmation', 'Pending - Awaiting Confirmation'),
         ('confirmed', 'Confirmed'),
+        ('expired', 'Expired'),
         ('cancelled_awaiting_confirmation', 'Cancelled - Awaiting Confirmation'),
         ('cancelled', 'Cancelled'),
         ('terminated', 'Terminated'),
