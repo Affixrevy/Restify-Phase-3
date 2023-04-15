@@ -16,6 +16,9 @@ function ImageGallery(props) {
     const [dataFetched, setDataFetched] = useState(false)
     const [imagesFetched, setImagesFetched] = useState(false)
 
+    // TODO: Mock data which needed to be changed later on when connecting the frontend and backend
+    const isOwner = false;
+
 
     useEffect(() => {
         async function fetchData() {
@@ -29,7 +32,7 @@ function ImageGallery(props) {
             const response = await fetch(`http://localhost:8000/properties/${page_id}/images/`)
             const responseData = await response.json()
             console.log("FETCH IMAGE")
-            const imageUrls = responseData.map(item => `http://localhost:8000/${item.image}`)
+            const imageUrls = responseData.map(item => `http://localhost:8000${item.image}`)
             setPropertyImages(imageUrls)
         }
 
@@ -191,13 +194,28 @@ function ImageGallery(props) {
                     <div
                         className="flex xl:justify-top xl:items-center xl:text-center text-left xl:pl-0 pl-4 flex-col"
                     >
-                        <Link to={"/modify-property"}>
-                            <button
-                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-4 my-5 rounded-full"
-                            >
-                                Edit
-                            </button>
-                        </Link>
+                        {isOwner ? (
+                            <Link to={"/modify-property"}>
+                                <button
+                                    className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-4 my-5 rounded-full"
+                                >
+                                    Edit
+                                </button>
+                            </Link>
+                        ) : (
+                            <div className="flex xl:justify-top xl:items-center xl:text-center text-left flex-col">
+                                <h1 className="text-FONT_COLOR_2 text-2xl dark:text-FONT_COLOR_1">
+                                    <b>$110 CAD</b> night
+                                </h1>
+                                <Link to={"/modify-property"}>
+                                    <button
+                                        className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-2 my-4 rounded-full"
+                                    >
+                                        Reserve
+                                    </button>
+                                </Link>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

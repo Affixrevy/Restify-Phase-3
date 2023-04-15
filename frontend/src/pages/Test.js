@@ -1,10 +1,9 @@
 import React from 'react';
+import ReservationCardOwner from "../components/ReservationCardOwner";
 
 const Test = () => {
     return (
-        <div>
-            hello
-        </div>
+        <ReservationCardOwner></ReservationCardOwner>
     );
 }
 

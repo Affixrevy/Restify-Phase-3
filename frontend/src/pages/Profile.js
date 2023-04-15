@@ -112,23 +112,23 @@ const Profile = () => {
                 </div>
             )
         },
-        {
-            title: "Comment",
-            content: (
-                <div className="mt-6 relative rounded-2xl bg-BACKGROUND_COLOR_2">
-                    <div
-                        role="tabpanel"
-                        id="panel-2"
-                        className="tab-panel p-6 transition duration-300 flex flex-col space-y-4 divide-y-2"
-                    >
-                        <h2 className="text-xl font-semibold text-FONT_COLOR_1">
-                            My Comments
-                        </h2>
-                        <p className="mt-4 text-FONT_COLOR_2">No Comments</p>
-                    </div>
-                </div>
-            )
-        },
+        // {
+        //     title: "Comment",
+        //     content: (
+        //         <div className="mt-6 relative rounded-2xl bg-BACKGROUND_COLOR_2">
+        //             <div
+        //                 role="tabpanel"
+        //                 id="panel-2"
+        //                 className="tab-panel p-6 transition duration-300 flex flex-col space-y-4 divide-y-2"
+        //             >
+        //                 <h2 className="text-xl font-semibold text-FONT_COLOR_1">
+        //                     My Comments
+        //                 </h2>
+        //                 <p className="mt-4 text-FONT_COLOR_2">No Comments</p>
+        //             </div>
+        //         </div>
+        //     )
+        // },
         {
             title: "Reservations",
             content: (
@@ -144,7 +144,7 @@ const Profile = () => {
                             </h2>
                             <Link to={"/"}>
                                 <button
-                                    className=" bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 rounded-full font-bold"
+                                    className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 rounded-full font-bold"
                                 >
                                     + Add
                                 </button>
@@ -167,7 +167,7 @@ const Profile = () => {
             content: (
                 <div
                     role="tabpanel"
-                    id="panel-4"
+                    id="panel-3"
                     className="tab-panel p-6 transition duration-300 flex flex-col space-y-4"
                 >
                     <h2 className="text-xl font-semibold text-FONT_COLOR_1">
@@ -176,11 +176,11 @@ const Profile = () => {
                     {listings.length > 0 ? (
                         <>
                             <button
-                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full mt-4"
+                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 rounded-full font-bold"
                             >
-                                <div className="block overflow-auto">Add Listing</div>
+                                <div className="block overflow-auto">+ Add</div>
                             </button>
-                            <main className="flex lg:mt-4 py-5 mx-auto w-full">
+                            <main className="flex lg:mt-4 py-3 mx-auto w-full">
                                 <div className="grid xl:grid-cols-2 gap-4 w-full">
                                     {listings.map(listing => (
                                         <PropertyCard key={listing.name} property={listing} url={"/manage-property"} color={1}/>
@@ -224,7 +224,7 @@ const Profile = () => {
                     <div
                         role="tablist"
                         aria-label="tabs"
-                        className="relative mx-auto h-12 grid grid-cols-4 items-center px-[3px] rounded-2xl bg-BACKGROUND_COLOR_2 overflow-hidden shadow-2xl shadow-900/20 transition"
+                        className="relative mx-auto h-12 grid grid-cols-3 items-center px-[3px] rounded-2xl bg-BACKGROUND_COLOR_2 overflow-hidden shadow-2xl shadow-900/20 transition"
                     >
                         {tabPanels.map((tabPanel, index) => (
                             <button
