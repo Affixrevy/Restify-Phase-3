@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import mansionImage from '../assets/img/mansion/mansion.webp';
 import livingImage from '../assets/img/mansion/living.webp';
@@ -7,16 +7,54 @@ import sunImage from '../assets/img/mansion/sun.webp';
 import washroomImage from '../assets/img/mansion/washroom.webp';
 import bedroomImage from '../assets/img/mansion/bedroom.webp';
 
-function ImageGallery() {
+function ImageGallery(props) {
+    const page_id = props.id
     const [slideIndex, setSlideIndex] = useState(1);
+    const [pageData, setPageData] = useState({})
+    const [propertyImages, setPropertyImages] = useState([])
+    const [dataFetched, setDataFetched] = useState(false)
+    const [imagesFetched, setImagesFetched] = useState(false)
+
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch(`http://localhost:8000/properties/select/${page_id}/`)
+            const responseData = await response.json()
+            console.log("FETCH DATA")
+            setPageData(responseData)
+        }
+
+        async function fetchImages() {
+            const response = await fetch(`http://localhost:8000/properties/${page_id}/images/`)
+            const responseData = await response.json()
+            console.log("FETCH IMAGE")
+            const imageUrls = responseData.map(item => `http://localhost:8000/${item.image}`)
+            setPropertyImages(imageUrls)
+        }
+
+        if (!dataFetched) {
+            fetchData().then(response => {
+                setDataFetched(true);
+            });
+        }
+
+        if (!imagesFetched) {
+            fetchImages().then(response => {
+                setImagesFetched(true);
+            });
+        }
+    }, [page_id])
+
+    console.log(pageData)
+    console.log(propertyImages)
 
     function plusSlides(n) {
         console.log(slideIndex)
 
-        if (n === 1 && slideIndex === 6) {
+        if (n === 1 && slideIndex === propertyImages.length + 1) {
             setSlideIndex(1);
         } else if (n === -1 && slideIndex === 1) {
-            setSlideIndex(6);
+            setSlideIndex(propertyImages.length + 1);
         } else {
             setSlideIndex(slideIndex + n);
         }
@@ -28,65 +66,37 @@ function ImageGallery() {
             <div className="container lg:w-4/6 rounded-2xl">
                 <div className="relative">
                     {/* Full-width images with number text */}
-                    <div className="mySlides" style={{ display: slideIndex === 1 ? "block" : "none" }}>
-                        <div className="numbertext">1 / 6</div>
+
+                    <div className="mySlides"
+                         style={{display: slideIndex === 1 ? "block" : "none"}}
+                         key={1}
+                    >
+                        <div className="numbertext">1 / {propertyImages.length + 1}</div>
                         <img
                             className="rounded-t-2xl"
-                            src={mansionImage}
-                            style={{ width: "100%" }}
+                            src={pageData.main_pic}
+                            style={{width: "100%"}}
                             alt={""}
                         />
                     </div>
 
-                    <div className="mySlides" style={{ display: slideIndex === 2 ? "block" : "none" }}>
-                        <div className="numbertext">2 / 6</div>
-                        <img
-                            className="rounded-t-2xl"
-                            src={livingImage}
-                            style={{ width: "100%" }}
-                            alt={""}
-                        />
-                    </div>
+                    {propertyImages.map((image, index) => {
+                        return (
+                            <div className="mySlides"
+                                 style={{display: slideIndex === index + 2 ? "block" : "none"}}
+                                 key={index + 2}
+                            >
+                                <div className="numbertext">{index + 2} / {propertyImages.length + 1}</div>
+                                <img
+                                    className="rounded-t-2xl"
+                                    src={image}
+                                    style={{width: "100%"}}
+                                    alt={""}
+                                />
+                            </div>
+                        )
+                    })}
 
-                    <div className="mySlides" style={{ display: slideIndex === 3 ? "block" : "none" }}>
-                        <div className="numbertext">3 / 6</div>
-                        <img
-                            className="rounded-t-2xl"
-                            src={kitchenImage}
-                            style={{ width: "100%" }}
-                            alt={""}
-                        />
-                    </div>
-
-                    <div className="mySlides" style={{ display: slideIndex === 4 ? "block" : "none" }}>
-                        <div className="numbertext">4 / 6</div>
-                        <img
-                            className="rounded-t-2xl"
-                            src={sunImage}
-                            style={{ width: "100%" }}
-                            alt={""}
-                        />
-                    </div>
-
-                    <div className="mySlides" style={{ display: slideIndex === 5 ? "block" : "none" }}>
-                        <div className="numbertext">5 / 6</div>
-                        <img
-                            className="rounded-t-2xl"
-                            src={washroomImage}
-                            style={{ width: "100%" }}
-                            alt={""}
-                        />
-                    </div>
-
-                    <div className="mySlides" style={{ display: slideIndex === 6 ? "block" : "none" }}>
-                        <div className="numbertext">6 / 6</div>
-                        <img
-                            className="rounded-t-2xl"
-                            src={bedroomImage}
-                            style={{ width: "100%" }}
-                            alt={""}
-                        />
-                    </div>
 
                     {/* Next and previous buttons */}
                     <p className="prev" onClick={() => plusSlides(-1)}>
@@ -105,9 +115,29 @@ function ImageGallery() {
                         <h5
                             className="mb-2 text-5xl font-bold tracking-tight dark:text-FONT_COLOR_1"
                         >
-                            Harry's Mansion
+                            {pageData.name}
                         </h5>
-                        <div className="flex mb-1">
+                        <div className="flex mb-3">
+                            <svg
+                                width="24"
+                                height="24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="mr-1 ml-0 pl-0 text-slate-400 dark:text-slate-500"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M18 11.034C18 14.897 12 19 12 19s-6-4.103-6-7.966C6 7.655 8.819 5 12 5s6 2.655 6 6.034Z"/>
+                                <path d="M14 11a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/>
+                            </svg>
+                            <h4 className="text-xs pt-1">
+                                {pageData.city}, {pageData.province}
+                            </h4>
+                        </div>
+                        <div className="flex mb-1 ml-0.5">
                             <svg
                                 aria-hidden="true"
                                 className="w-5 h-5 text-yellow-400"
@@ -131,36 +161,9 @@ function ImageGallery() {
                                 <p
                                     className="mb-3 font-normal text-FONT_COLOR_2 dark:text-FONT_COLOR_1"
                                 >
-                                    Hello look at this beautiful mansion that you can rent out for
-                                    an insane amount of money.
+                                    {pageData.description}
                                 </p>
-                                <p
-                                    className="mb-3 font-normal text-FONT_COLOR_2 dark:text-FONT_COLOR_1"
-                                >
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                    Dignissimos consectetur accusantium quae mollitia officia
-                                    quam, asperiores libero delectus nostrum! Sit omnis, sequi
-                                    ratione voluptates enim nesciunt doloremque asperiores qui
-                                    reiciendis fuga nemo quae eaque aliquid dolor repellat
-                                    assumenda facilis culpa quasi id et? Quaerat molestiae, et
-                                    voluptates ducimus facilis eos? Commodi nostrum alias ducimus
-                                    explicabo enim architecto magnam quasi. Deserunt nemo iure
-                                    dolores ex molestias magni ratione, quaerat, totam sunt,
-                                    itaque animi iusto earum! Ipsam quos iste nisi aperiam
-                                    asperiores nobis obcaecati, numquam error quod, adipisci nemo
-                                    consequatur incidunt facilis labore doloremque accusantium.
-                                    Officiis deserunt, quae iure consequuntur incidunt cupiditate
-                                </p>
-                                <p
-                                    className="mb-3 font-normal text-FONT_COLOR_2 dark:text-FONT_COLOR_1"
-                                >
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Debitis autem nesciunt quos explicabo iure, placeat commodi!
-                                    Enim iusto error qui praesentium eius aliquid porro deserunt
-                                    sunt eveniet aut placeat culpa fuga, id perspiciatis delectus
-                                    velit.
-                                </p>
-                                <hr className="my-3" />
+                                <hr className="my-3"/>
                                 <h2
                                     className="mb-2 text-3xl font-bold tracking-tight dark:text-FONT_COLOR_1"
                                 >
@@ -169,12 +172,9 @@ function ImageGallery() {
                                 <p
                                     className="mb-3 font-normal text-FONT_COLOR_2 dark:text-FONT_COLOR_1"
                                 >
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam
-                                    ad nobis cupiditate veniam inventore commodi eligendi illo,
-                                    perspiciatis accusantium consectetur distinctio id culpa
-                                    minima, in officia dolorum itaque repellendus? Rerum.
+                                    There are {pageData.num_beds} beds for {pageData.num_guests} guests.
                                 </p>
-                                <hr className="my-3" />
+                                <hr className="my-3"/>
                                 <h2
                                     className="mb-2 text-3xl font-bold tracking-tight dark:text-FONT_COLOR_1"
                                 >
@@ -183,13 +183,7 @@ function ImageGallery() {
                                 <p
                                     className="mb-3 font-normal text-FONT_COLOR_2 dark:text-FONT_COLOR_1"
                                 >
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Tempore repudiandae libero ipsam in fugit, quasi consectetur
-                                    accusamus assumenda id, quas impedit sapiente alias voluptas
-                                    hic. Cumque unde perspiciatis tempora, vitae expedita quia
-                                    vero necessitatibus earum corrupti voluptatem cupiditate
-                                    soluta libero. Error dolorum temporibus doloribus placeat
-                                    distinctio animi in odit dicta.
+                                    {pageData.amenities}
                                 </p>
                             </div>
                         </div>

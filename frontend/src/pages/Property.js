@@ -1,14 +1,18 @@
 import React from 'react';
 import ImageGallery from "../components/ImageGallery";
 import NavBar from "../components/NavBar";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import CommentBox from "../components/CommentBox";
 
 const Property = () => {
+
+    const { id } = useParams();
+    console.log(id)
+
     return (
-        <body className="h-screen bg-BACKGROUND_COLOR_1">
+        <div className="h-screen bg-BACKGROUND_COLOR_1">
             <NavBar></NavBar>
-            <ImageGallery></ImageGallery>
+            <ImageGallery id={id}></ImageGallery>
 
             <div className="flex flex-col items-center justify-center pb-10">
                 <div className="container lg:w-4/6 rounded-2xl bg-BACKGROUND_COLOR_2">
@@ -39,7 +43,7 @@ const Property = () => {
                     </div>
                 </div>
             </div>
-        </body>
+        </div>
     );
 };
 

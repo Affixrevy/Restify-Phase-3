@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -36,6 +36,19 @@ class DeletePropertyView(generics.DestroyAPIView):
 
     def get_object(self):
         return get_object_or_404(PropertyModel, pk=self.kwargs['pk'])
+
+
+class PropertyDetailView(generics.RetrieveAPIView):
+    queryset = PropertyModel.objects.all()
+    serializer_class = PropertySerializer
+
+    def get(self, request, *args, **kwargs):
+        try:
+            property_obj = self.get_object()
+            serializer = self.get_serializer(property_obj)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except PropertyModel.DoesNotExist:
+            return Response({'error': 'Property not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class PropertyFilterSet(FilterSet):
