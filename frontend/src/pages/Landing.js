@@ -54,7 +54,7 @@ class Landing extends React.Component {
                     >
                         <div className="grid lg:grid-cols-2 gap-4 w-full">
                             {this.state.items.map((item, index) => {
-                                return <PropertyCard key={index} property={item}></PropertyCard>
+                                return <PropertyCard key={index} property={item} url={`/property/${item.id}`} color={0}></PropertyCard>
                             })}
                         </div>
                     </InfiniteScroll>

@@ -6,6 +6,7 @@ import kitchenImage from '../assets/img/mansion/kitchen.webp';
 import sunImage from '../assets/img/mansion/sun.webp';
 import washroomImage from '../assets/img/mansion/washroom.webp';
 import bedroomImage from '../assets/img/mansion/bedroom.webp';
+import { Link } from "react-router-dom";
 
 function ImageGallery(props) {
     const page_id = props.id
@@ -49,8 +50,7 @@ function ImageGallery(props) {
     console.log(propertyImages)
 
     function plusSlides(n) {
-        console.log(slideIndex)
-
+        // console.log(slideIndex)
         if (n === 1 && slideIndex === propertyImages.length + 1) {
             setSlideIndex(1);
         } else if (n === -1 && slideIndex === 1) {
@@ -191,16 +191,13 @@ function ImageGallery(props) {
                     <div
                         className="flex xl:justify-top xl:items-center xl:text-center text-left xl:pl-0 pl-4 flex-col"
                     >
-                        <button
-                            className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-4 my-5 rounded-full"
-                        >
-                            Edit
-                        </button>
-                        <button
-                            className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-4 my-5 rounded-full"
-                        >
-                            Add information
-                        </button>
+                        <Link to={"/modify-property"}>
+                            <button
+                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-4 my-5 rounded-full"
+                            >
+                                Edit
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
