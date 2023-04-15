@@ -39,9 +39,11 @@ const ReservationCardOwner = (props) => {
                     </div>
                     </div>
                 <div className="flex flex-col items-center py-3">
-                    <button className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36">
-                        View Guest
-                    </button>
+                    <Link to={"/view-guest"}>
+                        <button className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36">
+                            View Guest
+                        </button>
+                    </Link>
                     {(chosen === "Pending awaiting confirmation" || chosen === "Cancelled awaiting confirmation") && (
                         <>
                             <button className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36">
