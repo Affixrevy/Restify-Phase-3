@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, status
 from rest_framework.parsers import FileUploadParser
@@ -81,9 +82,12 @@ class PropertyListView(generics.ListAPIView):
 
 class PropertyImageView(APIView):
     parser_class = (FileUploadParser,)
+    permission_classes = [IsAuthenticated]
 
     def put(self, request, property_id):
         property_obj = get_object_or_404(PropertyModel, pk=property_id)
+        if property_obj.owner != self.request.user:
+            raise PermissionDenied("You do not have permission to perform this action.")
         print(property_obj.name)
         request.data['property'] = property_obj.pk
         serializer = PropertyImageSerializer(data=request.data)
