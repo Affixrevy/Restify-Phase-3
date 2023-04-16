@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import NavBar from "../components/NavBar";
 import SubmitProfilePicture from "../components/SubmitProfilePicture";
 import image from "../assets/img/account.png";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import img from "../assets/img/mansion/mansion.webp";
 import PropertyCard from "../components/PropertyCard";
 import ReservationCardUser from "../components/ReservationCardUser";
@@ -40,6 +40,17 @@ const Profile = () => {
         },
     ];
 
+    const navigate = useNavigate();
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        // perform any additional logout tasks
+    };
+    const handleLogout = () => {
+        logout();
+        //TODO: Redirect to main page
+        navigate('/');
+    }
 
     const handleTabClick = (tabIndex) => {
         setActiveTab(tabIndex);
@@ -105,6 +116,7 @@ const Profile = () => {
                             </button>
                             <button
                                 className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-40 font-medium rounded-full text-xl"
+                                onClick={handleLogout}
                             >
                                 <p className="block overflow-auto">Logout</p>
                             </button>
@@ -185,7 +197,8 @@ const Profile = () => {
                             <main className="flex lg:mt-4 py-3 mx-auto w-full">
                                 <div className="grid xl:grid-cols-2 gap-4 w-full">
                                     {listings.map(listing => (
-                                        <PropertyCard key={listing.name} property={listing} url={"/manage-property"} color={1}/>
+                                        <PropertyCard key={listing.name} property={listing} url={"/manage-property"}
+                                                      color={1}/>
                                     ))}
                                 </div>
                             </main>
@@ -194,7 +207,8 @@ const Profile = () => {
                         <div>
                             <p className="mt-4 text-FONT_COLOR_2">
                                 This tab is for properties owners.
-                                <Link className="text-ACCENT_COLOR" to={"/listing"}> Create your listing today to become an
+                                <Link className="text-ACCENT_COLOR" to={"/listing"}> Create your listing today to become
+                                    an
                                     owner!</Link>
                             </p>
                         </div>
