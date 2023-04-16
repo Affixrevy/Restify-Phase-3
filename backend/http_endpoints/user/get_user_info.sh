@@ -13,5 +13,5 @@ echo $CURRENT_UID
 
 rm temp.json
 
-http GET http://localhost:8000/api/view/$CURRENT_UID \
+http GET http://localhost:8000/api/profile/ \
     "Authorization: Bearer $TOKEN"

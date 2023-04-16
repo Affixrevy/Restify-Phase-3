@@ -20,5 +20,5 @@ http PUT http://localhost:8000/api/update/profile/"$CURRENT_UID" \
     first_name="Spongebob" \
     last_name="Squarepants" \
     phone_num=1234567890 \
-    email="Squidward@underthesea.com" \
-    username="woah"
+    email="Squidward@underthesea.com"
+

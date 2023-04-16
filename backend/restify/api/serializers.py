@@ -70,7 +70,7 @@ class ProfileSerializer(ModelSerializer):
     class Meta:
         User = get_user_model()
         model = User
-        fields = ['first_name', 'last_name', 'username', 'avatar', 'phone_num', 'email', 'birth_date', ]
+        fields = ['first_name', 'last_name', 'username', 'avatar', 'phone_num', 'email', 'birth_date', 'id', ]
 
     def update(self, instance, validated_data):
         if 'first_name' in validated_data:

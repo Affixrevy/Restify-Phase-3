@@ -23,9 +23,9 @@ const Profile = () => {
             const responseData = await response.json()
 
             console.log("FETCH DATA")
-            // console.log(responseData)
+            console.log(responseData)
 
-            responseData.email = maskEmail(responseData.email)
+            // responseData.email = maskEmail(responseData.email)
 
             setUserProfile(responseData)
         }
@@ -132,8 +132,9 @@ const Profile = () => {
                                 </div>
                             </div>
                         </div>
+
                         <div className="flex mt-6 pt-6 items-center justify-center space-x-10">
-                            <Link to="/edit-profile">
+                            <Link to={`/edit-profile/${userProfile.id}`}>
                                 <button
                                     className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-40 font-medium rounded-full text-xl"
                                 >

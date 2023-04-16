@@ -23,7 +23,7 @@ function App() {
           <Route path="/profile" element={<Profile />}/>
           <Route path="/property/:id" element={<Property />}/>
           <Route path="/reservation" element={<Reservation />}/>
-          <Route path="/edit-profile" element={<EditProfile />}/>
+          <Route path="/edit-profile/:id" element={<EditProfile />}/>
           <Route path="/modify-property" element={<ModifyProperty />}/>
           <Route path="/manage-property/:id" element={<ManageProperty />}/>
           <Route path="view-guest" element={<ViewGuest />}/>
