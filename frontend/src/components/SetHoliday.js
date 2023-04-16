@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useState} from 'react';
 
 function SetHoliday(props) {
     const [isOpen, setIsOpen] = useState(false);
@@ -89,7 +89,9 @@ function SetHoliday(props) {
                             >
                                 Cancel
                             </button>
-                            <button className="bg-ACCENT_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-24 font-bold rounded-full block overflow-auto py-2 px-4" onClick={handleSubmit}>
+                            <button
+                                className="bg-ACCENT_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-24 font-bold rounded-full block overflow-auto py-2 px-4"
+                                onClick={handleSubmit}>
                                 Save
                             </button>
                         </div>

@@ -24,6 +24,7 @@ const SubmitFile = (props) => {
         event.preventDefault();
         console.log(file);
         // TODO: Handle file upload logic here
+        props.onFileSubmit(file);
         handleCloseModal();
     };
 
