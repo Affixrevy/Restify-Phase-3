@@ -47,17 +47,17 @@ const Property = () => {
                     <div className="flex flex-col justify-between items-left text-left p-4 leading-normal">
                         <div className="grid grid-cols-5 flex-row w-100">
                             <div className="xl:col-span-4 col-span-5">
-                                <h5 className="mb-4 text-5xl font-bold tracking-tight text-FONT_COLOR_1 dark:text-FONT_COLOR_1">
+                                <h5 className="mb-4 text-4xl font-bold tracking-tight text-FONT_COLOR_1 dark:text-FONT_COLOR_1">
                                     Comments
                                 </h5>
                             </div>
-                            <div className="xl:col-span-1 col-span-5">
-                                <button
-                                    className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-4 mb-4 rounded-full col-span-1"
-                                    onClick={() => setShowCommentBox(!showCommentBox)}
-                                >
-                                    Comment
-                                </button>
+                            <button
+                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-30 font-bold py-2 px-4 mb-4 rounded-full col-span-1"
+                                onClick={() => setShowCommentBox(!showCommentBox)}
+                            >
+                                + Add
+                            </button>
+                            <div className="col-span-5">
                                 {showCommentBox && (
                                     <div className="mt-2">
                                         <textarea

@@ -28,6 +28,7 @@ function App() {
           <Route path="/manage-property/:id" element={<ManageProperty />}/>
           <Route path="view-guest" element={<ViewGuest />}/>
           <Route path="/listing" element={<Listing />}/>
+          {/*TODO: This route is a test route for me pls remove whenever we're done*/}
           <Route path="/test" element={<Test />}/>
       </Routes>
     );
