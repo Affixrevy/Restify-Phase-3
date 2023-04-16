@@ -1,9 +1,10 @@
 import React from 'react';
-import ReservationCardUser from "../components/ReservationCardUser.js";
+import { useState } from 'react';
+import PopUpConfirm from "../components/PopUpConfirm";
 
 const Test = () => {
     return (
-        <ReservationCardUser></ReservationCardUser>
+        <PopUpConfirm text={"Are you sure hhahahahahah?"}></PopUpConfirm>
     );
 }
 

@@ -175,11 +175,13 @@ const Profile = () => {
                     </h2>
                     {listings.length > 0 ? (
                         <>
-                            <button
-                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 rounded-full font-bold"
-                            >
-                                <div className="block overflow-auto">+ Add</div>
-                            </button>
+                            <Link to={"/listing"}>
+                                <button
+                                    className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 rounded-full font-bold"
+                                >
+                                    <div className="block overflow-auto">+ Add</div>
+                                </button>
+                            </Link>
                             <main className="flex lg:mt-4 py-3 mx-auto w-full">
                                 <div className="grid xl:grid-cols-2 gap-4 w-full">
                                     {listings.map(listing => (
@@ -195,19 +197,6 @@ const Profile = () => {
                                 <Link className="text-ACCENT_COLOR" to={"/listing"}> Create your listing today to become an
                                     owner!</Link>
                             </p>
-                            <button
-                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full mt-4"
-                            >
-                                <div className="block overflow-auto">Add Listing</div>
-                            </button>
-                            <main className="flex lg:mt-4 py-5 mx-auto w-full">
-                                <div className="grid lg:grid-cols-2 gap-4 w-full">
-                                    {/*<PropertyCard></PropertyCard>*/}
-                                    {/*<PropertyCard></PropertyCard>*/}
-                                    {/*<PropertyCard></PropertyCard>*/}
-                                    {/*<PropertyCard></PropertyCard>*/}
-                                </div>
-                            </main>
                         </div>
                     )}
                 </div>

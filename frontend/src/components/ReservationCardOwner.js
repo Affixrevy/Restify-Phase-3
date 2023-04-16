@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import PopUpConfirm from "./PopUpConfirm";
 
 const ReservationCardOwner = (props) => {
     const currentDate = new Date();
@@ -41,25 +42,22 @@ const ReservationCardOwner = (props) => {
                 <div className="flex flex-col items-center py-3">
                     <Link to={"/view-guest"}>
                         <button className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36">
-                            View Guest
+                            Comment
                         </button>
                     </Link>
                     {(chosen === "Pending awaiting confirmation" || chosen === "Cancelled awaiting confirmation") && (
                         <>
-                            <button className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36">
-                                Confirm
-                            </button>
-                            <button className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded md:w-36">
-                                Deny
-                            </button>
+                            <PopUpConfirm title={"Are you sure that you want to confirm this booking?"} text={"Confirm"}>
+                            </PopUpConfirm>
+                            <PopUpConfirm title={"Are you sure that you want to deny this booking?"} text={"Deny"}>
+                            </PopUpConfirm>
                         </>
                     )}
 
                     {chosen === "Confirmed" && (
                         <>
-                            <button className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36">
-                                Terminate
-                            </button>
+                            <PopUpConfirm title={"Are you sure that you want to terminate this booking?"} text={"Terminate"}>
+                            </PopUpConfirm>
                         </>
                     )}
                 </div>

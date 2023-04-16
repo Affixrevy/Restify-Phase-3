@@ -38,7 +38,7 @@ const ReservationCardUser = () => {
                             View Property
                         </button>
                     </Link>
-                    <button className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36">
+                    <button className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36 mt-2">
                         Cancel
                     </button>
                 </div>

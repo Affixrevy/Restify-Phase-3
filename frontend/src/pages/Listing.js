@@ -1,9 +1,20 @@
 import NavBar from "../components/NavBar";
 import SubmitFile from "../components/SubmitFile";
 import SetHoliday from "../components/SetHoliday";
-import {useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const Listing = () => {
+    const navigate = useNavigate();
+
+    const handleCancel = () => {
+        // Navigate back to the previous page
+        navigate(-1);
+    };
+
+    const handleConfirm = () => {
+        // TODO: Implement the logic for confirming the modification here
+        console.log("Confirm modification");
+    };
 
     return (
         <div className="h-screen bg-BACKGROUND_COLOR_1">
@@ -90,13 +101,17 @@ const Listing = () => {
                                 <div className="flex flex-row justify-center space-x-4">
                                     <div className="flex flex-col items-start">
                                         <button
-                                            className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full">
-                                            <p className="block overflow-auto py-2 px-4">Cancel</p>
+                                            className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full"
+                                            onClick={handleCancel}
+                                        >
+                                            <p className="block overflow-auto py-2 px-4" >Cancel</p>
                                         </button>
                                     </div>
                                     <div className="flex flex-col items-center justify-center">
                                         <button
-                                            className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full">
+                                            className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full"
+                                            onClick={handleConfirm}
+                                        >
                                             <p className="block overflow-auto py-2 px-4">Confirm</p>
                                         </button>
                                     </div>

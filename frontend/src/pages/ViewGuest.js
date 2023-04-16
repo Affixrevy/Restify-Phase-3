@@ -42,13 +42,13 @@ const ViewGuest = () => {
                                     Comments
                                 </h5>
                             </div>
-                            <div className="xl:col-span-1 col-span-5">
                                 <button
-                                    className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-40 font-bold py-2 px-4 mb-4 rounded-full col-span-1"
+                                    className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-30 font-bold py-2 px-4 mb-4 rounded-full col-span-1"
                                     onClick={() => setShowCommentBox(!showCommentBox)}
                                 >
-                                    Comment
+                                    + Add
                                 </button>
+                            <div className="col-span-5">
                                 {showCommentBox && (
                                     <div className="mt-2">
                                         <textarea
