@@ -46,7 +46,7 @@ class Landing extends React.Component {
                         hasMore={this.state.hasMore}
                         loader={<h4 className="text-FONT_COLOR_2">Loading...</h4>}
                         dataLength={this.state.items.length}
-                        scrollThreshold={0.8}
+                        scrollThreshold={0.9}
                         scrollableTarget="window"
                         endMessage={<p className="mt-2 p-2 text-FONT_COLOR_2 text-sm text-center justify-center">
                                         No more properties to load

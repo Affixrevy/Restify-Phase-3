@@ -216,7 +216,7 @@ function ImageGallery(props) {
                                 <h1 className="text-FONT_COLOR_2 text-2xl dark:text-FONT_COLOR_1">
                                     <b>$110 CAD</b> night
                                 </h1>
-                                <Link to={"/modify-property"}>
+                                <Link to={"/reservation"}>
                                     <button
                                         className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-2 my-4 rounded-full"
                                     >

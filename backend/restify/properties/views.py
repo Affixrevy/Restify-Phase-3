@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404
 from rest_framework import generics, status
@@ -5,8 +6,8 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import PropertySerializer, PropertyImageSerializer
-from .models.property import PropertyModel, PropertyImage
+from .serializers import PropertySerializer, PropertyImageSerializer, DailyPriceSerializer
+from .models.property import PropertyModel, PropertyImage, DailyPrice
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet, DateFilter, NumberFilter
@@ -104,3 +105,72 @@ class PropertyImageListView(APIView):
         property_images = PropertyImage.objects.filter(property=property_obj)
         serializer = PropertyImageSerializer(property_images, many=True)
         return Response(serializer.data)
+
+
+class DailyPriceView(APIView):
+
+    def post(self, request, property_id, start_date_str, end_date_str):
+        permission_classes = [IsAuthenticated]
+        try:
+            # Retrieve the property and verify that the current user is the owner
+            to_rent_property = PropertyModel.objects.get(pk=property_id)
+            if request.user != to_rent_property.owner:
+                return Response({'error': 'You are not the owner of this property.'},
+                                status=status.HTTP_401_UNAUTHORIZED)
+
+            # Parse the start and end dates from the URL parameters
+            start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+
+            # Parse the price from the request body
+            price = request.data.get('price')
+            if price is None:
+                return Response({'error': 'Price is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Create the daily price objects and save them to the database
+            daily_prices = []
+            delta = timedelta(days=1)
+            current_date = start_date
+            while current_date <= end_date:
+                daily_price = DailyPrice(property=to_rent_property, date=current_date, price=price)
+                daily_prices.append(daily_price)
+                current_date += delta
+            DailyPrice.objects.bulk_create(daily_prices)
+
+            # Serialize the daily price objects and return the response
+            serializer = DailyPriceSerializer(daily_prices, many=True)
+            return Response(serializer.data)
+        except (PropertyModel.DoesNotExist, ValueError) as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, property_id, date_str):
+        try:
+            to_rent_property = PropertyModel.objects.get(pk=property_id)
+            date = datetime.strptime(date_str, '%Y-%m-%d').date()
+            daily_price = DailyPrice.objects.get(property=to_rent_property, date=date)
+            serializer = DailyPriceSerializer(daily_price, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data)
+            return Response(serializer.errors, status=400)
+        except (PropertyModel.DoesNotExist, ValueError, DailyPrice.DoesNotExist) as e:
+            return Response({'error': str(e)}, status=400)
+
+    def get(self, request, property_id, start_date_str, end_date_str):
+        try:
+            to_rent_property = PropertyModel.objects.get(pk=property_id)
+            start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date() - timedelta(days=1)
+            date_range = [start_date + timedelta(days=x) for x in range((end_date - start_date).days + 1)]
+            print(date_range)
+            total_price = 0
+            for date in date_range:
+                try:
+                    daily_price = DailyPrice.objects.get(property=to_rent_property, date=date)
+                    total_price += daily_price.price
+                except DailyPrice.DoesNotExist:
+                    total_price += to_rent_property.price
+
+            return Response({'price': total_price})
+        except (PropertyModel.DoesNotExist, ValueError) as e:
+            return Response({'error': str(e)}, status=400)

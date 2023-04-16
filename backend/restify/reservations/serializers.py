@@ -45,6 +45,7 @@ class ReservationSerializerCreate(serializers.ModelSerializer):
             'status',
             'to_book_property',
             'start_date',
+            'num_guests',
             'end_date'
         ]
 
@@ -53,6 +54,7 @@ class ReservationSerializerCreate(serializers.ModelSerializer):
         to_rent_property = validated_data['to_book_property']
         start_date = validated_data['start_date']
         end_date = validated_data['end_date']
+        request_num_guests = validated_data['num_guests']
 
         # Check if there are any existing reservations for the given date range
         existing_reservations = Reservation.objects.filter(
@@ -66,6 +68,11 @@ class ReservationSerializerCreate(serializers.ModelSerializer):
             # If there are existing reservations for the given date range, raise a validation error
             raise serializers.ValidationError(
                 f"A reservation for {to_rent_property.name} already exists for the selected date range."
+            )
+        elif to_rent_property.num_guests < request_num_guests:
+            raise serializers.ValidationError(
+                f'{to_rent_property.name} can house {to_rent_property.num_guests} guests. '
+                f'Requested {request_num_guests} > {to_rent_property.num_guests}.'
             )
         else:
             # If there are no existing reservations for the given date range, create a new reservation
