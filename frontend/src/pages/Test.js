@@ -1,10 +1,10 @@
 import React from 'react';
+import { useState } from 'react';
+import PopUpConfirm from "../components/PopUpConfirm";
 
 const Test = () => {
     return (
-        <div>
-            hello
-        </div>
+        <PopUpConfirm text={"Are you sure hhahahahahah?"}></PopUpConfirm>
     );
 }
 

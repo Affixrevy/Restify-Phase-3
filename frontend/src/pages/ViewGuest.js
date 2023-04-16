@@ -1,14 +1,8 @@
-import React, { useState } from 'react';
-import ImageGallery from "../components/ImageGallery";
+import React, {useState} from 'react';
 import NavBar from "../components/NavBar";
-import { useParams } from "react-router-dom";
-
 import CommentBox from "../components/CommentBox";
 
-const Property = () => {
-
-    const { id } = useParams();
-
+const ViewGuest = () => {
     const username = "Harry Duong";
     const username1 = 'Joe Mama';
     const username2 = 'Harry Potter';
@@ -21,7 +15,6 @@ const Property = () => {
         "                cupiditate veniam inventore commodi eligendi illo, perspiciatis\n" +
         "                accusantium consectetur distinctio id culpa minima, in officia dolorum\n" +
         "                itaque repellendus? Rerum."
-
     const [comments, setComments] = useState([
         { username: username1, content: content },
         { username: username2, content: content_special },
@@ -38,11 +31,9 @@ const Property = () => {
     };
 
     return (
-        <div className="h-screen bg-BACKGROUND_COLOR_1">
-            <NavBar />
-            <ImageGallery id={id} />
-
-            <div className="flex flex-col items-center justify-center pb-10">
+        <>
+            <NavBar></NavBar>
+            <div className="flex flex-col items-center justify-center py-10">
                 <div className="container lg:w-4/6 rounded-2xl bg-BACKGROUND_COLOR_2">
                     <div className="flex flex-col justify-between items-left text-left p-4 leading-normal">
                         <div className="grid grid-cols-5 flex-row w-100">
@@ -51,12 +42,12 @@ const Property = () => {
                                     Comments
                                 </h5>
                             </div>
-                            <button
-                                className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-30 font-bold py-2 px-4 mb-4 rounded-full col-span-1"
-                                onClick={() => setShowCommentBox(!showCommentBox)}
-                            >
-                                + Add
-                            </button>
+                                <button
+                                    className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-30 font-bold py-2 px-4 mb-4 rounded-full col-span-1"
+                                    onClick={() => setShowCommentBox(!showCommentBox)}
+                                >
+                                    + Add
+                                </button>
                             <div className="col-span-5">
                                 {showCommentBox && (
                                     <div className="mt-2">
@@ -82,8 +73,8 @@ const Property = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
-};
+}
 
-export default Property;
+export default ViewGuest;
