@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import NavBar from "../components/NavBar";
 import SubmitProfilePicture from "../components/SubmitProfilePicture";
 import image from "../assets/img/account.png";
@@ -9,6 +9,37 @@ import ReservationCardUser from "../components/ReservationCardUser";
 
 const Profile = () => {
     const [activeTab, setActiveTab] = useState(1);
+
+    const [userProfile, setUserProfile] = useState({});
+
+    useEffect(() => {
+        async function fetchData() {
+            const token = localStorage.getItem('token');
+            const response = await fetch(`http://localhost:8000/api/profile/`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            const responseData = await response.json()
+
+            console.log("FETCH DATA")
+            // console.log(responseData)
+
+            responseData.email = maskEmail(responseData.email)
+
+            setUserProfile(responseData)
+        }
+
+        fetchData().then(r => {
+        })
+    }, [])
+
+    function maskEmail(email) {
+        const [name, domain] = email.split('@')
+        const maskedName = `${name.slice(0, 2)}${'*'.repeat(name.length - 2)}`
+        return `${maskedName}@${domain}`
+    }
+
     const listings = [
         {
             main_pic: img,
@@ -95,9 +126,9 @@ const Profile = () => {
                                     <p>Email:</p>
                                 </div>
                                 <div className="flex flex-col space-y-2 relative">
-                                    <p>Potato</p>
-                                    <p>Tomato</p>
-                                    <p>t***o@mayo.com</p>
+                                    <p>{userProfile.first_name}</p>
+                                    <p>{userProfile.last_name}</p>
+                                    <p>{userProfile.email}</p>
                                 </div>
                             </div>
                         </div>

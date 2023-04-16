@@ -1,6 +1,6 @@
 from rest_framework.generics import CreateAPIView, UpdateAPIView, RetrieveAPIView
 
-from .serializers import UserSerializer, PasswordSerializer, ProfileSerializer
+from .serializers import UserSerializer, PasswordSerializer, ProfileSerializer, PublicUserSerializer
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
@@ -30,15 +30,17 @@ class UpdateProfileView(RetrieveAPIView, UpdateAPIView):
 
 
 class ViewUser(generics.RetrieveAPIView):
-    queryset = get_user_model().objects.all()
     serializer_class = ProfileSerializer
     permission_classes = [IsAuthenticated]
 
-    def get(self, request, *args, **kwargs):
-        user_id = kwargs.get('user_id')
-        user = self.get_object()
-        serializer = self.get_serializer(user)
-        return Response(serializer.data)
+    def get_object(self):
+        return self.request.user
+
+
+class PublicUserRetrieveAPIView(RetrieveAPIView):
+    queryset = get_user_model().objects.all()
+    serializer_class = PublicUserSerializer
+    lookup_field = 'pk'
 
 
 class CurrentUserUID(APIView):

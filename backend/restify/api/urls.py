@@ -4,7 +4,8 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView
 )
-from .views import CreateUserView, UpdatePasswordView, UpdateProfileView, ViewUser, CurrentUserUID
+from .views import CreateUserView, UpdatePasswordView, UpdateProfileView, ViewUser, CurrentUserUID, \
+    PublicUserRetrieveAPIView
 
 app_name = "api"
 
@@ -15,7 +16,8 @@ urlpatterns = [
     path('register/', CreateUserView.as_view(), name='create'),
     path('update/password/<int:pk>', UpdatePasswordView.as_view(), name='update'),
     path('update/profile/<int:pk>', UpdateProfileView.as_view(), name='profile'),
-    path('view/<int:pk>', ViewUser.as_view(), name='view_user'),
+    path('profile/', ViewUser.as_view(), name='view_user'),
+    path('users/<int:pk>/', PublicUserRetrieveAPIView.as_view(), name='public_user_detail'),
     path('currentuid/', CurrentUserUID.as_view(), name='current_user_uid'),
     # path('logout', )
 ]

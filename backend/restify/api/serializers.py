@@ -27,6 +27,14 @@ class UserSerializer(ModelSerializer):
         return user
 
 
+class PublicUserSerializer(ModelSerializer):
+
+    class Meta:
+        User = get_user_model()
+        model = User
+        fields = ['first_name', 'last_name']
+
+
 class PasswordSerializer(ModelSerializer):
     password2 = CharField(write_only=True, required=True)
     old_password = CharField(write_only=True, required=True)

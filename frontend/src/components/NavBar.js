@@ -13,7 +13,7 @@ const NavBar = () => {
 
     const isLoggedIn = () => {
         const token = localStorage.getItem('token');
-        console.log(token)
+        // console.log(token)
         return token !== null;
     };
 
