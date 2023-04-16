@@ -47,17 +47,17 @@ http --form POST http://localhost:8000/properties/create/ \
     start_date="2023-01-01" \
     end_date="2024-01-01" \
     amenities="Everything you could ever wish for" \
-    description="Welcome to Arthur's Mansion, a luxurious Restify property that will exceed all of your expectations and transport you to a world of unparalleled comfort and style.\n\n
+    description="Welcome to Arthur's Mansion, a luxurious Restify property that will exceed all of your expectations and transport you to a world of unparalleled comfort and style.\n
 
-Located in the heart of a vibrant city, Arthur's Mansion is a stunning architectural masterpiece that boasts sweeping views of the skyline and is surrounded by lush gardens and sprawling lawns. From the moment you arrive, you'll be greeted by the elegant facade of this grand estate, which hints at the opulent interiors that await you inside.\n\n
+Located in the heart of a vibrant city, Arthur's Mansion is a stunning architectural masterpiece that boasts sweeping views of the skyline and is surrounded by lush gardens and sprawling lawns. From the moment you arrive, you'll be greeted by the elegant facade of this grand estate, which hints at the opulent interiors that await you inside.\n
 
-As you step through the front door, you'll be awed by the sheer scale and beauty of the space. The foyer is illuminated by a dazzling chandelier and features a dramatic staircase that leads up to the second floor. The living room is a masterpiece of design, with soaring ceilings, intricate moldings, and sumptuous furnishings that invite you to sink in and relax.\n\n
+As you step through the front door, you'll be awed by the sheer scale and beauty of the space. The foyer is illuminated by a dazzling chandelier and features a dramatic staircase that leads up to the second floor. The living room is a masterpiece of design, with soaring ceilings, intricate moldings, and sumptuous furnishings that invite you to sink in and relax.\n
 
-Arthur's Mansion has nine exquisitely appointed bedrooms, each with its own distinctive style and charm. The master suite is a sanctuary of luxury, with a king-sized bed, a spacious sitting area, and a private balcony that overlooks the lush gardens. The other bedrooms are just as inviting, with plush bedding, comfortable seating areas, and breathtaking views of the city.\n\n
+Arthur's Mansion has nine exquisitely appointed bedrooms, each with its own distinctive style and charm. The master suite is a sanctuary of luxury, with a king-sized bed, a spacious sitting area, and a private balcony that overlooks the lush gardens. The other bedrooms are just as inviting, with plush bedding, comfortable seating areas, and breathtaking views of the city.\n
 
-The gourmet kitchen is a chef's dream, with top-of-the-line appliances, a large center island, and ample counter space for preparing meals. The adjacent dining room is an elegant space, perfect for hosting formal dinners or casual gatherings with friends and family.\n\n
+The gourmet kitchen is a chef's dream, with top-of-the-line appliances, a large center island, and ample counter space for preparing meals. The adjacent dining room is an elegant space, perfect for hosting formal dinners or casual gatherings with friends and family.\n
 
-Outside, the grounds are equally impressive. You can relax by the sparkling pool, soak in the hot tub, or enjoy a game of tennis on the private court. There's also a spacious patio area with plenty of seating, perfect for al fresco dining or evening cocktails under the stars.\n\n
+Outside, the grounds are equally impressive. You can relax by the sparkling pool, soak in the hot tub, or enjoy a game of tennis on the private court. There's also a spacious patio area with plenty of seating, perfect for al fresco dining or evening cocktails under the stars.\n
 
 Arthur's Mansion is the perfect destination for those seeking the ultimate in luxury and sophistication. With its impeccable design, breathtaking views, and endless amenities, this property will leave you feeling pampered, rejuvenated, and completely enchanted. Book your stay today and experience the magic of Arthur's Mansion for yourself." \
     num_guests=18 \
@@ -74,9 +74,17 @@ http --form POST http://localhost:8000/properties/create/ \
     province="FL" \
     country="USA" \
     start_date="2023-06-01" \
-    end_date="2023-06-07" \
+    end_date="2023-12-07" \
     amenities="Private beach access, swimming pool, jacuzzi, tennis court" \
-    description="Luxury villa with breathtaking views of the ocean" \
+    description="Experience the ultimate in luxury and relaxation at this beachfront villa located at 123 Ocean Drive, in Miami, Florida, USA. Imagine waking up to the sound of the waves gently lapping against the shore, stepping outside onto your private beach access, and feeling the soft sand between your toes as the sun warms your face.\n
+
+This inviting villa is perfect for a group or family vacation, with four spacious bedrooms and four bathrooms, comfortably accommodating up to eight guests. The villa is well-appointed with luxurious amenities such as a swimming pool, a jacuzzi, and a tennis court, all of which are sure to provide you with endless hours of entertainment and relaxation.\n
+
+Take a refreshing swim in the pool, relax in the jacuzzi, or challenge your friends or family to a game of tennis on the private court. The villa is also equipped with private beach access, so you can enjoy the beauty of the ocean at any time.\n
+
+With breathtaking views of the ocean, this villa is an ideal spot for guests who want to indulge in the beauty of nature while enjoying the comfort of modern amenities. The description provided indicates that the villa is a perfect getaway spot for guests who want to unwind and rejuvenate in a serene and tranquil environment.\n
+
+Book now and get ready to make unforgettable memories that you will cherish forever at this inviting beachfront villa in Miami." \
     num_guests=8 \
     num_beds=4 \
     num_baths=4 \

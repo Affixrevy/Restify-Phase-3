@@ -17,7 +17,8 @@ class ReservationSerializer(ModelSerializer):
             'status',
             'to_book_property',
             'start_date',
-            'end_date'
+            'end_date',
+            'id'
         ]
 
 
@@ -57,6 +58,8 @@ class ReservationSerializerCreate(serializers.ModelSerializer):
         existing_reservations = Reservation.objects.filter(
             Q(to_book_property=to_rent_property) &
             (Q(start_date__range=[start_date, end_date]) | Q(end_date__range=[start_date, end_date]))
+        ).exclude(
+            Q(status='terminated') | Q(status='cancelled')
         )
 
         if existing_reservations.exists():

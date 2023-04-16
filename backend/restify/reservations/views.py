@@ -60,6 +60,8 @@ class ReservationCreateView(generics.CreateAPIView):
             to_book_property=to_book_property,
             start_date__lte=end_date,
             end_date__gte=start_date
+        ).exclude(
+            Q(status='terminated') | Q(status='cancelled')
         )
 
         if existing_reservations.exists():
@@ -115,7 +117,7 @@ class ReservationUpdateView(generics.UpdateAPIView):
         reservation = self.get_object()
         owner = request.user
 
-        if owner != reservation.property.owner:
+        if owner != reservation.to_book_property.owner:
             return Response({'error': 'You are not authorized to perform this action.'},
                             status=status.HTTP_403_FORBIDDEN)
 
@@ -126,7 +128,7 @@ class ReservationUpdateView(generics.UpdateAPIView):
         reservation.status = requested_status if requested_status == 'confirmed' else 'terminated'
         reservation.save()
         serializer = self.serializer_class(reservation)
-        return Response(serializer.data, status=requested_status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ReservationTerminateView(generics.UpdateAPIView):
@@ -137,7 +139,7 @@ class ReservationTerminateView(generics.UpdateAPIView):
         reservation = get_object_or_404(Reservation, id=self.kwargs.get('pk'))
 
         # Check if the user making the request is the owner of the property
-        property_owner = reservation.property.owner
+        property_owner = reservation.to_book_property.owner
         if request.user != property_owner:
             return Response(
                 {'error': 'Only the owner of the property can terminate a reservation.'},
@@ -154,6 +156,9 @@ class ReservationTerminateView(generics.UpdateAPIView):
         # Update the status of the reservation to 'cancelled'
         reservation.status = 'terminated'
         reservation.save()
+
+        serializer = self.get_serializer(reservation)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ReservationCancelView(generics.UpdateAPIView):
@@ -193,7 +198,7 @@ class ReservationConfirmCancelView(generics.UpdateAPIView):
         reservation = get_object_or_404(Reservation, id=self.kwargs.get('pk'))
 
         # Check if the user making the request is the owner of the property
-        property_owner = reservation.property.owner
+        property_owner = reservation.to_book_property.owner
         if request.user != property_owner:
             return Response(
                 {'error': 'Only the owner of the property can confirm the cancellation of a reservation.'},
@@ -219,8 +224,8 @@ class ReservationConfirmCancelView(generics.UpdateAPIView):
         reservation.save()
 
         # Update the availability of the property for the cancelled reservation's date range
-        reservation_property = reservation.property
-        reservation_property.update_availability(reservation.start_date, reservation.end_date)
+        # reservation_property = reservation.to_book_property
+        # reservation_property.update_availability(reservation.start_date, reservation.end_date)
 
         serializer = self.get_serializer(reservation)
         return Response(serializer.data, status=status.HTTP_200_OK)

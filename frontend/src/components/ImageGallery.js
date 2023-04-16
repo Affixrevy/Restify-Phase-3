@@ -6,7 +6,7 @@ import kitchenImage from '../assets/img/mansion/kitchen.webp';
 import sunImage from '../assets/img/mansion/sun.webp';
 import washroomImage from '../assets/img/mansion/washroom.webp';
 import bedroomImage from '../assets/img/mansion/bedroom.webp';
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function ImageGallery(props) {
     const page_id = props.id
@@ -15,14 +15,18 @@ function ImageGallery(props) {
     const [propertyImages, setPropertyImages] = useState([])
     const [dataFetched, setDataFetched] = useState(false)
     const [imagesFetched, setImagesFetched] = useState(false)
+    const [propertyDescription, setPropertyDescription] = useState([])
 
 
     useEffect(() => {
         async function fetchData() {
             const response = await fetch(`http://localhost:8000/properties/select/${page_id}/`)
             const responseData = await response.json()
+            const description = responseData.description.split("\n");
             console.log("FETCH DATA")
+            console.log(description)
             setPageData(responseData)
+            setPropertyDescription(description)
         }
 
         async function fetchImages() {
@@ -158,11 +162,16 @@ function ImageGallery(props) {
                             <div
                                 className="flex flex-col justify-between items-left text-left p-4 leading-normal"
                             >
-                                <p
-                                    className="mb-3 font-normal text-FONT_COLOR_2 dark:text-FONT_COLOR_1"
-                                >
-                                    {pageData.description}
-                                </p>
+                                {propertyDescription.map((paragraph, index) => {
+                                    return (
+                                        <p
+                                            className="mb-3 font-normal text-FONT_COLOR_2 dark:text-FONT_COLOR_1"
+                                            key={index}
+                                        >
+                                            {paragraph.replace(/\n/g, "")}
+                                        </p>
+                                    )
+                                })}
                                 <hr className="my-3"/>
                                 <h2
                                     className="mb-2 text-3xl font-bold tracking-tight dark:text-FONT_COLOR_1"
