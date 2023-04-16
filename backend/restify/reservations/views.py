@@ -15,36 +15,10 @@ from django.db.models import Q
 # Create your views here.
 
 
-# class ReservationCreateView(generics.CreateAPIView):
-#     serializer_class = ReservationSerializer
-#
-#     def perform_create(self, serializer):
-#         # Set status to 'pending' before saving
-#         serializer.save(status='pending_awaiting_confirmation')
-#
-#         # Check if there are any existing reservations for the property
-#         # in the same time frame
-#         property_id = serializer.validated_data['property'].id
-#         start_date = serializer.validated_data['start_date']
-#         end_date = serializer.validated_data['end_date']
-#         existing_reservations = Reservation.objects.filter(
-#             Q(property_id=property_id),
-#             Q(start_date__lte=start_date, end_date__gte=start_date) |
-#             Q(start_date__lte=end_date, end_date__gte=end_date) |
-#             Q(start_date__gte=start_date, end_date__lte=end_date),
-#             ~Q(status='cancelled')
-#         )
-#
-#         print(existing_reservations)
-#
-#         if existing_reservations:
-#             raise serializers.ValidationError(
-#                 'A reservation for this property already exists in the selected time frame.'
-#             )
-
 class ReservationCreateView(generics.CreateAPIView):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializerCreate
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
