@@ -14,7 +14,8 @@ const ModifyProperty = (props) => {
         amenities: "We have whatever you want. This is definitely not a scam at all lol",
         description: "The detail about 20 baths is just a little sus",
         start_date: '2023-05-01',
-        end_date: '2023-06-01'
+        end_date: '2023-06-01',
+        name: "House of Potato"
     }
 
     const handleCancel = () => {
@@ -69,6 +70,14 @@ const ModifyProperty = (props) => {
                                     <label htmlFor="address"
                                            className="absolute text-sm text-gray-300 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Street
                                         Address</label>
+                                </div>
+                                <div className="relative mb-4">
+                                    <input type="text" id="name"
+                                        className="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
+                                        placeholder=" " defaultValue={data.name}/>
+                                    <label htmlFor="name"
+                                        className="absolute text-sm text-gray-300 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Property Name
+                                    </label>
                                 </div>
                                 <div className="flex justify-center items-center h-20">
                                     <div className="grid grid-cols-3 gap-4 items-center">
