@@ -11,10 +11,13 @@ const Profile = () => {
     const [activeTab, setActiveTab] = useState(1);
 
     const [userProfile, setUserProfile] = useState({});
+    const [userReservations, setUserReservations] = useState([])
+    const [propertyDescription, setPropertyDescription] = useState([])
 
     useEffect(() => {
-        async function fetchData() {
-            const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');
+
+        async function fetchProfile() {
             const response = await fetch(`http://localhost:8000/api/profile/`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -30,7 +33,26 @@ const Profile = () => {
             setUserProfile(responseData)
         }
 
-        fetchData().then(r => {
+        async function fetchReservations() {
+            const response = await fetch(`http://localhost:8000/reservations/guest/view/`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            const responseData = await response.json()
+            console.log(responseData)
+
+            setUserReservations(responseData.results)
+        }
+
+        async function fetchProperties() {
+
+        }
+
+        fetchProfile().then(r => {
+        })
+        fetchReservations().then(r => {
+            console.log("All Fetched")
         })
     }, [])
 
@@ -196,11 +218,10 @@ const Profile = () => {
                             </Link>
                         </div>
                         <div className="flex flex-col items-center">
-                            <ReservationCardUser></ReservationCardUser>
-                            <ReservationCardUser></ReservationCardUser>
-                            <ReservationCardUser></ReservationCardUser>
-                            <ReservationCardUser></ReservationCardUser>
-                            <ReservationCardUser></ReservationCardUser>
+                            {userReservations.map((reservation, index) => {
+                                console.log("hi")
+                                return <ReservationCardUser reservation={reservation} key={index}/>
+                            })}
                         </div>
                     </div>
                 </div>

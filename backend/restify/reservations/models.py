@@ -16,6 +16,8 @@ class Reservation(models.Model):
 
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=31, choices=STATUS_CHOICES)
+    num_guests = models.ImageField(blank=False, null=False, default=1)
     to_book_property = models.ForeignKey(PropertyModel, on_delete=models.CASCADE, null=True)
     start_date = models.DateField()
     end_date = models.DateField()
+

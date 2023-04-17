@@ -9,9 +9,9 @@ import { default as Property } from "./pages/Property.js"
 import { default as ModifyProperty } from "./pages/ModifyProperty.js";
 import { default as ManageProperty } from "./pages/ManageProperty.js";
 import { default as Listing } from "./pages/Listing.js"
-import { default as Reservation } from "./pages/Reservation.js"
+import { default as ListingAddition } from "./pages/ListingAddition.js";
 import { default as ViewGuest } from "./pages/ViewGuest.js";
-import { default as Test } from "./pages/Test.js"
+import { default as Test } from "./pages/Test.js";
 
 
 function App() {
@@ -22,12 +22,12 @@ function App() {
           <Route path="/signup" element={<Signup />}/>
           <Route path="/profile" element={<Profile />}/>
           <Route path="/property/:id" element={<Property />}/>
-          <Route path="/reservation" element={<Reservation />}/>
           <Route path="/edit-profile/:id" element={<EditProfile />}/>
           <Route path="/modify-property" element={<ModifyProperty />}/>
           <Route path="/manage-property/:id" element={<ManageProperty />}/>
-          <Route path="view-guest" element={<ViewGuest />}/>
+          <Route path="/view-guest" element={<ViewGuest />}/>
           <Route path="/listing" element={<Listing />}/>
+          <Route path="/listing-addition" element={<ListingAddition />}/>
           {/*TODO: This route is a test route for me pls remove whenever we're done*/}
           <Route path="/test" element={<Test />}/>
       </Routes>

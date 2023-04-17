@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models.property import PropertyModel, PropertyImage
+from .models.property import PropertyModel, PropertyImage, DailyPrice
 from django.utils.crypto import get_random_string
 
 
@@ -32,3 +32,9 @@ class PropertyImageSerializer(serializers.ModelSerializer):
 
         # call the superclass method to save the instance
         super().save(**kwargs)
+
+
+class DailyPriceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DailyPrice
+        fields = ['id', 'property', 'date', 'price']
