@@ -226,7 +226,7 @@ function ImageGallery(props) {
                         ) : (
                             <div className="flex xl:justify-top xl:items-center xl:text-center text-left flex-col">
                                 <h1 className="text-FONT_COLOR_2 text-2xl dark:text-FONT_COLOR_1">
-                                    <b>$110 CAD</b> night
+                                    <b>CAD ${pageData.price}</b> night
                                 </h1>
                                 {/*<Link to={"/reservation"}>*/}
                                     <button
@@ -236,7 +236,7 @@ function ImageGallery(props) {
                                         Reserve
                                     </button>
                                 {/*</Link>*/}
-                                {showPopup && <ReservationPopUp onClose={handleClosePopup} />}
+                                {showPopup && <ReservationPopUp propertyId={pageData.id} onClose={handleClosePopup} />}
                             </div>
                         )}
                     </div>
