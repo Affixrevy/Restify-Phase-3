@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {default as NavBar} from "../components/NavBar.js";
 import PropertyCard from "../components/PropertyCard";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -78,7 +78,6 @@ class Landing extends React.Component {
     }
 
     render() {
-
         return (
         <div className="bg-BACKGROUND_COLOR_1">
             <NavBar></NavBar>
@@ -172,7 +171,7 @@ class Landing extends React.Component {
                         </div>
                     </div>
                     <InfiniteScroll
-                        next={() => this.fetchData(this.state.items.length / 8 + 1)}
+                        next={() => this.fetchData(this.state.items.length / 8 + 1, this.state.ordering, this.state.filters)}
                         hasMore={this.state.hasMore}
                         loader={<h4 className="text-FONT_COLOR_2">Loading...</h4>}
                         dataLength={this.state.items.length}
