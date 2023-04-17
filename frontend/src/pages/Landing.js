@@ -1,7 +1,5 @@
 import React from 'react';
 import {default as NavBar} from "../components/NavBar.js";
-import SearchBar from "../components/SearchBar";
-import FilterBar from "../components/FilterBar";
 import PropertyCard from "../components/PropertyCard";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -11,8 +9,25 @@ class Landing extends React.Component {
         this.state = {
             items: [],
             hasMore: true,
-            ordering: ""
+            ordering: "",
+            filters: {'location': "", 'arrival': "", 'departure': "", 'guests': ""}
         }
+    }
+
+    handleFiltering = () => {
+        let location = document.getElementById('location').value
+        let arrival = document.getElementById('arrival').value
+        let departure = document.getElementById('departure').value
+        let guests = document.getElementById('guests').value
+
+        console.log(location)
+
+        this.setState({
+            ordering: this.state.ordering,
+            items: [],
+            hasMore: true,
+            filters: {'location': location, 'arrival': arrival, 'departure': departure, 'guests': guests}
+        });
     }
 
     handleOrdering = (e) => {
@@ -34,22 +49,23 @@ class Landing extends React.Component {
         this.setState({
           ordering: ordering,
           items: [],
-          hasMore: true
+          hasMore: true,
+          filters: this.state.filters
         });
     }
 
     componentDidMount() {
-        this.fetchData(1, this.state.ordering)
+        this.fetchData(1, this.state.ordering, this.state.filters)
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.ordering !== this.state.ordering) {
-            this.fetchData(1, this.state.ordering)
+        if (prevState.ordering !== this.state.ordering || prevState.filters !== this.state.filters) {
+            this.fetchData(1, this.state.ordering, this.state.filters)
         }
     }
 
-    fetchData = (page, ordering) => {
-        fetch(`http://localhost:8000/properties/view/?page=${page}&ordering=${ordering}`)
+    fetchData = (page, ordering, filters) => {
+        fetch(`http://localhost:8000/properties/view/?page=${page}&ordering=${ordering}&country=${filters.location}&start_date=${filters.arrival}&end_date=${filters.departure}&num_guests=${filters.guests}`)
             .then(response => response.json())
             .then(data => {
                 this.setState({items: [...this.state.items, ...data.results], hasMore: data.next !== null})
@@ -79,14 +95,14 @@ class Landing extends React.Component {
                                     className="absolute text-sm text-FONT_COLOR_1 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Location</label>
                             </div>
                             <div className="relative py-2 lg:py-0 lg:mx-2 lg:w-1/6">
-                                <input type="text" id="arrival"
+                                <input type="date" id="arrival"
                                     className="block  rounded-2xl px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
                                     placeholder=" "/>
                                 <label htmlFor="arrival"
                                     className="absolute text-sm text-FONT_COLOR_1 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Arrival</label>
                             </div>
                             <div className="relative py-2 lg:py-0 lg:mx-2 lg:w-1/6">
-                                <input type="text" id="departure"
+                                <input type="date" id="departure"
                                     className="block  rounded-2xl px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
                                     placeholder=" "/>
                                 <label htmlFor="departure"
@@ -101,7 +117,8 @@ class Landing extends React.Component {
                             </div>
                             <div className="py-2 lg:py-0 lg:mx-2 lg:w-1/12">
                                 <button
-                                    className="rounded-2xl w-full h-full bg-BUTTON_COLOR text-center text-justify-center ">
+                                    className="rounded-2xl w-full h-full bg-BUTTON_COLOR text-center text-justify-center "
+                                    onClick={this.handleFiltering}>
                                     <span className="material-symbols-outlined text-white">search</span>
                                 </button>
                             </div>
