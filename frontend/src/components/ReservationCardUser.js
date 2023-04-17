@@ -16,6 +16,24 @@ const ReservationCardUser = (props) => {
     const r = props.reservation;
     console.log(r)
 
+    let status = "Undefined";
+    if (r.status === 'pending_awaiting_confirmation') {
+        status = "Pending - Awaiting Confirmation";
+    } else if (r.status === 'confirmed') {
+        status = "Confirmed";
+    } else if (r.status === 'expired') {
+        status = "Expired";
+    } else if (r.status === 'cancelled_awaiting_confirmation') {
+        status = "Cancelled - Awaiting Confirmation";
+    } else if (r.status === 'cancelled') {
+        status = "Cancelled";
+    } else if (r.status === 'terminated') {
+        status = "Terminated";
+    } else if (r.status === 'completed') {
+        status = "Completed";
+    }
+
+
     useEffect(() => {
         async function fetchData() {
             const response = await fetch(`http://localhost:8000/properties/select/${r.to_book_property}/`)
@@ -41,13 +59,10 @@ const ReservationCardUser = (props) => {
                     <h1 className="text-2xl font-bold tracking-tight dark:text-FONT_COLOR_1">{propertyName}</h1>
                     <div className="flex items-center">
                         <h1 className="pt-1 font-bold text-white">
-                            {r.status}
+                            {status}
                         </h1>
                     </div>
                     <div className="flex flex-col">
-                        {/*<p>Owner - Albus Dumbledore</p>*/}
-                        {/*<p>Start Date: {month}/{day}/{year}</p>*/}
-                        {/*<p>End Date: {month}/{day + 5}/{year}</p>*/}
                         <p>Start Date: {r.start_date}</p>
                         <p>End Date: {r.end_date}</p>
                     </div>
