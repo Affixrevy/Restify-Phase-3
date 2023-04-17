@@ -23,7 +23,7 @@ const ReservationCardOwner = (props) => {
     }
 
     return (
-        <div className="col-span-1">
+        <div className="col-span-1 drop-shadow-lg">
             <div
                 className="items-start rounded-2xl text-FONT_COLOR_2 hover:bg-gray-100 dark:bg-STROKE_COLOR dark:hover:bg-STROKE_COLOR grid grid-cols-3 gap-4 mb-2 h-44">
                 <div className="m-3 ml-4 col-span-2">

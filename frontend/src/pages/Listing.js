@@ -93,17 +93,22 @@ const Listing = () => {
                         <div className="text-2xl font-bold py-2">
                             Create Listing
                         </div>
-                        <div className="relative mb-4">
-                            <input type="text" id="name"
-                                   className="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
-                                   placeholder=" "/>
-                            <label htmlFor="name"
-                                   className="absolute text-sm text-gray-300 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Street
-                                Name</label>
-                        </div>
 
                         <div className="flex flex-col space-y-4 divide-y-2">
+
+                            <div className="relative mb-4">
+                                <input type="text" id="name"
+                                       className="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
+                                       placeholder=" "/>
+                                <label htmlFor="name"
+                                       className="absolute text-sm text-gray-300 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Property Name
+                                </label>
+                            </div>
+
                             <div className="pt-4">
+                                <div className="text-2xl font-bold pb-2">
+                                    Address
+                                </div>
                                 <div className="relative mb-4">
                                     <input type="text" id="address"
                                            className="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
@@ -136,11 +141,14 @@ const Listing = () => {
                                                className="absolute text-sm text-gray-300 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Country</label>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div className="relative mb-4">
                                 <div className="text-2xl font-bold py-2">
                                     Images
                                 </div>
                                 <div className="flex justify-center items-center h-20">
-                                    <div className="grid grid-cols-3 gap-4 items-center">
+                                    <div className="items-center">
                                         {/*<SetHoliday text="Add Holiday Price"></SetHoliday>*/}
                                         <SubmitFile multiple={0} text="Add Thumbnail" title="Submit a thumbnail"
                                                     onFileSubmit={setThumbnail}/>
@@ -149,29 +157,30 @@ const Listing = () => {
                                 </div>
                             </div>
 
-                            <div className="mb-4">
-                                <label htmlFor="start_date" className="block text-white font-medium mb-2">
-                                    Start Date
-                                </label>
-                                <input
-                                    type="date"
-                                    id="start_date"
-                                    className="block text-gray-700 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    value={startDate}
-                                    onChange={(e) => setStartDate(e.target.value)}
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label htmlFor="end_date" className="block text-white font-medium mb-2">
-                                    End Date
-                                </label>
-                                <input
-                                    type="date"
-                                    id="end_date"
-                                    className="block text-gray-700 w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                                    value={endDate}
-                                    onChange={(e) => setEndDate(e.target.value)}
-                                />
+                            <div className="relative mb-4">
+                                <div className="text-2xl font-bold py-2">
+                                    Availability
+                                </div>
+                                <div className="relative mb-4">
+                                    <input type="date" id="start_data"
+                                           className="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
+                                           placeholder=" "
+                                           value={startDate}
+                                           onChange={(e) => setStartDate(e.target.value)}
+                                    />
+                                    <label htmlFor="Start_data"
+                                           className="absolute text-sm text-gray-300 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Start Date</label>
+                                </div>
+                                <div className="relative mb-4">
+                                    <input type="text" id="end_date"
+                                           className="block rounded-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
+                                           placeholder=" "
+                                           value={endDate}
+                                           onChange={(e) => setEndDate(e.target.value)}
+                                    />
+                                    <label htmlFor="end_date"
+                                           className="absolute text-sm text-gray-300 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">End Date</label>
+                                </div>
                             </div>
 
                             <div className="pt-8 relative">
@@ -235,7 +244,7 @@ const Listing = () => {
                                     </div>
                                     <div className="flex flex-col items-center justify-center">
                                         <button
-                                            className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full"
+                                            className="bg-ACCENT_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full"
                                             onClick={handleConfirm}
                                         >
                                             <p className="block overflow-auto py-2 px-4">Confirm</p>

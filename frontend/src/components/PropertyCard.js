@@ -10,7 +10,7 @@ const PropertyCard = (props) => {
         <>
             {color > 0 ? (
                 <Link to={url}
-                      className="flex flex-col items-start rounded-2xl shadow lg:flex-row lg:max-w-xl lg:h-max-1 text-FONT_COLOR_2 hover:text-gray-700 hover:bg-gray-100 dark:bg-STROKE_COLOR dark:hover:bg-STROKE_COLOR ">
+                      className="flex flex-col items-start rounded-2xl shadow lg:flex-row lg:max-w-xl lg:h-max-1 text-FONT_COLOR_2 hover:text-gray-700 hover:bg-gray-100 dark:bg-STROKE_COLOR dark:hover:bg-STROKE_COLOR drop-shadow-lg">
                     <img className="object-cover w-full rounded-t-2xl h-96 lg:h-40 lg:w-48 lg:rounded-none lg:rounded-l-2xl"
                          src={property.main_pic} alt=""/>
                     <div className="m-3 ml-4">

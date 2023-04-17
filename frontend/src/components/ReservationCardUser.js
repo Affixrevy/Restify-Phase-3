@@ -34,7 +34,7 @@ const ReservationCardUser = (props) => {
     const url = "/property/3"
 
     return (
-        <div className="w-5/6 justify-center py-2">
+        <div className="w-5/6 justify-center py-2 drop-shadow-lg">
             <div
                 className="rounded-2xl text-FONT_COLOR_2 hover:bg-gray-100 dark:bg-STROKE_COLOR dark:hover:bg-STROKE_COLOR grid grid-cols-3 gap-4">
                 <div className="m-3 ml-4 col-span-2">
