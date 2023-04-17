@@ -18,6 +18,7 @@ http --form POST http://localhost:8000/properties/create/ \
     num_beds=2 \
     num_baths=2 \
     price=1000 \
+    stars=4.3 \
     main_pic@neptune_house.webp
 
 http --form POST http://localhost:8000/properties/create/ \
@@ -35,6 +36,7 @@ http --form POST http://localhost:8000/properties/create/ \
     num_beds=2 \
     num_baths=2 \
     price=5 \
+    stars=1.0 \
     main_pic@harrys_hut.webp
 
 http --form POST http://localhost:8000/properties/create/ \
@@ -64,6 +66,7 @@ Arthur's Mansion is the perfect destination for those seeking the ultimate in lu
     num_beds=9 \
     num_baths=12 \
     price=2500 \
+    stars=4.9 \
     main_pic@mansion.webp
 
 http --form POST http://localhost:8000/properties/create/ \
@@ -89,6 +92,7 @@ Book now and get ready to make unforgettable memories that you will cherish fore
     num_beds=4 \
     num_baths=4 \
     price=325 \
+    stars=4.6 \
     main_pic@beachfront_villa.webp
 
 
@@ -107,6 +111,7 @@ http --form POST http://localhost:8000/properties/create/ \
     num_beds=3 \
     num_baths=2 \
     price=200 \
+    stars=4.3 \
     main_pic@mountain_cabin.webp
 
 
@@ -125,6 +130,7 @@ http --form POST http://localhost:8000/properties/create/ \
     num_beds=2 \
     num_baths=2 \
     price=1000 \
+    stars=3.9 \
     main_pic@luxury_apartment.webp
 
 
@@ -143,6 +149,7 @@ http --form POST http://localhost:8000/properties/create/ \
     num_beds=3 \
     num_baths=2 \
     price=1200 \
+    stars=4.3 \
     main_pic@lakeside_cottage.webp
 
 
@@ -161,6 +168,7 @@ http --form POST http://localhost:8000/properties/create/ \
     num_beds=2 \
     num_baths=2 \
     price=650 \
+    stars=4.4 \
     main_pic@modern_apartment.webp
 
 
@@ -179,6 +187,7 @@ http --form POST http://localhost:8000/properties/create/ \
     num_beds=2 \
     num_baths=1 \
     price=200 \
+    stars=4.2 \
     main_pic@rustic_cabin.webp
 
 
@@ -197,6 +206,7 @@ http --form POST http://localhost:8000/properties/create/ \
     num_beds=3 \
     num_baths=3 \
     price=250 \
+    stars=4.7 \
     main_pic@desert_retreat.webp
 
 
@@ -215,6 +225,7 @@ http --form POST http://localhost:8000/properties/create/ \
   num_beds=4 \
   num_baths=4 \
   price=500 \
+  stars=4.5 \
   main_pic@ski_chalet.webp
 
 http --form POST http://localhost:8000/properties/create/ \
@@ -232,4 +243,5 @@ http --form POST http://localhost:8000/properties/create/ \
   num_beds=5 \
   num_baths=5 \
   price=489 \
+  stars=4.1 \
   main_pic@seaside_villa.webp

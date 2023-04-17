@@ -24,6 +24,7 @@ class PropertyModel(Model):
     amenities = CharField(max_length=500, blank=True, null=True)
     description = CharField(max_length=5000, blank=True, null=True)
     owner = ForeignKey(get_user_model(), on_delete=CASCADE, null=True)
+    stars = DecimalField(default=0, decimal_places=1, max_digits=2)
 
 
 class PropertyImage(Model):
