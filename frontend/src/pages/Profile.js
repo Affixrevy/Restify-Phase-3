@@ -97,6 +97,7 @@ const Profile = () => {
 
     const logout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userID');
         // perform any additional logout tasks
     };
     const handleLogout = () => {
