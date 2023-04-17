@@ -43,7 +43,23 @@ const Login = () => {
                 console.log(token)
 
                 localStorage.setItem('token', token)
-                navigate("/")
+
+                async function fetchProfile() {
+                    const response = await fetch(`http://localhost:8000/api/profile/`, {
+                        headers: {
+                            "Authorization": `Bearer ${token}`
+                        }
+                    })
+                    const responseData = await response.json()
+
+                    console.log("FETCH USER ID")
+                    console.log(responseData)
+                    localStorage.setItem('userID', responseData.id)
+                }
+
+                fetchProfile().then(r => {
+                    navigate("/")
+                })
             } else {
                 console.log('you fucked up submitting the form')
                 setErrorText('Incorrect username or password');

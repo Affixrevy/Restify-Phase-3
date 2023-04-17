@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {default as NavBar} from "../components/NavBar.js";
 import SearchBar from "../components/SearchBar";
 import FilterBar from "../components/FilterBar";
@@ -32,6 +32,7 @@ class Landing extends React.Component {
     }
 
     render() {
+
         return (
         <div className="bg-BACKGROUND_COLOR_1">
             <NavBar></NavBar>
