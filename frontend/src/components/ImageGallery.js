@@ -7,6 +7,7 @@ import sunImage from '../assets/img/mansion/sun.webp';
 import washroomImage from '../assets/img/mansion/washroom.webp';
 import bedroomImage from '../assets/img/mansion/bedroom.webp';
 import {Link} from "react-router-dom";
+import ReservationPopUp from "./ReservationPopUp";
 
 function ImageGallery(props) {
     const page_id = props.id
@@ -66,6 +67,17 @@ function ImageGallery(props) {
             setSlideIndex(slideIndex + n);
         }
     }
+
+    const [showPopup, setShowPopup] = useState(false);
+
+    const handleButtonClick = () => {
+        setShowPopup(true);
+    };
+
+    const handleClosePopup = () => {
+        setShowPopup(false);
+    };
+
 
     return (
         <main className="flex flex-col items-center justify-center py-10">
@@ -216,13 +228,15 @@ function ImageGallery(props) {
                                 <h1 className="text-FONT_COLOR_2 text-2xl dark:text-FONT_COLOR_1">
                                     <b>$110 CAD</b> night
                                 </h1>
-                                <Link to={"/reservation"}>
+                                {/*<Link to={"/reservation"}>*/}
                                     <button
                                         className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-48 font-bold py-2 px-2 my-4 rounded-full"
+                                        onClick={handleButtonClick}
                                     >
                                         Reserve
                                     </button>
-                                </Link>
+                                {/*</Link>*/}
+                                {showPopup && <ReservationPopUp onClose={handleClosePopup} />}
                             </div>
                         )}
                     </div>
