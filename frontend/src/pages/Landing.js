@@ -10,16 +10,46 @@ class Landing extends React.Component {
         super(props);
         this.state = {
             items: [],
-            hasMore: true
+            hasMore: true,
+            ordering: ""
         }
     }
 
-    componentDidMount() {
-        this.fetchData(1)
+    handleOrdering = (e) => {
+        let ordering = e.target.id;
+        console.log(ordering)
+        if (ordering === "tab-1") {
+            ordering = "start_date"
+        }
+        else if (ordering === "tab-2") {
+            ordering = "price"
+        }
+        else if (ordering === "tab-3") {
+            ordering = "rating"
+        }
+        else {
+            ordering = ""
+        }
+        console.log(ordering)
+        this.setState({
+          ordering: ordering,
+          items: [],
+          hasMore: true
+        });
     }
 
-    fetchData = (page) => {
-        fetch(`http://localhost:8000/properties/view/?page=${page}`)
+    componentDidMount() {
+        this.fetchData(1, this.state.ordering)
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.ordering !== this.state.ordering) {
+            this.fetchData(1, this.state.ordering)
+        }
+    }
+
+    fetchData = (page, ordering) => {
+        fetch(`http://localhost:8000/properties/view/?page=${page}&ordering=${ordering}`)
             .then(response => response.json())
             .then(data => {
                 this.setState({items: [...this.state.items, ...data.results], hasMore: data.next !== null})
@@ -35,11 +65,93 @@ class Landing extends React.Component {
         return (
         <div className="bg-BACKGROUND_COLOR_1">
             <NavBar></NavBar>
-            <SearchBar></SearchBar>
+
+            <div className="lg:absolute z-40 lg:top-10 w-full">
+                <div className="relative container mx-auto py-3 md:px-10 lg:py-10 flex items-center justify-center">
+                    <div
+                        className="w-full md:w-3/4 max-w-7xl drop-shadow-lg p-6 rounded-2xl shadow dark:bg-POPUP_BACKGROUND_COLOR dark:border-gray-700">
+                        <div className="flex flex-col lg:flex-row lg:justify-items-stretch justify-evenly">
+                            <div className="relative py-2 lg:py-0 lg:mx-2 lg:w-1/2">
+                                <input type="text" id="location"
+                                    className="block rounded-2xl px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
+                                    placeholder=" "/>
+                                <label htmlFor="location"
+                                    className="absolute text-sm text-FONT_COLOR_1 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Location</label>
+                            </div>
+                            <div className="relative py-2 lg:py-0 lg:mx-2 lg:w-1/6">
+                                <input type="text" id="arrival"
+                                    className="block  rounded-2xl px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
+                                    placeholder=" "/>
+                                <label htmlFor="arrival"
+                                    className="absolute text-sm text-FONT_COLOR_1 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Arrival</label>
+                            </div>
+                            <div className="relative py-2 lg:py-0 lg:mx-2 lg:w-1/6">
+                                <input type="text" id="departure"
+                                    className="block  rounded-2xl px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
+                                    placeholder=" "/>
+                                <label htmlFor="departure"
+                                    className="absolute text-sm text-FONT_COLOR_1 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Departure</label>
+                            </div>
+                            <div className="relative py-2 lg:py-0 lg:mx-2 lg:w-1/6 xl:w-1/12">
+                                <input type="number" id="guests"
+                                    className="block rounded-2xl px-2.5 pb-2.5 pt-5 w-full text-sm text-FONT_COLOR_1 bg-TEXT_FIELD_COLOR dark:bg-TEXT_FIELD_COLOR border-0 border-b-2 border-TEXT_FIELD_COLOR appearance-none dark:text-FONT_COLOR_1 dark:border-TEXT_FIELD_COLOR dark:focus:border-TEXT_FIELD_COLOR focus:outline-none focus:ring-0 focus:border-TEXT_FIELD_COLOR peer"
+                                    placeholder=" "/>
+                                <label htmlFor="guests"
+                                    className="absolute text-sm text-FONT_COLOR_1 dark:text-FONT_COLOR_1 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] left-2.5 peer-focus:text-FONT_COLOR_2 peer-focus:dark:text-FONT_COLOR_2 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">Guests</label>
+                            </div>
+                            <div className="py-2 lg:py-0 lg:mx-2 lg:w-1/12">
+                                <button
+                                    className="rounded-2xl w-full h-full bg-BUTTON_COLOR text-center text-justify-center ">
+                                    <span className="material-symbols-outlined text-white">search</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <main className="flex justify-center lg:mt-16 py-5 mx-auto w-full">
                 <div className="w-11/12 md:w-2/3 justify-center">
                     <div className="py-4">
-                        <FilterBar></FilterBar>
+                        <div
+                        role="tablist"
+                        aria-label="tabs"
+                        className="relative mx-auto h-12 grid grid-cols-3 items-center px-[3px] rounded-2xl bg-BACKGROUND_COLOR_2 overflow-hidden shadow-2xl shadow-900/20 transition"
+                        >
+                            <button
+                                role="tab"
+                                aria-selected="true"
+                                aria-controls="panel-1"
+                                id="tab-1"
+                                tabIndex="0"
+                                className="relative block h-10 px-6 tab rounded-2xl text-FONT_COLOR_1"
+                                onClick={this.handleOrdering}
+                            >
+                            Start Date
+                            </button>
+                            <button
+                                role="tab"
+                                aria-selected="false"
+                                aria-controls="panel-2"
+                                id="tab-2"
+                                tabIndex="1"
+                                className="relative block h-10 px-6 tab rounded-2xl text-FONT_COLOR_1"
+                                onClick={this.handleOrdering}
+                            >
+                            Price
+                            </button>
+                            <button
+                                role="tab"
+                                aria-selected="false"
+                                aria-controls="panel-3"
+                                id="tab-3"
+                                tabIndex="2"
+                                className="relative block h-10 px-6 tab rounded-2xl text-FONT_COLOR_1"
+                                onClick={this.handleOrdering}
+                            >
+                            Rating
+                            </button>
+                        </div>
                     </div>
                     <InfiniteScroll
                         next={() => this.fetchData(this.state.items.length / 8 + 1)}
