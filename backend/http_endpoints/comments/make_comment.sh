@@ -19,9 +19,9 @@ http POST http://localhost:8000/comments/create/ \
     content="Arthur's mansion was the most amazing vacation experience ever. LETS GO OILERS!!!" \
     Authorization:"Bearer $TOKEN_JOE"
 
-http POST http://localhost:8000/comments/reply/ thread_id=23 content="YES! GO OILERS" Authorization:"Bearer $TOKEN_JOHN"
+http POST http://localhost:8000/comments/reply/ thread_id=4 content="YES! GO OILERS" Authorization:"Bearer $TOKEN_JOHN"
 
-http POST http://localhost:8000/comments/reply/ thread_id=23 content="The kings suck" Authorization:"Bearer $TOKEN_JOE"
+http POST http://localhost:8000/comments/reply/ thread_id=4 content="The kings suck" Authorization:"Bearer $TOKEN_JOE"
 
 
 
