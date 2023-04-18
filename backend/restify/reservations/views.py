@@ -232,7 +232,7 @@ class ReservationDenyCancelView(generics.UpdateAPIView):
         reservation = get_object_or_404(Reservation, id=self.kwargs.get('pk'))
 
         # Check if the user making the request is the owner of the property
-        property_owner = reservation.property.owner
+        property_owner = reservation.to_book_property.owner
         if request.user != property_owner:
             return Response(
                 {'error': 'Only the owner of the property can deny the cancellation of a reservation.'},

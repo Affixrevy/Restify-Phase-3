@@ -75,25 +75,25 @@ const ManageProperty = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center pb-10">
-                <div className="container lg:w-4/6 rounded-2xl bg-BACKGROUND_COLOR_2">
-                    <div className="flex flex-col justify-between items-left text-left p-4 leading-normal">
-                        <div className="grid grid-cols-6 flex-row w-full">
-                            <div className="col-span-6 space-y-3">
-                                <h5 className="mb-4 text-5xl font-bold tracking-tight text-FONT_COLOR_1 dark:text-FONT_COLOR_1">
-                                    Reservations
-                                </h5>
-                                <div className="xl:grid grid-cols-2 gap-2">
-                                    <ReservationCardOwner chosen={3}></ReservationCardOwner>
-                                    <ReservationCardOwner chosen={3}></ReservationCardOwner>
-                                    <ReservationCardOwner chosen={2}></ReservationCardOwner>
-                                    <ReservationCardOwner chosen={3}></ReservationCardOwner>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {/*<div className="flex flex-col items-center justify-center pb-10">*/}
+            {/*    <div className="container lg:w-4/6 rounded-2xl bg-BACKGROUND_COLOR_2">*/}
+            {/*        <div className="flex flex-col justify-between items-left text-left p-4 leading-normal">*/}
+            {/*            <div className="grid grid-cols-6 flex-row w-full">*/}
+            {/*                <div className="col-span-6 space-y-3">*/}
+            {/*                    <h5 className="mb-4 text-5xl font-bold tracking-tight text-FONT_COLOR_1 dark:text-FONT_COLOR_1">*/}
+            {/*                        Reservations*/}
+            {/*                    </h5>*/}
+            {/*                    <div className="xl:grid grid-cols-2 gap-2">*/}
+            {/*                        <ReservationCardOwner chosen={3}></ReservationCardOwner>*/}
+            {/*                        <ReservationCardOwner chosen={3}></ReservationCardOwner>*/}
+            {/*                        <ReservationCardOwner chosen={2}></ReservationCardOwner>*/}
+            {/*                        <ReservationCardOwner chosen={3}></ReservationCardOwner>*/}
+            {/*                    </div>*/}
+            {/*                </div>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </div>
     );
 };

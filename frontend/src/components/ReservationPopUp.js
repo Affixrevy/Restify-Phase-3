@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import PopUpConfirm from "../components/PopUpConfirm";
 
 const ReservationPopUp = (props) => {
     const onClose = props.onClose;
