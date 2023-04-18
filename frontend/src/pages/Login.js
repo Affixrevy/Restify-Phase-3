@@ -40,7 +40,8 @@ const Login = () => {
                 // navigate("/login")
                 console.log('you\'re in')
                 const token = data.access;
-                console.log(token)
+                // lmao you can't just print out token that's a huge security hazard
+                // console.log(token)
 
                 localStorage.setItem('token', token)
 

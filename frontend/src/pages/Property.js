@@ -30,11 +30,66 @@ const Property = () => {
     const [showCommentBox, setShowCommentBox] = useState(false);
     const [commentContent, setCommentContent] = useState('');
 
+    function sendNotif() {
+        const token = localStorage.getItem('token');
+
+        const user = fetch(`http://localhost:8000/api/profile/`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+        
+        const sender = user.then(response => {
+            return response.json()
+        }).then(data => {
+            return data
+        });
+
+        const property = fetch(`http://localhost:8000/properties/select/${id}/`);
+
+        var pDdata = property.then(response => {
+            return response.json()
+        }).then(data => {
+            return data
+        });
+
+        const formData = new FormData();
+
+        Promise.all([sender, pDdata]).then((values => {
+            let sender = values[0];
+            let pData = values[1];
+
+            console.log(sender.id);
+            console.log(pData.owner);
+
+            formData.append("sender_type", 7);
+            formData.append("sender_id", sender.id);
+            formData.append("receiver_id", pData.owner);
+            formData.append("reservation", false);
+            formData.append("concellation", false);
+            formData.append("comment", true);
+            formData.append("content", sender.first_name + " " + sender.last_name + " commented on your property.");
+
+            fetch("http://localhost:8000/notifications/create/", {
+                method: 'POST',
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: formData
+            }).then(response => {
+                return response.json()
+            }).then(data => {
+                console.log(data)
+            });
+        }));
+    }
+
     const handleComment = () => {
         if (commentContent.trim() === '') return;
         setComments([...comments, { username: username, content: commentContent }]);
         setCommentContent('');
         setShowCommentBox(false);
+        sendNotif();
     };
 
     return (

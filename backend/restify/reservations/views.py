@@ -244,3 +244,11 @@ class ReservationDenyCancelView(generics.UpdateAPIView):
 
         serializer = self.get_serializer(reservation)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ReservationDetailView(generics.ListAPIView):
+    serializer_class = ReservationSerializer
+
+    def get_queryset(self):
+        res_id = self.kwargs['pk']
+        return Reservation.objects.filter(pk=res_id)
