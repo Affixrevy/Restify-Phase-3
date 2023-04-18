@@ -2,19 +2,9 @@ import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 
 const ReservationCardUser = (props) => {
-    const currentDate = new Date();
-    const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
-    const state = {
-        one: "Pending awaiting confirmation",
-        two: "Cancelled awaiting confirmation",
-        three: "Confirmed"
-    }
-
     const [propertyName, setPropertyName] = useState('')
     const r = props.reservation;
-    console.log(r)
+    console.log(r);
 
     let status = "Undefined";
     if (r.status === 'pending_awaiting_confirmation') {
@@ -33,6 +23,18 @@ const ReservationCardUser = (props) => {
         status = "Completed";
     }
 
+    async function handleCancel() {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`http://localhost:8000/reservations/${r.id}/cancel/`, {
+            method: "PATCH",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+
+        console.log(response)
+    }
 
     useEffect(() => {
         async function fetchData() {
@@ -49,7 +51,7 @@ const ReservationCardUser = (props) => {
     }, [])
 
     // TODO: Replace this with actual url to link this component to the corresponding property page
-    const url = "/property/3"
+    const url = `/property/${r.to_book_property}`
 
     return (
         <div className="w-5/6 justify-center py-2 drop-shadow-lg">
@@ -75,7 +77,9 @@ const ReservationCardUser = (props) => {
                         </button>
                     </Link>
                     <button
-                        className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36 mt-2">
+                        className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36 mt-2"
+                        onClick={handleCancel}
+                    >
                         Cancel
                     </button>
                 </div>

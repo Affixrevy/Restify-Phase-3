@@ -7,18 +7,95 @@ const PopUpConfirm = (props) => {
     const title = props.title;
     const text = props.text;
 
+    async function handleAccept() {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`http://localhost:8000/reservations/${props.id}/update/`, {
+            method: "PATCH",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                status: "confirmed"
+            })
+        })
+    }
+
+    async function handleDeny() {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`http://localhost:8000/reservations/${props.id}/update/`, {
+            method: "PATCH",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                status: "denied"
+            })
+        })
+
+        const responseData = await response.json()
+        console.log(responseData)
+    }
+
+    async function handleTerminate() {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`http://localhost:8000/reservations/${props.id}/terminate/`, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        })
+    }
+
+    async function handleCancelAccept() {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`http://localhost:8000/reservations/${props.id}/confirmcancel/`, {
+            method: "PATCH",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        })
+    }
+
+    async function handleCancelDeny() {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`http://localhost:8000/reservations/${props.id}/deny-cancel/`, {
+            method: "PATCH",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        })
+    }
+
     const handleSubmit = () => {
-        if (status === 1) {
-            setStatus(2);
+        if (props.text === "Accept") {
+            handleAccept();
+        } else if (props.text === "Deny") {
+            handleDeny();
+        } else if (props.text === "Terminate") {
+            // This works
+            handleTerminate()
+        } else if (props.text === "Accept Cancel") {
+            handleCancelAccept();
+        } else if (props.text === "Deny Cancel") {
+            handleCancelDeny();
         }
+
         setShowModal(false);
+        props.setRefresh(true);
         console.log(status);
     };
 
     return (
         <div className="relative">
             <button
-                className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36"
+                className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36 z-10"
                 onClick={() => setShowModal(true)}
             >
                 {text}
@@ -33,7 +110,7 @@ const PopUpConfirm = (props) => {
                         className="bg-white p-8 rounded shadow-lg w-80"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <h2 className="text-xl mb-4">{title}</h2>
+                        <h2 className="text-xl mb-4 text-black">{title}</h2>
                         <div className="flex justify-between space-x-3">
                             <button
                                 className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36"
