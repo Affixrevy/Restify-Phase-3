@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
+import PopUpConfirm from "./PopUpConfirm";
 
 const ReservationCardUser = (props) => {
     const [propertyName, setPropertyName] = useState('')
@@ -23,19 +24,6 @@ const ReservationCardUser = (props) => {
         status = "Completed";
     }
 
-    async function handleCancel() {
-        const token = localStorage.getItem('token');
-
-        const response = await fetch(`http://localhost:8000/reservations/${r.id}/cancel/`, {
-            method: "PATCH",
-            headers: {
-                "Authorization": `Bearer ${token}`
-            }
-        })
-
-        console.log(response)
-    }
-
     useEffect(() => {
         async function fetchData() {
             const response = await fetch(`http://localhost:8000/properties/select/${r.to_book_property}/`)
@@ -50,7 +38,6 @@ const ReservationCardUser = (props) => {
         })
     }, [])
 
-    // TODO: Replace this with actual url to link this component to the corresponding property page
     const url = `/property/${r.to_book_property}`
 
     return (
@@ -76,12 +63,11 @@ const ReservationCardUser = (props) => {
                             View Property
                         </button>
                     </Link>
-                    <button
-                        className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36 mt-2"
-                        onClick={handleCancel}
-                    >
-                        Cancel
-                    </button>
+                    <PopUpConfirm
+                        title={"Are you sure that you want to cancel this booking?"}
+                        text={"Cancel"}
+                        id={r.id}
+                    ></PopUpConfirm>
                 </div>
             </div>
         </div>

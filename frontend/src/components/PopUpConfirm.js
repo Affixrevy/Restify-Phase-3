@@ -71,24 +71,40 @@ const PopUpConfirm = (props) => {
                 "Authorization": `Bearer ${token}`,
             }
         })
+
+        const jsonData = await response.json()
+        console.log(jsonData)
+    }
+
+    async function handleCancel() {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`http://localhost:8000/reservations/${props.id}/cancel/`, {
+            method: "PATCH",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+
+        console.log(response)
     }
 
     const handleSubmit = () => {
         if (props.text === "Accept") {
-            handleAccept();
+            handleAccept().then();
         } else if (props.text === "Deny") {
-            handleDeny();
+            handleDeny().then();
         } else if (props.text === "Terminate") {
-            // This works
-            handleTerminate()
+            handleTerminate().then();
         } else if (props.text === "Accept Cancel") {
-            handleCancelAccept();
+            handleCancelAccept().then();
         } else if (props.text === "Deny Cancel") {
-            handleCancelDeny();
+            handleCancelDeny().then();
+        } else if (props.text === "Cancel") {
+            handleCancel().then();
         }
 
         setShowModal(false);
-        props.setRefresh(true);
         console.log(status);
     };
 
@@ -103,7 +119,7 @@ const PopUpConfirm = (props) => {
 
             {showModal && (
                 <div
-                    className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center z-60"
+                    className="fixed top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50 flex justify-center items-center z-50"
                     onClick={() => setShowModal(false)}
                 >
                     <div

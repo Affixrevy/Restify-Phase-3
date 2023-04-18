@@ -52,7 +52,7 @@ const Profile = () => {
         }
 
         async function fetchListings() {
-            const response = await fetch(`http://localhost:8000/reservations/owner/view/`, {
+            const response = await fetch(`http://localhost:8000/reservations/host/view/`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -247,6 +247,7 @@ const Profile = () => {
                             <h2 className="text-xl font-semibold text-FONT_COLOR_1">
                                 My Bookings
                             </h2>
+                            {}
                             <Link to={"/"}>
                                 <button
                                     className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 rounded-full font-bold"
@@ -257,7 +258,7 @@ const Profile = () => {
                         </div>
                         <div className="items-center">
                             {userListings.map((listing, index) => {
-                                return <ReservationCardOwner listing={listing} chosen={3}/>
+                                return <ReservationCardOwner listing={listing}/>
                             })}
                         </div>
                     </div>
