@@ -105,6 +105,25 @@ class ReservationUpdateView(generics.UpdateAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class ReservationCompleteView(generics.UpdateAPIView):
+    queryset = Reservation.objects
+    serializer_class = ReservationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        reservation = self.get_object()
+        owner = request.user
+
+        if owner != reservation.to_book_property.owner:
+            return Response({'error': 'You are not authorized to perform this action.'},
+                            status=status.HTTP_403_FORBIDDEN)
+
+        reservation.status = 'completed'
+        reservation.save()
+        serializer = self.serializer_class(reservation)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 class ReservationTerminateView(generics.UpdateAPIView):
     serializer_class = ReservationSerializer
     permission_classes = [IsAuthenticated]
@@ -239,7 +258,7 @@ class ReservationDenyCancelView(generics.UpdateAPIView):
         reservation.save()
 
         # Update the availability of the property for the cancelled reservation's date range
-        reservation_property = reservation.property
+        reservation_property = reservation.to_book_property
         reservation_property.update_availability(reservation.start_date, reservation.end_date)
 
         serializer = self.get_serializer(reservation)
