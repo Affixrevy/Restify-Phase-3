@@ -95,13 +95,11 @@ const ReservationCardOwner = (props) => {
                             <PopUpConfirm
                                 title={"Are you sure that you want to accept this booking?"}
                                 text={"Accept"}
-                                setRefresh={setRefresh}
                                 id={listing.id}
                             ></PopUpConfirm>
                             <PopUpConfirm
                                 title={"Are you sure that you want to deny this booking?"}
                                 text={"Deny"}
-                                setRefresh={setRefresh}
                                 id={listing.id}
                             ></PopUpConfirm>
                         </>
@@ -112,7 +110,6 @@ const ReservationCardOwner = (props) => {
                             <PopUpConfirm
                                 title={"Are you sure that you want to terminate this booking?"}
                                 text={"Terminate"}
-                                setRefresh={setRefresh}
                                 id={listing.id}
                             ></PopUpConfirm>
                         </>
@@ -128,13 +125,11 @@ const ReservationCardOwner = (props) => {
                             <PopUpConfirm
                                 title={"Are you sure that you want to accept this cancellation?"}
                                 text={"Accept Cancel"}
-                                setRefresh={setRefresh}
                                 id={listing.id}
                             ></PopUpConfirm>
                             <PopUpConfirm
                                 title={"Are you sure that you want to deny this cancellation?"}
                                 text={"Deny Cancel"}
-                                setRefresh={setRefresh}
                                 id={listing.id}
                             ></PopUpConfirm>
                         </>
