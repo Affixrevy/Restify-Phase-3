@@ -10,7 +10,7 @@ from .serializers import PropertySerializer, PropertyImageSerializer, DailyPrice
 from .models.property import PropertyModel, PropertyImage, DailyPrice
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import filters
-from django_filters.rest_framework import DjangoFilterBackend, FilterSet, DateFilter, NumberFilter
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet, DateFilter, NumberFilter, CharFilter
 from rest_framework.pagination import PageNumberPagination
 
 
@@ -54,6 +54,8 @@ class PropertyDetailView(generics.RetrieveAPIView):
 
 
 class PropertyFilterSet(FilterSet):
+    country = CharFilter(field_name='country', lookup_expr='exact')
+    num_guests = NumberFilter(field_name='num_guests', lookup_expr='exact')
     start_date = DateFilter(field_name='start_date', lookup_expr='gte')
     end_date = DateFilter(field_name='end_date', lookup_expr='lte')
     min_price = NumberFilter(field_name='price', lookup_expr='gte')
@@ -77,7 +79,7 @@ class PropertyListView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['country', 'start_date', 'end_date', 'price', 'num_guests']
     filterset_class = PropertyFilterSet
-    ordering_fields = ['price', 'start_date']
+    ordering_fields = ['price', 'start_date', 'stars']
     pagination_class = PropertyPagination
 
 

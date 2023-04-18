@@ -16,9 +16,7 @@ const FilterBar = () => {
                 tabIndex="0"
                 className="relative block h-10 px-6 tab rounded-2xl"
             >
-                <Link to={"/login"}>
-                    <span className="text-FONT_COLOR_1">Popular</span>
-                </Link>
+                <span className="text-FONT_COLOR_1">Popular</span>
             </button>
             <button
                 role="tab"
@@ -28,9 +26,7 @@ const FilterBar = () => {
                 tabIndex="1"
                 className="relative block h-10 px-6 tab rounded-2xl"
             >
-                <Link to={"/login"}>
-                    <span className="text-FONT_COLOR_1">Price</span>
-                </Link>
+                <span className="text-FONT_COLOR_1">Price</span>
             </button>
             <button
                 role="tab"
@@ -40,9 +36,7 @@ const FilterBar = () => {
                 tabIndex="2"
                 className="relative block h-10 px-6 tab rounded-2xl"
             >
-                <Link to={"/login"}>
-                    <span className="text-FONT_COLOR_1">Rating</span>
-                </Link>
+                <span className="text-FONT_COLOR_1">Rating</span>
             </button>
         </div>
     );
