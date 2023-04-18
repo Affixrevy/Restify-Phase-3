@@ -6,18 +6,24 @@ import {Link, useNavigate} from "react-router-dom";
 import img from "../assets/img/mansion/mansion.webp";
 import PropertyCard from "../components/PropertyCard";
 import ReservationCardUser from "../components/ReservationCardUser";
+import InfiniteScroll from "react-infinite-scroll-component";
+import ReservationCardOwner from "../components/ReservationCardOwner";
 
 const Profile = () => {
     const [activeTab, setActiveTab] = useState(1);
-
     const [userProfile, setUserProfile] = useState({});
-    const [userReservations, setUserReservations] = useState([])
+    const [userReservations, setUserReservations] = useState([]);
+    const [userListings, setUserListings] = useState([]);
     const [propertyDescription, setPropertyDescription] = useState([])
+
+    // Variables for loading the listings
+    const [items, setItems] = useState([]);
+    const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
 
-        async function fetchProfile() {
+        async function fetchProfile(token) {
             const response = await fetch(`http://localhost:8000/api/profile/`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -45,53 +51,54 @@ const Profile = () => {
             setUserReservations(responseData.results)
         }
 
-        async function fetchProperties() {
+        async function fetchListings() {
+            const response = await fetch(`http://localhost:8000/reservations/owner/view/`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            })
+            const responseData = await response.json()
+            console.log(responseData)
 
+            setUserListings(responseData.results)
         }
 
-        fetchProfile().then(r => {
+        fetchProfile(token).then(r => {
+            console.log("Fetched all user information")
         })
         fetchReservations().then(r => {
-            console.log("All Fetched")
+            console.log("Fetched all reservations")
         })
-    }, [])
+        fetchListings().then(r => {
+            console.log("All Fetched all listings")
+        })
+        fetchData(1, userProfile.id).then(r => {
+            console.log("Fetched all data")
+        });
+    }, [userProfile.id]);
+
+    const fetchData = async (page, userId) => {
+        try {
+            const response = await fetch(`http://localhost:8000/properties/view/?page=${page}`);
+            const data = await response.json();
+            if (data.results && Array.isArray(data.results)) {
+                const userProperties = data.results.filter(property => property.owner === userId);
+                setItems(prevItems => [...prevItems, ...userProperties]);
+                setHasMore(data.next !== null);
+            } else {
+                setHasMore(false);
+                console.error('Unexpected data format:', data);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     function maskEmail(email) {
         const [name, domain] = email.split('@')
         const maskedName = `${name.slice(0, 2)}${'*'.repeat(name.length - 2)}`
         return `${maskedName}@${domain}`
     }
-
-    const listings = [
-        {
-            main_pic: img,
-            name: "White House",
-            city: "Washington DC",
-            province: "Washington",
-            price: "1"
-        },
-        {
-            main_pic: img,
-            name: "CN Tower",
-            city: "Toronto",
-            province: "Ontario",
-            price: "2"
-        },
-        {
-            main_pic: img,
-            name: "Stonehenge",
-            city: "Salisbury Plain",
-            province: "Wiltshire",
-            price: "3"
-        },
-        {
-            main_pic: img,
-            name: "Giza Pyramids",
-            city: "Giza",
-            province: "Greater Cairo",
-            price: "4"
-        },
-    ];
 
     const navigate = useNavigate();
 
@@ -203,7 +210,7 @@ const Profile = () => {
                 <div className="mt-6 relative rounded-2xl bg-BACKGROUND_COLOR_2">
                     <div
                         role="tabpanel"
-                        id="panel-3"
+                        id="panel-2"
                         className="tab-panel p-6 transition duration-300 flex flex-col space-y-4"
                     >
                         <div className="flex justify-between items-center">
@@ -220,8 +227,37 @@ const Profile = () => {
                         </div>
                         <div className="flex flex-col items-center">
                             {userReservations.map((reservation, index) => {
-                                console.log("hi")
-                                return <ReservationCardUser reservation={reservation} key={index}/>
+                                return <ReservationCardUser reservation={reservation}/>
+                            })}
+                        </div>
+                    </div>
+                </div>
+            )
+        },
+        {
+            title: "Bookings",
+            content : (
+                <div className="mt-6 relative rounded-2xl bg-BACKGROUND_COLOR_2">
+                    <div
+                        role="tabpanel"
+                        id="panel-3"
+                        className="tab-panel p-6 transition duration-300 flex flex-col space-y-4"
+                    >
+                        <div className="flex justify-between items-center">
+                            <h2 className="text-xl font-semibold text-FONT_COLOR_1">
+                                My Bookings
+                            </h2>
+                            <Link to={"/"}>
+                                <button
+                                    className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 rounded-full font-bold"
+                                >
+                                    + Add
+                                </button>
+                            </Link>
+                        </div>
+                        <div className="items-center">
+                            {userListings.map((listing, index) => {
+                                return <ReservationCardOwner listing={listing} chosen={3}/>
                             })}
                         </div>
                     </div>
@@ -233,42 +269,41 @@ const Profile = () => {
             content: (
                 <div
                     role="tabpanel"
-                    id="panel-3"
+                    id="panel-4"
                     className="tab-panel p-6 transition duration-300 flex flex-col space-y-4"
                 >
                     <h2 className="text-xl font-semibold text-FONT_COLOR_1">
                         My Listings
                     </h2>
-                    {listings.length > 0 ? (
-                        <>
-                            <Link to={"/listing"}>
-                                <button
-                                    className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 rounded-full font-bold"
+                        {items.length > 0 ? (
+                                <InfiniteScroll
+                                    next={() => fetchData(items.length / 8 + 1, userProfile.id)}
+                                    hasMore={hasMore}
+                                    loader={<h4 className="text-FONT_COLOR_2"></h4>}
+                                    dataLength={items.length}
+                                    scrollThreshold={0.9}
+                                    scrollableTarget="window"
+                                    endMessage={<p className="mt-2 p-2 text-FONT_COLOR_2 text-sm text-center justify-center">
+                                        No more listings
+                                    </p>}
                                 >
-                                    <div className="block overflow-auto">+ Add</div>
-                                </button>
-                            </Link>
-                            <main className="flex lg:mt-4 py-3 mx-auto w-full">
-                                <div className="grid xl:grid-cols-2 gap-4 w-full">
-                                    {listings.map(listing => (
-                                        <PropertyCard key={listing.name} property={listing} url={"/manage-property"}
-                                                      color={1}/>
-                                    ))}
-                                </div>
-                            </main>
-                        </>
-                    ) : (
-                        <div>
-                            <p className="mt-4 text-FONT_COLOR_2">
-                                This tab is for properties owners.
-                                <Link className="text-ACCENT_COLOR" to={"/listing"}> Create your listing today to become
-                                    an
-                                    owner!</Link>
-                            </p>
-                        </div>
-                    )}
+                                    <div className="w-full space-y-4">
+                                        {items.map((item, index) => {
+                                            return <PropertyCard key={index} property={item} url={`/manage-property/${item.id}`} color={1}></PropertyCard>
+                                        })}
+                                    </div>
+                                </InfiniteScroll>
+                        ) : (
+                            <div>
+                                <p className="mt-4 text-FONT_COLOR_2">
+                                    This tab is for properties owners.
+                                    <Link className="text-ACCENT_COLOR" to={"/listing"}> Create your listing today to become
+                                        an
+                                        owner!</Link>
+                                </p>
+                            </div>
+                        )}
                 </div>
-
             )
         }
     ];
@@ -281,7 +316,7 @@ const Profile = () => {
                     <div
                         role="tablist"
                         aria-label="tabs"
-                        className="relative mx-auto h-12 grid grid-cols-3 items-center px-[3px] rounded-2xl bg-BACKGROUND_COLOR_2 overflow-hidden shadow-2xl shadow-900/20 transition"
+                        className="relative mx-auto h-12 grid grid-cols-4 items-center px-[3px] rounded-2xl bg-BACKGROUND_COLOR_2 overflow-hidden shadow-2xl shadow-900/20 transition"
                     >
                         {tabPanels.map((tabPanel, index) => (
                             <button
