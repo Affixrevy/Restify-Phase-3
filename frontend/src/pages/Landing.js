@@ -40,7 +40,7 @@ class Landing extends React.Component {
             ordering = "price"
         }
         else if (ordering === "tab-3") {
-            ordering = "rating"
+            ordering = "stars"
         }
         else {
             ordering = ""

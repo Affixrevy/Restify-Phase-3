@@ -79,7 +79,7 @@ class PropertyListView(generics.ListAPIView):
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['country', 'start_date', 'end_date', 'price', 'num_guests']
     filterset_class = PropertyFilterSet
-    ordering_fields = ['price', 'start_date']
+    ordering_fields = ['price', 'start_date', 'stars']
     pagination_class = PropertyPagination
 
 
