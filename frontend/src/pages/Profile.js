@@ -245,7 +245,7 @@ const Profile = () => {
                     >
                         <div className="flex justify-between items-center">
                             <h2 className="text-xl font-semibold text-FONT_COLOR_1">
-                                My Bookings
+                                Upcoming Bookings
                             </h2>
                         </div>
                             {userListings.length > 0 ? (
