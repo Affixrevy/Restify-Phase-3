@@ -19,6 +19,7 @@ class NotificationsDetailSerializer(ModelSerializer):
     class Meta:
         model = Notifications
         fields = [
+            'id',
             'sender_type',
             'sender_id',
             'receiver_id',
