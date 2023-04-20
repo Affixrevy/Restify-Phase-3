@@ -68,7 +68,8 @@ const ViewGuest = () => {
                             </div>
                         </div>
                         {comments.map((comment, index) => (
-                            <CommentBox key={index} username={comment.username} content={comment.content} />
+                            // <CommentBox key={index} username={comment.username} content={comment.content} />
+                            <></>
                         ))}
                     </div>
                 </div>

@@ -24,19 +24,6 @@ const Property = () => {
             .catch();
 
         const userID = localStorage.getItem('userID')
-
-        async function fetchData() {
-            const response = await fetch(`http://localhost:8000/properties/select/${id}/`)
-            const responseData = await response.json();
-            console.log(responseData.owner)
-            const owner = responseData.owner
-            console.log(ownerId)
-        }
-
-        fetchData().then(r => {
-                console.log(ownerId)
-            }
-        );
         }, [id]);
     //     async function fetchThreads() {
     //         const response = await fetch(`http://localhost:8000/comments/property/${id}/`);
