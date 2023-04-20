@@ -40,9 +40,11 @@ const Login = () => {
                 // navigate("/login")
                 console.log('you\'re in')
                 const token = data.access;
+                const refresh = data.refresh
                 console.log(token)
 
                 localStorage.setItem('token', token)
+                localStorage.setItem('refresh', refresh)
 
                 async function fetchProfile() {
                     const response = await fetch(`http://localhost:8000/api/profile/`, {

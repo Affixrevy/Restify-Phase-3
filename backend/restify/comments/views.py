@@ -81,7 +81,7 @@ class CreateCommentView(generics.CreateAPIView):
         request_data['date_time'] = timezone.now().isoformat()
 
         # Add user to request
-        request_data['author'] = request.user.id
+        request_data['comment_author'] = request.user.id
 
         # Create the comment
         comment_serializer = self.get_serializer(data=request_data)
@@ -141,7 +141,7 @@ class CreateReplyView(generics.CreateAPIView):
             request_data['date_time'] = timezone.now().isoformat()
 
             # Add user to request
-            request_data['author'] = request.user.id
+            request_data['comment_author'] = request.user.id
 
             # Create the comment
             comment_serializer = self.get_serializer(data=request_data)
@@ -158,7 +158,7 @@ class CreateReplyView(generics.CreateAPIView):
             request_data['date_time'] = timezone.now().isoformat()
 
             # Add user to request
-            request_data['author'] = request.user.id
+            request_data['comment_author'] = request.user.id
 
             # Create the comment
             comment_serializer = self.get_serializer(data=request_data)

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import NavBar from "../components/NavBar";
 import SubmitProfilePicture from "../components/SubmitProfilePicture";
 import image from "../assets/img/account.png";
-import {Link, useNavigate} from "react-router-dom";
+import {json, Link, useNavigate} from "react-router-dom";
 import img from "../assets/img/mansion/mansion.webp";
 import PropertyCard from "../components/PropertyCard";
 import ReservationCardUser from "../components/ReservationCardUser";
@@ -19,9 +19,58 @@ const Profile = () => {
     // Variables for loading the listings
     const [items, setItems] = useState([]);
     const [hasMore, setHasMore] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
+
+        if (token === null) {
+            navigate("/")
+            return
+        }
+
+        async function confirmToken() {
+
+            const data = {
+                token: token
+            }
+
+            const response = await fetch(`http://localhost:8000/api/token/verify/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+
+            if (response.status === 401) {
+                console.log("bad bad bad")
+                const refresh = localStorage.getItem('refresh');
+
+                if (refresh === null) {
+                    navigate("/")
+                    return
+                }
+
+                const refreshData = {refresh: refresh}
+
+                const refreshResponse = await fetch(`http://localhost:8000/api/token/refresh/`, {
+                    methods: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(refreshData)
+                })
+
+                if (refreshResponse.ok) {
+                    console.log(refreshResponse.json())
+                } else {
+                    console.log(response.json())
+                }
+            }
+
+            console.log(await response)
+        }
 
         async function fetchProfile(token) {
             const response = await fetch(`http://localhost:8000/api/profile/`, {
@@ -33,8 +82,6 @@ const Profile = () => {
 
             console.log("FETCH DATA")
             console.log(responseData)
-
-            // responseData.email = maskEmail(responseData.email)
 
             setUserProfile(responseData)
         }
@@ -63,18 +110,21 @@ const Profile = () => {
             setUserListings(responseData.results)
         }
 
-        fetchProfile(token).then(r => {
-            console.log("Fetched all user information")
+        confirmToken().then(r => {
+            fetchProfile(token).then(r => {
+                console.log("Fetched all user information")
+            })
+            fetchReservations().then(r => {
+                console.log("Fetched all reservations")
+            })
+            fetchListings().then(r => {
+                console.log("All Fetched all listings")
+            })
+            fetchData(1, userProfile.id).then(r => {
+                console.log("Fetched all data")
+            });
         })
-        fetchReservations().then(r => {
-            console.log("Fetched all reservations")
-        })
-        fetchListings().then(r => {
-            console.log("All Fetched all listings")
-        })
-        fetchData(1, userProfile.id).then(r => {
-            console.log("Fetched all data")
-        });
+
     }, [userProfile.id]);
 
     const fetchData = async (page, userId) => {
@@ -100,11 +150,11 @@ const Profile = () => {
         return `${maskedName}@${domain}`
     }
 
-    const navigate = useNavigate();
 
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('userID');
+        localStorage.removeItem('refresh');
         // perform any additional logout tasks
     };
     const handleLogout = () => {
@@ -187,23 +237,6 @@ const Profile = () => {
                 </div>
             )
         },
-        // {
-        //     title: "Comment",
-        //     content: (
-        //         <div className="mt-6 relative rounded-2xl bg-BACKGROUND_COLOR_2">
-        //             <div
-        //                 role="tabpanel"
-        //                 id="panel-2"
-        //                 className="tab-panel p-6 transition duration-300 flex flex-col space-y-4 divide-y-2"
-        //             >
-        //                 <h2 className="text-xl font-semibold text-FONT_COLOR_1">
-        //                     My Comments
-        //                 </h2>
-        //                 <p className="mt-4 text-FONT_COLOR_2">No Comments</p>
-        //             </div>
-        //         </div>
-        //     )
-        // },
         {
             title: "Reservations",
             content: (
@@ -236,7 +269,7 @@ const Profile = () => {
         },
         {
             title: "Bookings",
-            content : (
+            content: (
                 <div className="mt-6 relative rounded-2xl bg-BACKGROUND_COLOR_2">
                     <div
                         role="tabpanel"
@@ -248,22 +281,23 @@ const Profile = () => {
                                 My Bookings
                             </h2>
                         </div>
-                            {userListings.length > 0 ? (
-                                <div className="items-center">
-                                    {userListings.map((listing, index) => {
-                                        return <ReservationCardOwner listing={listing}/>
-                                    })}
-                                </div>
-                            ) : (
-                                <div>
-                                    <p className="mt-4 text-FONT_COLOR_2">
-                                        This tab is for properties owners.
-                                        <Link className="text-ACCENT_COLOR" to={"/listing"}> Create your listing today to become
-                                            an
-                                            owner!</Link>
-                                    </p>
-                                </div>
-                            )}
+                        {userListings.length > 0 ? (
+                            <div className="items-center">
+                                {userListings.map((listing, index) => {
+                                    return <ReservationCardOwner listing={listing}/>
+                                })}
+                            </div>
+                        ) : (
+                            <div>
+                                <p className="mt-4 text-FONT_COLOR_2">
+                                    This tab is for properties owners.
+                                    <Link className="text-ACCENT_COLOR" to={"/listing"}> Create your listing today to
+                                        become
+                                        an
+                                        owner!</Link>
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
             )
@@ -279,34 +313,35 @@ const Profile = () => {
                     <h2 className="text-xl font-semibold text-FONT_COLOR_1">
                         My Listings
                     </h2>
-                        {items.length > 0 ? (
-                                <InfiniteScroll
-                                    next={() => fetchData(items.length / 8 + 1, userProfile.id)}
-                                    hasMore={hasMore}
-                                    loader={<h4 className="text-FONT_COLOR_2"></h4>}
-                                    dataLength={items.length}
-                                    scrollThreshold={0.9}
-                                    scrollableTarget="window"
-                                    endMessage={<p className="mt-2 p-2 text-FONT_COLOR_2 text-sm text-center justify-center">
-                                        No more listings
-                                    </p>}
-                                >
-                                    <div className="w-full space-y-4">
-                                        {items.map((item, index) => {
-                                            return <PropertyCard key={index} property={item} url={`/manage-property/${item.id}`} color={1}></PropertyCard>
-                                        })}
-                                    </div>
-                                </InfiniteScroll>
-                        ) : (
-                            <div>
-                                <p className="mt-4 text-FONT_COLOR_2">
-                                    This tab is for properties owners.
-                                    <Link className="text-ACCENT_COLOR" to={"/listing"}> Create your listing today to become
-                                        an
-                                        owner!</Link>
-                                </p>
+                    {items.length > 0 ? (
+                        <InfiniteScroll
+                            next={() => fetchData(items.length / 8 + 1, userProfile.id)}
+                            hasMore={hasMore}
+                            loader={<h4 className="text-FONT_COLOR_2"></h4>}
+                            dataLength={items.length}
+                            scrollThreshold={0.9}
+                            scrollableTarget="window"
+                            endMessage={<p className="mt-2 p-2 text-FONT_COLOR_2 text-sm text-center justify-center">
+                                No more listings
+                            </p>}
+                        >
+                            <div className="w-full space-y-4">
+                                {items.map((item, index) => {
+                                    return <PropertyCard key={index} property={item} url={`/manage-property/${item.id}`}
+                                                         color={1}></PropertyCard>
+                                })}
                             </div>
-                        )}
+                        </InfiniteScroll>
+                    ) : (
+                        <div>
+                            <p className="mt-4 text-FONT_COLOR_2">
+                                This tab is for properties owners.
+                                <Link className="text-ACCENT_COLOR" to={"/listing"}> Create your listing today to become
+                                    an
+                                    owner!</Link>
+                            </p>
+                        </div>
+                    )}
                 </div>
             )
         }

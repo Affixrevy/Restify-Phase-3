@@ -50,12 +50,13 @@
 from django.contrib.contenttypes.models import ContentType
 from rest_framework import serializers
 from .models import Comments, Thread
+from api.serializers import PublicUserSerializer
 
 
 class CommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comments
-        fields = ('content', 'author', 'date_time')
+        fields = ('content', 'comment_author', 'date_time')
 
 
 # TODO add id to a thread field
@@ -72,6 +73,14 @@ class ThreadSerializer(serializers.ModelSerializer):
     #     ret = super().to_internal_value(data)
     #     ret['root_comment'] = Comments.objects.get(pk=ret['root_comment'])
     #     return ret
+
+
+class ViewComment(serializers.ModelSerializer):
+    comment_author = PublicUserSerializer()
+
+    class Meta:
+        model = Comments
+        fields = ('comment_author', 'date_time', 'content')
 
 
 class ViewThread(serializers.ModelSerializer):

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import ImageGallery from "../components/ImageGallery";
 import NavBar from "../components/NavBar";
 import { useParams } from "react-router-dom";
@@ -29,6 +29,19 @@ const Property = () => {
     ]);
     const [showCommentBox, setShowCommentBox] = useState(false);
     const [commentContent, setCommentContent] = useState('');
+    // TODO: fetch the data and change this threads variable
+    const [threads, setThreads] = useState([{}]);
+
+    useEffect(() => {
+        async function fetchThreads() {
+            const response = await fetch(`http://localhost:8000/comments/property/${id}/`);
+            const responseJson = await response.json();
+            console.log(responseJson);
+            setThreads(responseJson);
+        }
+
+        fetchThreads()
+    }, [])
 
     const handleComment = () => {
         if (commentContent.trim() === '') return;
@@ -76,8 +89,8 @@ const Property = () => {
                                 )}
                             </div>
                         </div>
-                        {comments.map((comment, index) => (
-                            <CommentBox key={index} username={comment.username} content={comment.content} />
+                        {threads.map((thread, index) => (
+                            <CommentBox key={index} thread={thread} />
                         ))}
                     </div>
                 </div>
