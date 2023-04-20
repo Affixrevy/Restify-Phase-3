@@ -7,6 +7,67 @@ const PopUpConfirm = (props) => {
     const title = props.title;
     const text = props.text;
 
+    function sendNotif(type) {
+        const token = localStorage.getItem('token');
+
+        const user = fetch(`http://localhost:8000/api/profile/`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+        
+        const sender = user.then(response => {
+            return response.json()
+        }).then(data => {
+            return data
+        });
+
+        const reservation = fetch(`http://localhost:8000/reservations/select/${props.id}/`);
+
+        var rDdata = reservation.then(response => {
+            return response.json()
+        }).then(data => {
+            console.log(data[0])
+            return data[0]
+        });
+
+        const formData = new FormData();
+
+        Promise.all([sender, rDdata]).then((values => {
+            let sender = values[0];
+            let rData = values[1];
+
+            console.log(sender.id);
+            console.log(rData.user);
+
+            formData.append("sender_type", 7);
+            formData.append("sender_id", sender.id);
+            formData.append("receiver_id", rData.user);
+            formData.append("reservation", false);
+            formData.append("concellation", false);
+            formData.append("comment", true);
+
+            if (type === 1) {
+                formData.append("content", sender.first_name + " " + sender.last_name + " has accepted your reservation request.");
+            }
+            if (type === 0) {
+                formData.append("content", sender.first_name + " " + sender.last_name + " has denied your reservation request.");
+            }
+
+            fetch("http://localhost:8000/notifications/create/", {
+                method: 'POST',
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: formData
+            }).then(response => {
+                return response.json()
+            }).then(data => {
+                console.log(data)
+            });
+        }));
+    }
+
     async function handleAccept() {
         const token = localStorage.getItem('token');
 
@@ -20,6 +81,8 @@ const PopUpConfirm = (props) => {
                 status: "confirmed"
             })
         })
+
+        sendNotif(1)
     }
 
     async function handleDeny() {
@@ -38,6 +101,8 @@ const PopUpConfirm = (props) => {
 
         const responseData = await response.json()
         console.log(responseData)
+
+        sendNotif(0)
     }
 
     async function handleTerminate() {

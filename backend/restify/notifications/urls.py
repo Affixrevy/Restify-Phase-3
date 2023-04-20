@@ -5,7 +5,8 @@ from .views import (
     NotificationsCreateAPI,
     NotificationListAPIView,
     NotificationsDeleteAPIView,
-    NotificationsDetailAPIView
+    NotificationsDetailAPIView,
+    NotificationsDeleteAllAPIView
 )
 
 app_name = 'notifications'
@@ -13,6 +14,7 @@ app_name = 'notifications'
 urlpatterns = [
     path('view/', NotificationListAPIView.as_view()),
     path('create/', NotificationsCreateAPI.as_view()),
-    path('delete/', NotificationsDeleteAPIView.as_view()),
-    path('<receiver_id>/', NotificationsDetailAPIView.as_view())
+    path('delete/<pk>/', NotificationsDeleteAPIView.as_view()),
+    path('<receiver_id>/', NotificationsDetailAPIView.as_view()),
+    path('delete/all/<receiver_id>/', NotificationsDeleteAllAPIView.as_view()),
 ]

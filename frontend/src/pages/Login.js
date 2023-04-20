@@ -41,7 +41,8 @@ const Login = () => {
                 console.log('you\'re in')
                 const token = data.access;
                 const refresh = data.refresh
-                console.log(token)
+                // lmao you can't just print out token that's a huge security hazard
+                // console.log(token)
 
                 localStorage.setItem('token', token)
                 localStorage.setItem('refresh', refresh)

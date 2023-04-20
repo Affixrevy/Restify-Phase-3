@@ -24,7 +24,18 @@ class NotificationListAPIView(ListAPIView):
 
 class NotificationsDeleteAPIView(DestroyAPIView):
     serializer_class = NotificationsSerializer
-    queryset = Notifications.objects.all()
+
+    def get_queryset(self):
+        notif_id = self.kwargs['pk']
+        return Notifications.objects.filter(pk=notif_id)
+
+
+class NotificationsDeleteAllAPIView(DestroyAPIView):
+    serializer_class = NotificationsSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs['pk']
+        return Notifications.objects.filter(reciever_id=user_id)
 
 
 class NotificationsDetailAPIView(ListAPIView):

@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {Link} from "react-router-dom";
 import account from "../assets/img/account_circle_white_48dp.svg"
 import {default as NotificationDropdown} from "./NotificationDropdown.js"
 
 const NavBar = () => {
-    const notifications = [
-        {sender: "Harry"},
-        {sender: "Arthur"},
-        {sender: "Thomas"},
-        {sender: "Vahid"}
-    ];
+
+    // const notifications = [
+    //     {sender: "Harry"},
+    //     {sender: "Arthur"},
+    //     {sender: "Thomas"},
+    //     {sender: "Vahid"}
+    // ];
 
     const isLoggedIn = () => {
         const token = localStorage.getItem('token');
@@ -27,7 +28,7 @@ const NavBar = () => {
                     <div className="flex w-40 justify-evenly">
                         {userIsLoggedIn ? (
                             <>
-                                <NotificationDropdown notifications={notifications}></NotificationDropdown>
+                                <NotificationDropdown></NotificationDropdown>
                                 <Link to="/profile" className="bg-BACKGROUND_COLOR_2 rounded-full w-10 h-10 pt-3 z-50">
                                     <img src={account} alt={""}/>
                                 </Link>
