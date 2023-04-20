@@ -4,6 +4,7 @@ const CommentBox = (props) => {
     // Variables passed in from the previous page
     const thread = props.thread;
     const id = props.id;
+    const user = props.user;
     const rootComment = thread.root_comment;
     const ownerReply = thread.owner_reply;
     const userReply = thread.user_reply;
@@ -86,12 +87,14 @@ const CommentBox = (props) => {
                 </h2>
                 {/*{(thread.state !== 3) && ((userID === rootComment.comment_author) || (userID === userReply.comment_author)) && (*/}
                 {/*)}*/}
+                {(user === 0) && (
                     <button
                         className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 font-bold py-1 px-4 rounded mr-3 mt-2"
                         onClick={() => setShowReplyBox(!showReplyBox)}
                     >
                         Reply
                     </button>
+                )}
             </div>
             <div className="place-self-center px-3">
             {showReplyBox && (
