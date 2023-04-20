@@ -73,10 +73,55 @@ const CommentBox = (props) => {
         }
     }
 
+    function sendNotif() {
+        const token = localStorage.getItem('token');
+
+        const user = fetch(`http://localhost:8000/api/profile/`, {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+        
+        const sender = user.then(response => {
+            return response.json()
+        }).then(data => {
+            return data
+        });
+
+        const formData = new FormData();
+
+        Promise.all([sender]).then((values => {
+            let sender = values[0];
+
+            console.log(sender.id);
+
+            formData.append("sender_type", 7);
+            formData.append("sender_id", sender.id);
+            formData.append("receiver_id", rootComment.comment_author);
+            formData.append("reservation", false);
+            formData.append("concellation", false);
+            formData.append("comment", true);
+            formData.append("content", sender.first_name + " " + sender.last_name + " replied to your comment.");
+
+            fetch("http://localhost:8000/notifications/create/", {
+                method: 'POST',
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: formData
+            }).then(response => {
+                return response.json()
+            }).then(data => {
+                console.log(data)
+            });
+        }));
+    }
+
     const handleReply = () => {
         if (replyContent.trim() === '') return;
         setShowReplyBox(false);
         createComment().then();
+        sendNotif();
     };
 
     return (
