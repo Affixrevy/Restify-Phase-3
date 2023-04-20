@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const CommentBox = (props) => {
     // Variables passed in from the previous page
     const thread = props.thread;
+    const id = props.id;
     const rootComment = thread.root_comment;
     const ownerReply = thread.owner_reply;
     const userReply = thread.user_reply;
@@ -19,12 +20,9 @@ const CommentBox = (props) => {
     async function fetchOwner() {
         const response = await fetch(`http://localhost:8000/api/users/${ownerReply.comment_author}/`);
         const responseData = await response.json();
-        // console.log(responseData);
         setOwnerFirst(responseData.first_name);
         setOwnerLast(responseData.last_name);
     }
-
-    fetchOwner().then();
 
     //Name of the user
     const [userFirst, setUserFirst] = useState('');
@@ -33,44 +31,69 @@ const CommentBox = (props) => {
     async function fetchUser() {
         const response = await fetch(`http://localhost:8000/api/users/${rootComment.comment_author}/`);
         const responseData = await response.json();
-        // console.log(responseData);
         setUserFirst(responseData.first_name);
         setUserLast(responseData.last_name);
     }
 
-    fetchUser().then();
+    // handle the different cases for thread
+    if (thread.state < 2) {
+        fetchUser().then();
+    } else if (thread.state >= 2) {
+        fetchOwner().then();
+        fetchUser().then();
+    }
 
     // Getting the current logged-in user
     const userID = localStorage.getItem('userID');
+    const token = localStorage.getItem('token');
+
+    async function createComment(content) {
+        const url = 'http://localhost:8000/comments/reply/';
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                thread_id: thread.id,
+                content: replyContent
+            })
+        };
+
+        try {
+            const response = await fetch(url, options);
+
+            const responseJson = await response.json();
+
+            console.log(responseJson)
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const handleReply = () => {
         if (replyContent.trim() === '') return;
-        setReplies([...replies, replyContent]);
-        setReplyContent('');
         setShowReplyBox(false);
+        createComment().then();
     };
 
     return (
         <div className="rounded-2xl bg-STROKE_COLOR justify-center items-center mb-4">
             <div className="flex justify-between items-center">
                 <h2 className="mb-2 ml-3 mt-2 text-xl font-bold tracking-tight text-FONT_COLOR_1 dark:text-FONT_COLOR_1">
-                    {ownerFirst} {ownerLast}
+                    {userFirst} {userLast}
                 </h2>
-                {(thread.state !== 3) && ((userID === rootComment.comment_author) || (userID === userReply.comment_author)) && (
+                {/*{(thread.state !== 3) && ((userID === rootComment.comment_author) || (userID === userReply.comment_author)) && (*/}
+                {/*)}*/}
                     <button
                         className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 font-bold py-1 px-4 rounded mr-3 mt-2"
                         onClick={() => setShowReplyBox(!showReplyBox)}
                     >
                         Reply
                     </button>
-                )}
             </div>
             <div className="place-self-center px-3">
-                <hr className="my-3 border-0 border-BORDER_COLOR_1 border-solid border-b-2"/>
-            </div>
-            <p className="mb-3 ml-3 font-normal text-FONT_COLOR_2 dark:text-FONT_COLOR_2">
-                {rootComment.content}
-            </p>
             {showReplyBox && (
                 <div className="ml-3 mb-3">
                     <textarea
@@ -87,10 +110,12 @@ const CommentBox = (props) => {
                     </button>
                 </div>
             )}
+                <hr className="my-3 border-0 border-BORDER_COLOR_1 border-solid border-b-2"/>
+            </div>
+            <p className="mb-3 ml-3 font-normal text-FONT_COLOR_2 dark:text-FONT_COLOR_2">
+                {rootComment.content}
+            </p>
             {replies.map((reply, index) => (
-                // <div key={index} className="ml-8 mt-2">
-                //     <CommentBox username={username} content={reply} />
-                // </div>
                 <>
                     {(userID === rootComment.comment_author) && (
                         <>
@@ -133,7 +158,7 @@ const CommentBox = (props) => {
                 <div className="rounded-2xl bg-STROKE_COLOR justify-center items-center mb-4">
                     <div className="flex justify-between items-center">
                         <h2 className="mb-2 ml-3 mt-2 text-xl font-bold tracking-tight text-FONT_COLOR_1 dark:text-FONT_COLOR_1">
-                            {userFirst} {userLast}
+                            {ownerFirst} {ownerLast}
                         </h2>
                     </div>
                     <div className="place-self-center px-3">
@@ -150,7 +175,7 @@ const CommentBox = (props) => {
                     <div className="rounded-2xl bg-STROKE_COLOR justify-center items-center mb-4">
                         <div className="flex justify-between items-center">
                             <h2 className="mb-2 ml-3 mt-2 text-xl font-bold tracking-tight text-FONT_COLOR_1 dark:text-FONT_COLOR_1">
-                                {userFirst} {userLast}
+                                {ownerFirst} {ownerLast}
                             </h2>
                         </div>
                         <div className="place-self-center px-3">
@@ -163,7 +188,7 @@ const CommentBox = (props) => {
                         <div className="rounded-2xl bg-STROKE_COLOR justify-center items-center mb-4">
                             <div className="flex justify-between items-center">
                                 <h2 className="mb-2 ml-3 mt-2 text-xl font-bold tracking-tight text-FONT_COLOR_1 dark:text-FONT_COLOR_1">
-                                    {ownerFirst} {ownerLast}
+                                    {userFirst} {userLast}
                                 </h2>
                             </div>
                             <div className="place-self-center px-3">
