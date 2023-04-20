@@ -22,7 +22,7 @@ const Profile = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        let token = localStorage.getItem('token');
 
         if (token === null) {
             navigate("/")
@@ -55,24 +55,33 @@ const Profile = () => {
                 const refreshData = {refresh: refresh}
 
                 const refreshResponse = await fetch(`http://localhost:8000/api/token/refresh/`, {
-                    methods: "POST",
+                    method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify(refreshData)
                 })
 
-                if (refreshResponse.ok) {
-                    console.log(refreshResponse.json())
+                if (refreshResponse.status === 401) {
+                    handleLogout();
+                    navigate("/login")
                 } else {
-                    console.log(response.json())
+                    const responseJson = await refreshResponse.json();
+
+                    const token = responseJson.access;
+                    localStorage.setItem('token', token)
+
+                    console.log("Refresh still valid")
+                    console.log(responseJson)
                 }
             }
 
-            console.log(await response)
+            // console.log(await response)
         }
 
-        async function fetchProfile(token) {
+        async function fetchProfile() {
+            const token = localStorage.getItem('token');
+
             const response = await fetch(`http://localhost:8000/api/profile/`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -87,6 +96,8 @@ const Profile = () => {
         }
 
         async function fetchReservations() {
+            const token = localStorage.getItem('token');
+
             const response = await fetch(`http://localhost:8000/reservations/guest/view/`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -99,6 +110,8 @@ const Profile = () => {
         }
 
         async function fetchListings() {
+            const token = localStorage.getItem('token');
+
             const response = await fetch(`http://localhost:8000/reservations/host/view/`, {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -111,7 +124,8 @@ const Profile = () => {
         }
 
         confirmToken().then(r => {
-            fetchProfile(token).then(r => {
+            const token = localStorage.getItem('token');
+            fetchProfile().then(r => {
                 console.log("Fetched all user information")
             })
             fetchReservations().then(r => {
