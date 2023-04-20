@@ -6,16 +6,12 @@ import { useParams } from "react-router-dom";
 import CommentBox from "../components/CommentBox";
 
 const Property = () => {
-
     const { id } = useParams();
     const [showCommentBox, setShowCommentBox] = useState(false);
     const [commentContent, setCommentContent] = useState('');
 
-    // TODO: fetch the data and change this threads variable
     const [threads, setThreads] = useState([]);
-    const userID = localStorage.getItem('userID');
     const token = localStorage.getItem('token');
-    const [ownerId, setOwnerId] = useState(-1);
 
     useEffect(() => {
         fetch(`http://localhost:8000/comments/property/${id}/`)
@@ -24,17 +20,7 @@ const Property = () => {
             .catch();
 
         const userID = localStorage.getItem('userID')
-        }, [id]);
-    //     async function fetchThreads() {
-    //         const response = await fetch(`http://localhost:8000/comments/property/${id}/`);
-    //         const responseJson = await response.json();
-    //         console.log(id);
-    //         setThreads(responseJson);
-    //         console.log(threads);
-    //     }
-    //
-    //     fetchThreads()
-    // }, [])
+    }, [id]);
 
     async function createComment() {
         const url = 'http://localhost:8000/comments/create/';
@@ -54,10 +40,6 @@ const Property = () => {
 
         try {
             const response = await fetch(url, options);
-
-            const responseJson = await response.json();
-
-            console.log(responseJson)
         } catch (error) {
             console.error(error);
         }
@@ -68,11 +50,6 @@ const Property = () => {
         setShowCommentBox(false);
         createComment().then();
     };
-
-
-    // useEffect(() => {
-    //
-    // }, [id])
 
     return (
         <div className="h-screen bg-BACKGROUND_COLOR_1">
@@ -114,7 +91,7 @@ const Property = () => {
                             </div>
                         </div>
                         {threads.map((thread, index) => (
-                            <CommentBox key={index} thread={thread} id={id}/>
+                            <CommentBox key={index} thread={thread} id={id} user={0}/>
                         ))}
                     </div>
                 </div>

@@ -7,6 +7,7 @@ const ReservationCardOwner = (props) => {
     const [refresh, setRefresh] = useState(false);
     const [listingName, setListingName] = useState('');
     const listing = props.listing;
+    const fetchUserId = listing.user;
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     console.log(listing);
@@ -53,7 +54,6 @@ const ReservationCardOwner = (props) => {
         }
 
         async function fetchUser() {
-            const fetchUserId = listing.user
             const response = await fetch(`http://localhost:8000/api/users/${fetchUserId}/`)
             const responseData = await response.json()
             console.log(responseData)
@@ -85,7 +85,7 @@ const ReservationCardOwner = (props) => {
                     </div>
                     </div>
                 <div className="flex flex-col items-center py-3">
-                    <Link to={"/view-guest"}>
+                    <Link to={`/view-guest/${fetchUserId}`}>
                         <button className="bg-BUTTON_COLOR hover:bg-ACCENT_COLOR text-white font-bold py-2 px-4 rounded mb-2 md:w-36">
                             Comment
                         </button>

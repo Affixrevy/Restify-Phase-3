@@ -1,34 +1,55 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import NavBar from "../components/NavBar";
 import CommentBox from "../components/CommentBox";
+import {useParams} from "react-router-dom";
 
 const ViewGuest = () => {
+    const { id } = useParams();
     const username = "Harry Duong";
-    const username1 = 'Joe Mama';
-    const username2 = 'Harry Potter';
-    const username3 = 'Peter Parker';
-    const content = "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam ad nobis\n" +
-        "                cupiditate veniam inventore commodi eligendi illo, perspiciatis\n" +
-        "                accusantium consectetur distinctio id culpa minima, in officia dolorum\n" +
-        "                itaque repellendus? Rerum.";
-    const content_special = "Avada kedavra. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam ad nobis\n" +
-        "                cupiditate veniam inventore commodi eligendi illo, perspiciatis\n" +
-        "                accusantium consectetur distinctio id culpa minima, in officia dolorum\n" +
-        "                itaque repellendus? Rerum."
-    const [comments, setComments] = useState([
-        { username: username1, content: content },
-        { username: username2, content: content_special },
-        { username: username3, content: content },
-    ]);
+
     const [showCommentBox, setShowCommentBox] = useState(false);
     const [commentContent, setCommentContent] = useState('');
 
+    const [comments, setComments] = useState([]);
+    const token = localStorage.getItem('token');
+
+    useEffect(() => {
+        fetch(`http://localhost:8000/comments/user/${id}/`)
+            .then(response => response.json())
+            .then(jsonData => setComments(jsonData))
+            .catch();
+
+        const userID = localStorage.getItem('userID')
+    }, [id]);
+
+    async function createComment() {
+        const url = 'http://localhost:8000/comments/create/';
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                subject_type: "user",
+                subject_id: id,
+                reservation_id: 2,
+                content: commentContent
+            })
+        };
+
+        try {
+            const response = await fetch(url, options);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const handleComment = () => {
         if (commentContent.trim() === '') return;
-        setComments([...comments, { username: username, content: commentContent }]);
-        setCommentContent('');
         setShowCommentBox(false);
-    };
+        createComment().then();
+    }
 
     return (
         <>
@@ -68,8 +89,7 @@ const ViewGuest = () => {
                             </div>
                         </div>
                         {comments.map((comment, index) => (
-                            // <CommentBox key={index} username={comment.username} content={comment.content} />
-                            <></>
+                            <CommentBox key={index} thread={comment} id={id} user={1}/>
                         ))}
                     </div>
                 </div>

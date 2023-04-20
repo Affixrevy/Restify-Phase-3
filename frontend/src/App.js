@@ -25,7 +25,7 @@ function App() {
           <Route path="/edit-profile/:id" element={<EditProfile />}/>
           <Route path="/modify-property" element={<ModifyProperty />}/>
           <Route path="/manage-property/:id" element={<ManageProperty />}/>
-          <Route path="/view-guest" element={<ViewGuest />}/>
+          <Route path="/view-guest/:id" element={<ViewGuest />}/>
           <Route path="/listing" element={<Listing />}/>
           <Route path="/listing-addition" element={<ListingAddition />}/>
           {/*TODO: This route is a test route for me pls remove whenever we're done*/}
