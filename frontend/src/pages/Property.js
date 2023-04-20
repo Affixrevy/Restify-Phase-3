@@ -30,24 +30,31 @@ const Property = () => {
     const [showCommentBox, setShowCommentBox] = useState(false);
     const [commentContent, setCommentContent] = useState('');
     // TODO: fetch the data and change this threads variable
-    const [threads, setThreads] = useState([{}]);
+    const [threads, setThreads] = useState([]);
 
     useEffect(() => {
-        async function fetchThreads() {
-            const response = await fetch(`http://localhost:8000/comments/property/${id}/`);
-            const responseJson = await response.json();
-            console.log(responseJson);
-            setThreads(responseJson);
-        }
-
-        fetchThreads()
-    }, [])
+        fetch(`http://localhost:8000/comments/property/${id}/`)
+            .then(response => response.json())
+            .then(jsonData => setThreads(jsonData))
+            .catch();
+    }, []);
+    //     async function fetchThreads() {
+    //         const response = await fetch(`http://localhost:8000/comments/property/${id}/`);
+    //         const responseJson = await response.json();
+    //         console.log(id);
+    //         setThreads(responseJson);
+    //         console.log(threads);
+    //     }
+    //
+    //     fetchThreads()
+    // }, [])
 
     const handleComment = () => {
         if (commentContent.trim() === '') return;
         setComments([...comments, { username: username, content: commentContent }]);
         setCommentContent('');
         setShowCommentBox(false);
+        // console.log(threads[0]);
     };
 
     return (

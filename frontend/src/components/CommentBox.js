@@ -13,13 +13,13 @@ const CommentBox = (props) => {
     const [replyContent, setReplyContent] = useState('');
 
     // Name of the owner
-    const [ownerFirst, setOwnerFirst] = '';
-    const [ownerLast, setOwnerLast] = '';
+    const [ownerFirst, setOwnerFirst] = useState('');
+    const [ownerLast, setOwnerLast] = useState('');
 
     async function fetchOwner() {
         const response = await fetch(`http://localhost:8000/api/users/${ownerReply.comment_author}/`);
         const responseData = await response.json();
-        console.log(responseData);
+        // console.log(responseData);
         setOwnerFirst(responseData.first_name);
         setOwnerLast(responseData.last_name);
     }
@@ -33,7 +33,7 @@ const CommentBox = (props) => {
     async function fetchUser() {
         const response = await fetch(`http://localhost:8000/api/users/${rootComment.comment_author}/`);
         const responseData = await response.json();
-        console.log(responseData);
+        // console.log(responseData);
         setUserFirst(responseData.first_name);
         setUserLast(responseData.last_name);
     }
@@ -87,11 +87,48 @@ const CommentBox = (props) => {
                     </button>
                 </div>
             )}
-            {/*{replies.map((reply, index) => (*/}
-            {/*    <div key={index} className="ml-8 mt-2">*/}
-            {/*        <CommentBox username={username} content={reply} />*/}
-            {/*    </div>*/}
-            {/*))}*/}
+            {replies.map((reply, index) => (
+                // <div key={index} className="ml-8 mt-2">
+                //     <CommentBox username={username} content={reply} />
+                // </div>
+                <>
+                    {(userID === rootComment.comment_author) && (
+                        <>
+                            <div className="rounded-2xl bg-STROKE_COLOR justify-center items-center mb-4">
+                                <div className="flex justify-between items-center">
+                                    <h2 className="mb-2 ml-3 mt-2 text-xl font-bold tracking-tight text-FONT_COLOR_1 dark:text-FONT_COLOR_1">
+                                        {userFirst} {userLast}
+                                    </h2>
+                                </div>
+                                <div className="place-self-center px-3">
+                                    <hr className="my-3 border-0 border-BORDER_COLOR_1 border-solid border-b-2"/>
+                                </div>
+                                <p className="mb-3 ml-3 font-normal text-FONT_COLOR_2 dark:text-FONT_COLOR_2">
+                                    {reply}
+                                </p>
+                            </div>
+                        </>
+                    )}
+
+                    {(userID === ownerReply.comment_author) && (
+                        <>
+                            <div className="rounded-2xl bg-STROKE_COLOR justify-center items-center mb-4">
+                                <div className="flex justify-between items-center">
+                                    <h2 className="mb-2 ml-3 mt-2 text-xl font-bold tracking-tight text-FONT_COLOR_1 dark:text-FONT_COLOR_1">
+                                        {ownerFirst} {ownerLast}
+                                    </h2>
+                                </div>
+                                <div className="place-self-center px-3">
+                                    <hr className="my-3 border-0 border-BORDER_COLOR_1 border-solid border-b-2"/>
+                                </div>
+                                <p className="mb-3 ml-3 font-normal text-FONT_COLOR_2 dark:text-FONT_COLOR_2">
+                                    {reply}
+                                </p>
+                            </div>
+                        </>
+                    )}
+                </>
+            ))}
             {(thread.state === 2) && (
                 <div className="rounded-2xl bg-STROKE_COLOR justify-center items-center mb-4">
                     <div className="flex justify-between items-center">
