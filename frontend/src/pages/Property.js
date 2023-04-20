@@ -8,40 +8,60 @@ import CommentBox from "../components/CommentBox";
 const Property = () => {
 
     const { id } = useParams();
-
-    const username = "Harry Duong";
-    const username1 = 'Joe Mama';
-    const username2 = 'Harry Potter';
-    const username3 = 'Peter Parker';
-    const content = "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam ad nobis\n" +
-        "                cupiditate veniam inventore commodi eligendi illo, perspiciatis\n" +
-        "                accusantium consectetur distinctio id culpa minima, in officia dolorum\n" +
-        "                itaque repellendus? Rerum.";
-    const content_special = "Avada kedavra. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nam ad nobis\n" +
-        "                cupiditate veniam inventore commodi eligendi illo, perspiciatis\n" +
-        "                accusantium consectetur distinctio id culpa minima, in officia dolorum\n" +
-        "                itaque repellendus? Rerum."
-
-    const [comments, setComments] = useState([
-        { username: username1, content: content },
-        { username: username2, content: content_special },
-        { username: username3, content: content },
-    ]);
     const [showCommentBox, setShowCommentBox] = useState(false);
     const [commentContent, setCommentContent] = useState('');
+
     // TODO: fetch the data and change this threads variable
-    const [threads, setThreads] = useState([{}]);
+    const [threads, setThreads] = useState([]);
+    const userID = localStorage.getItem('userID');
+    const token = localStorage.getItem('token');
+    const [ownerId, setOwnerId] = useState(-1);
 
     useEffect(() => {
-        async function fetchThreads() {
-            const response = await fetch(`http://localhost:8000/comments/property/${id}/`);
-            const responseJson = await response.json();
-            console.log(responseJson);
-            setThreads(responseJson);
-        }
+        fetch(`http://localhost:8000/comments/property/${id}/`)
+            .then(response => response.json())
+            .then(jsonData => setThreads(jsonData))
+            .catch();
 
-        fetchThreads()
-    }, [])
+        const userID = localStorage.getItem('userID')
+        }, [id]);
+    //     async function fetchThreads() {
+    //         const response = await fetch(`http://localhost:8000/comments/property/${id}/`);
+    //         const responseJson = await response.json();
+    //         console.log(id);
+    //         setThreads(responseJson);
+    //         console.log(threads);
+    //     }
+    //
+    //     fetchThreads()
+    // }, [])
+
+    async function createComment() {
+        const url = 'http://localhost:8000/comments/create/';
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                subject_type: "property",
+                subject_id: id,
+                reservation_id: 2,
+                content: commentContent
+            })
+        };
+
+        try {
+            const response = await fetch(url, options);
+
+            const responseJson = await response.json();
+
+            console.log(responseJson)
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     function sendNotif() {
         const token = localStorage.getItem('token');
@@ -99,11 +119,15 @@ const Property = () => {
 
     const handleComment = () => {
         if (commentContent.trim() === '') return;
-        setComments([...comments, { username: username, content: commentContent }]);
-        setCommentContent('');
         setShowCommentBox(false);
+        createComment().then();
         sendNotif();
     };
+
+
+    // useEffect(() => {
+    //
+    // }, [id])
 
     return (
         <div className="h-screen bg-BACKGROUND_COLOR_1">
@@ -145,7 +169,7 @@ const Property = () => {
                             </div>
                         </div>
                         {threads.map((thread, index) => (
-                            <CommentBox key={index} thread={thread} />
+                            <CommentBox key={index} thread={thread} id={id}/>
                         ))}
                     </div>
                 </div>

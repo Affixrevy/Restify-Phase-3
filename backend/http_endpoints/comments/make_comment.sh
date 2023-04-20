@@ -1,4 +1,3 @@
-#!/bin/zsh
 
 TOKEN_JOHN=$(cat ../user/tokens/john_token.txt)
 TOKEN_TERR=$(cat ../user/tokens/terrance_token.txt)

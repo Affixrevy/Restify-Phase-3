@@ -25,9 +25,6 @@ function ImageGallery(props) {
             const response = await fetch(`http://localhost:8000/properties/select/${page_id}/`)
             const responseData = await response.json()
             const description = responseData.description.split("\n");
-            console.log("FETCH DATA")
-            console.log(description)
-            console.log(responseData.owner)
             if (responseData.owner === parseInt(userID)) {
                 setIsOwner(true);
             }
@@ -38,7 +35,6 @@ function ImageGallery(props) {
         async function fetchImages() {
             const response = await fetch(`http://localhost:8000/properties/${page_id}/images/`)
             const responseData = await response.json()
-            console.log("FETCH IMAGE")
             const imageUrls = responseData.map(item => `http://localhost:8000${item.image}`)
             setPropertyImages(imageUrls)
         }
@@ -56,11 +52,7 @@ function ImageGallery(props) {
         }
     }, [page_id])
 
-    console.log(pageData)
-    console.log(propertyImages)
-
     function plusSlides(n) {
-        // console.log(slideIndex)
         if (n === 1 && slideIndex === propertyImages.length + 1) {
             setSlideIndex(1);
         } else if (n === -1 && slideIndex === 1) {
