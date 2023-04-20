@@ -2,8 +2,12 @@ import React from 'react';
 import NavBar from "../components/NavBar";
 import SubmitFile from "../components/SubmitFile";
 import SetHoliday from "../components/SetHoliday";
+import SubmitFileMultiple from "../components/SubmitFileMultiple";
+import {Link, useParams} from "react-router-dom";
 
 const ListingAddition = () => {
+    const { id } = useParams();
+
     return (
         <>
             <NavBar></NavBar>
@@ -16,15 +20,17 @@ const ListingAddition = () => {
                         <div className="relative mb-4">
                             <div className="flex justify-center items-center h-20 space-x-10">
                                 <SetHoliday text="Add Holiday Price"></SetHoliday>
-                                <SubmitFile multiple={1} text="Add More Pictures" title="Submit multiple images for the listing"/>
+                                <SubmitFileMultiple id={id} multiple={1} text="Add More Pictures" title="Submit multiple images for the listing"/>
                             </div>
                         </div>
                         <div className="flex flex-col items-center justify-center">
-                            <button
-                                className="bg-ACCENT_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full"
-                            >
-                                <p className="block overflow-auto py-2 px-4">Confirm</p>
-                            </button>
+                            <Link to="/">
+                                <button
+                                    className="bg-ACCENT_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-32 font-bold rounded-full"
+                                >
+                                    <p className="block overflow-auto py-2 px-4">Confirm</p>
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

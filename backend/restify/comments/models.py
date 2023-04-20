@@ -8,7 +8,7 @@ from reservations.models import Reservation
 
 
 class Comments(models.Model):
-    content = models.CharField(max_length=200)
+    content = models.CharField(max_length=500)
     comment_author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
     date_time = models.DateTimeField(default=timezone.now().isoformat())
 

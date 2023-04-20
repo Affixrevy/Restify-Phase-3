@@ -292,7 +292,7 @@ const Profile = () => {
                     >
                         <div className="flex justify-between items-center">
                             <h2 className="text-xl font-semibold text-FONT_COLOR_1">
-                                My Bookings
+                                Upcoming Bookings
                             </h2>
                         </div>
                         {userListings.length > 0 ? (
@@ -324,9 +324,18 @@ const Profile = () => {
                     id="panel-4"
                     className="tab-panel p-6 transition duration-300 flex flex-col space-y-4"
                 >
-                    <h2 className="text-xl font-semibold text-FONT_COLOR_1">
-                        My Listings
-                    </h2>
+                   <div className="flex justify-between items-center">
+                            <h2 className="text-xl font-semibold text-FONT_COLOR_1">
+                                My Listings
+                            </h2>
+                            <Link to={"/listing"}>
+                                <button
+                                    className="bg-BUTTON_COLOR hover:bg-STROKE_COLOR text-FONT_COLOR_1 w-20 rounded-full font-bold"
+                                >
+                                    + Add
+                                </button>
+                            </Link>
+                        </div>
                     {items.length > 0 ? (
                         <InfiniteScroll
                             next={() => fetchData(items.length / 8 + 1, userProfile.id)}
